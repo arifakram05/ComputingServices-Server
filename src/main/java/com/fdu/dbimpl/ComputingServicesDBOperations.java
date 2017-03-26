@@ -13,6 +13,7 @@ import org.bson.Document;
 
 import com.fdu.constants.Collections;
 import com.fdu.constants.Constants;
+import com.fdu.database.DBConnection;
 import com.fdu.interfaces.DBOperations;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabAssistant;
@@ -26,7 +27,7 @@ public class ComputingServicesDBOperations implements DBOperations {
 	@Override
 	public boolean saveJobApplicant(JobApplicant jobApplicantDetails) {
 		//connect to database
-		MongoCollection<Document> collection = DBConnection.INSTANCE.establishDBConnection().getCollection("jobapplicants");
+		MongoCollection<Document> collection = DBConnection.getConnection().getCollection("jobapplicants");
 
 		Document document = new Document();		
 				
@@ -48,18 +49,9 @@ public class ComputingServicesDBOperations implements DBOperations {
 	public List<JobApplicant> getAllJobApplicants() {
 		List<JobApplicant> allJobApplicants = new ArrayList<>();
 		//connect to database
-		MongoCollection<Document> collection = DBConnection.INSTANCE.establishDBConnection().getCollection("jobapplicants");
+		MongoCollection<Document> collection = DBConnection.getConnection().getCollection("jobapplicants");
 		
 		Block<Document> processRetreivedData = (document) -> {
-			//ObjectMapper is unable to map Date field, this is a bug from MongoDB side
-			/*ObjectMapper mapper = new ObjectMapper();
-			SimpleModule mongoDateModule =
-	                new SimpleModule("MongoDateDeserializer", new Version(1, 0, 0, ""));
-	        mongoDateModule.addDeserializer(Date.class, new DateDeserializer());
-			mapper.registerModule(mongoDateModule);*/			
-			/*JobApplicant jobApplicant = mapper.readValue(document.toJson(), JobApplicant.class);
-			allJobApplicants.add(jobApplicant);*/
-			/*String jsonString = JSON.serialize(document);*/
 			
 			JobApplicant jobApplicant = new JobApplicant();
 			
@@ -86,7 +78,7 @@ public class ComputingServicesDBOperations implements DBOperations {
 	@Override
 	public boolean saveLabAssistant(LabAssistant labAssistant) {
 		//connect to database
-		MongoCollection<Document> collection = DBConnection.INSTANCE.establishDBConnection().getCollection("labassistants");
+		MongoCollection<Document> collection = DBConnection.getConnection().getCollection("labassistants");
 
 		Document document = new Document();		
 				
@@ -108,7 +100,7 @@ public class ComputingServicesDBOperations implements DBOperations {
 
 	@Override
 	public boolean deleteJobApplicant(Integer studentId) {
-		MongoCollection<Document> collection = DBConnection.INSTANCE.establishDBConnection().getCollection("jobapplicants");
+		MongoCollection<Document> collection = DBConnection.getConnection().getCollection("jobapplicants");
 		DeleteResult result = collection.deleteOne(eq("studentId", studentId));
 		return result.wasAcknowledged();
 	}
@@ -116,7 +108,7 @@ public class ComputingServicesDBOperations implements DBOperations {
 	@Override
 	public boolean saveLabSchedule(LabSchedule labSchedule) {
 		//connect to database
-		MongoCollection<Document> collection = DBConnection.INSTANCE.establishDBConnection().getCollection(Collections.LABSCHECULE.getValue());
+		MongoCollection<Document> collection = DBConnection.getConnection().getCollection(Collections.LABSCHECULE.getValue());
 		
 		Document document = new Document();
 				
