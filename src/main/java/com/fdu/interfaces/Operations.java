@@ -3,9 +3,9 @@ package com.fdu.interfaces;
 import java.util.List;
 
 import com.fdu.impl.ComputingServicesOperations;
+import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabSchedule;
-import com.fdu.response.ComputingServicesResponse;
 
 /**
  * Defines every service this product has to offer

@@ -1,9 +1,9 @@
 package com.fdu.interfaces;
 
 import com.fdu.core.AdminOperationsImpl;
+import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabSchedule;
-import com.fdu.response.ComputingServicesResponse;
 
 /**
  * specifies all services for <b>admin</b> role

@@ -21,13 +21,13 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.impl.ComputingServicesOperations;
 import com.fdu.interfaces.Operations;
+import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
-import com.fdu.response.ComputingServicesResponse;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/services")
-public class ComputingServicesService {
+public class AssistantServices {
 
 	/**
 	 * Apply for a Job

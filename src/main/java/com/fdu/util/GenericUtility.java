@@ -1,6 +1,6 @@
 package com.fdu.util;
 
-import com.fdu.response.ComputingServicesResponse;
+import com.fdu.model.ComputingServicesResponse;
 
 public class GenericUtility {
 

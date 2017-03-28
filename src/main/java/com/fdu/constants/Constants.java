@@ -2,7 +2,7 @@ package com.fdu.constants;
 
 public enum Constants {
 
-	//LABASSISTANT AND JOBAPPLICANT
+	// LABASSISTANT AND JOBAPPLICANT
 	FIRSTNAME("firstName"),
 	LASTNAME("lastName"),
 	EMAIL("email"),
@@ -12,8 +12,8 @@ public enum Constants {
 	EDUCATION("education"),
 	RESUME("resume"),
 	STUDENTID("studentId"),
-	
-	//LABSCHEDULE
+
+	// LABSCHEDULE
 	LABSCHEDULEID("labScheduleId"),
 	CAMPUS("campus"),
 	LAB("lab"),
@@ -23,16 +23,19 @@ public enum Constants {
 	ENDTIME("endTime"),
 	ISRECURRING("isRecurring"),
 	PROFESSORNAME("profName"),
-	SUBJECT("subject");
-	
+	SUBJECT("subject"),
+
+	// names of collections
+	LABSCHECULE("labschedule");
+
 	private String value;
-	
+
 	private Constants(String value) {
 		this.value = value;
 	}
-	
+
 	public String getValue() {
 		return value;
 	}
-	
+
 }

@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.bson.Document;
 
-import com.fdu.constants.Collections;
 import com.fdu.constants.Constants;
 import com.fdu.database.DBConnection;
 import com.fdu.interfaces.DBOperations;
@@ -108,7 +107,7 @@ public class ComputingServicesDBOperations implements DBOperations {
 	@Override
 	public boolean saveLabSchedule(LabSchedule labSchedule) {
 		//connect to database
-		MongoCollection<Document> collection = DBConnection.getConnection().getCollection(Collections.LABSCHECULE.getValue());
+		MongoCollection<Document> collection = DBConnection.getConnection().getCollection(Constants.LABSCHECULE.getValue());
 		
 		Document document = new Document();
 				
