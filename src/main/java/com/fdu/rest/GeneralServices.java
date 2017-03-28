@@ -7,6 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.fdu.model.ComputingServicesResponse;
+import com.fdu.model.User;
 import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/general")
@@ -23,11 +24,21 @@ public class GeneralServices {
 	@Path("/login")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ComputingServicesResponse<Void> login(@FormDataParam("userDetails") String userDetails) {
+	public ComputingServicesResponse<User> login(@FormDataParam("userDetails") String userDetails) {
 
 		/*ScrumBoardResponse<Associate> response = ScrumBoard.getInstance().login(associateDetails);
 		return response;*/
 		return null;
 	}
+
+	@POST
+	@Path("/register")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ComputingServicesResponse<Void> register(@FormDataParam("userDetails") String userDetails) {
+
+		return null;
+	}
+
 }
 	
