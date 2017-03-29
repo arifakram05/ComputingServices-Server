@@ -8,15 +8,7 @@ import com.fdu.model.LabAssistant;
 import com.fdu.model.LabSchedule;
 
 public interface DBOperations {
-	
-	/**
-	 * saves the details of a job applicant for Lab Assistant position to the database
-	 * @param jobApplicantDetails Details of the person applying for a Lab Assistant position
-	 * @return boolean value indication operation success status; true if
-	 *         success, false otherwise
-	 */
-	boolean saveJobApplicant(JobApplicant jobApplicant);
-	
+
 	/**
 	 * view all job applicants
 	 * @return {@link List} of all {@link JobApplicant}s

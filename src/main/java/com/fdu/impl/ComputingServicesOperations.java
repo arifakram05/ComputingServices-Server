@@ -12,11 +12,6 @@ import com.fdu.model.LabSchedule;
 public class ComputingServicesOperations implements Operations {
 
 	@Override
-	public boolean saveJobApplicant(JobApplicant jobApplicantDetails) {
-		return DBOperations.getInstance().saveJobApplicant(jobApplicantDetails) ? true : false;
-	}
-
-	@Override
 	public List<JobApplicant> getAllJobApplicants() {
 		return DBOperations.getInstance().getAllJobApplicants();
 	}

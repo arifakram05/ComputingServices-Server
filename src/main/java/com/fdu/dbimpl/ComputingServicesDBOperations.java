@@ -24,27 +24,6 @@ import com.mongodb.client.result.DeleteResult;
 public class ComputingServicesDBOperations implements DBOperations {
 
 	@Override
-	public boolean saveJobApplicant(JobApplicant jobApplicantDetails) {
-		//connect to database
-		MongoCollection<Document> collection = DBConnection.getConnection().getCollection("jobapplicants");
-
-		Document document = new Document();		
-				
-		document.append(Constants.FIRSTNAME.getValue(), jobApplicantDetails.getFirstName());
-		document.append(Constants.LASTNAME.getValue(), jobApplicantDetails.getLastName());
-		document.append(Constants.DATEAPPPLIED.getValue(), new Date());		
-		document.append(Constants.EMAIL.getValue(), jobApplicantDetails.getEmail());
-		document.append(Constants.PHONE.getValue(), jobApplicantDetails.getPhone());
-		document.append(Constants.RESUME.getValue(), jobApplicantDetails.getResume());
-		document.append(Constants.STUDENTID.getValue(), jobApplicantDetails.getStudentId());
-		document.append(Constants.EDUCATION.getValue(), jobApplicantDetails.getEducation());
-		//insert details into database
-		collection.insertOne(document);
-	
-		return true;
-	}
-
-	@Override
 	public List<JobApplicant> getAllJobApplicants() {
 		List<JobApplicant> allJobApplicants = new ArrayList<>();
 		//connect to database

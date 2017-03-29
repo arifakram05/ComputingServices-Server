@@ -5,7 +5,8 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
- * POJO to fill in with job applicant's information
+ * Hold's Job Applicant's information
+ * 
  * @author arifakrammohammed
  *
  */
@@ -20,43 +21,43 @@ public class JobApplicant {
 	private byte[] resume;
 	private int studentId;
 	private Date dateApplied;
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
+
 	public String getLastName() {
 		return lastName;
 	}
-	
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getPhone() {
 		return phone;
 	}
-	
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
 	public String getEducation() {
 		return education;
 	}
-	
+
 	public void setEducation(String education) {
 		this.education = education;
 	}
@@ -84,5 +85,5 @@ public class JobApplicant {
 	public void setDateApplied(Date dateApplied) {
 		this.dateApplied = dateApplied;
 	}
-	
+
 }

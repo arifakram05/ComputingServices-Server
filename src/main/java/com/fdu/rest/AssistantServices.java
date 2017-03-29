@@ -30,31 +30,6 @@ import com.sun.jersey.multipart.FormDataParam;
 public class AssistantServices {
 
 	/**
-	 * Apply for a Job
-	 * @param formData
-	 * @param file
-	 * @param fileDetail
-	 * @return
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
-	 * @throws IOException
-	 */
-	@POST
-	@Path("/applyJob")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response applyForAJob(@FormDataParam("model") String formData, @FormDataParam("file") InputStream file,
-			@FormDataParam("file") FormDataContentDisposition fileDetail)
-			throws JsonParseException, JsonMappingException, IOException {
-
-		JobApplicant jobApplicantDetails = new ObjectMapper().readValue(formData, JobApplicant.class);
-		byte[] fileData = IOUtils.toByteArray(file);
-		jobApplicantDetails.setResume(fileData);
-		Operations operation = new ComputingServicesOperations();
-		boolean success = operation.saveJobApplicant(jobApplicantDetails);
-		return success ? Response.ok(200).build() : Response.status(500).build();
-	}
-
-	/**
 	 * Admin - View all job applicants
 	 * @return
 	 */

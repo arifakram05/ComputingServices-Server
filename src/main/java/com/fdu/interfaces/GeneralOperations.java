@@ -1,5 +1,9 @@
 package com.fdu.interfaces;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.fdu.impl.CareersServiceImpl;
 import com.fdu.impl.GeneralOperationsImpl;
 import com.fdu.impl.LoginServiceImpl;
 import com.fdu.impl.RegisterServiceImpl;
@@ -7,6 +11,8 @@ import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.User;
 
 public interface GeneralOperations extends Connection {
+
+	Map<String, Object> instanceMap = new ConcurrentHashMap<>();
 
 	/**
 	 * Login a user to use system services
@@ -28,14 +34,28 @@ public interface GeneralOperations extends Connection {
 	ComputingServicesResponse<Void> register(String userDetails);
 
 	/**
+	 * Apply for a job as a lab assistant
+	 * 
+	 * @param application
+	 *            job applicant details
+	 * @param resume
+	 *            job applicant resume
+	 * @return {@link ComputingServicesResponse} containing response details
+	 */
+	ComputingServicesResponse<Void> careers(String application, Object resume);
+
+	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class
 	 * 
-	 * @return {@link GeneralOperationsImpl} Object of the class that
-	 *         implements this interface
+	 * @return {@link GeneralOperationsImpl} Object of the class that implements
+	 *         this interface
 	 */
 	static GeneralOperationsImpl getInstance() {
-		return new GeneralOperationsImpl();
+		if(instanceMap.get("GeneralOperations") == null) {
+			instanceMap.put("GeneralOperations", new GeneralOperationsImpl());
+		}
+		return (GeneralOperationsImpl) instanceMap.get("GeneralOperations");
 	}
 
 	/*
@@ -43,11 +63,24 @@ public interface GeneralOperations extends Connection {
 	 */
 
 	default LoginService getLoginServiceInstance() {
-		return new LoginServiceImpl(getDBConnection());
+		if(instanceMap.get("LoginService") == null) {
+			instanceMap.put("LoginService", new LoginServiceImpl(getDBConnection()));
+		}
+		return (LoginServiceImpl) instanceMap.get("LoginService");
 	}
 
 	default RegisterService getRegisterServiceInstance() {
-		return new RegisterServiceImpl(getDBConnection());
+		if(instanceMap.get("RegisterService") == null) {
+			instanceMap.put("RegisterService", new RegisterServiceImpl(getDBConnection()));
+		}
+		return (RegisterServiceImpl) instanceMap.get("RegisterService");
+	}
+
+	default CareersService getCareersServiceInstance() {
+		if(instanceMap.get("CareersService") == null) {
+			instanceMap.put("CareersService", new CareersServiceImpl(getDBConnection()));
+		}
+		return (CareersServiceImpl) instanceMap.get("CareersService");
 	}
 
 }
