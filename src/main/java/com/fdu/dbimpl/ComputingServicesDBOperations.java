@@ -63,7 +63,7 @@ public class ComputingServicesDBOperations implements DBOperations {
 		document.append(Constants.FIRSTNAME.getValue(), labAssistant.getFirstName());
 		document.append(Constants.LASTNAME.getValue(), labAssistant.getLastName());
 		document.append(Constants.DATEAPPPLIED.getValue(), labAssistant.getDateApplied());
-		document.append(Constants.DATEHIRED.getValue(), new Date());
+		document.append(Constants.DATEHIRED.getValue(), labAssistant.getDateHired());
 		document.append(Constants.EMAIL.getValue(), labAssistant.getEmail());
 		document.append(Constants.PHONE.getValue(), labAssistant.getPhone());
 		document.append(Constants.RESUME.getValue(), labAssistant.getResume());

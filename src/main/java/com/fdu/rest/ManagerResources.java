@@ -9,10 +9,11 @@ import javax.ws.rs.core.Response;
 import com.fdu.interfaces.ManagerOperations;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
+import com.fdu.model.LabAssistant;
 
 @Path("/admin")
 @Produces(MediaType.APPLICATION_JSON)
-public class ManagerServices {
+public class ManagerResources {
 
 	/*@POST
 	@Path("/saveLabSchedule")
@@ -36,5 +37,17 @@ public class ManagerServices {
 	public Response viewJobApplicants() {
 		ComputingServicesResponse<JobApplicant> jobApplicants = ManagerOperations.getInstance().viewJobApplicants();
 		return Response.status(jobApplicants.getStatusCode()).entity(jobApplicants).build();
+	}
+
+	/**
+	 * View all lab assistants
+	 * 
+	 * @return {@link ComputingServicesResponse} containing response details
+	 */
+	@GET
+	@Path("/viewLabAssistants")
+	public Response viewLabAssistants() {
+		ComputingServicesResponse<LabAssistant> labAssistants = ManagerOperations.getInstance().viewLabAssistants();
+		return Response.status(labAssistants.getStatusCode()).entity(labAssistants).build();
 	}
 }

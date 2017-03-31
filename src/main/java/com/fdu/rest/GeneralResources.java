@@ -16,7 +16,7 @@ import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/general")
 @Produces(MediaType.APPLICATION_JSON)
-public class GeneralServices {
+public class GeneralResources {
 
 	/**
 	 * Validate user credentials and log-in

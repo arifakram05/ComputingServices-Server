@@ -27,6 +27,7 @@ public enum Constants {
 
 	// names of collections
 	LABSCHECULE("labschedule"),
+	LABASSISTANTS("labassistants"),
 	JOBAPPLICANTS("jobapplicants");
 
 	private String value;

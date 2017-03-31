@@ -27,7 +27,7 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/services")
-public class AssistantServices {
+public class AssistantResources {
 
 	/**
 	 * Admin - View all job applicants

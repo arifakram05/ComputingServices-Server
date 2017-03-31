@@ -1,20 +1,16 @@
 package com.fdu.model;
 
-import java.util.Date;
-
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import com.fdu.constants.Status;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(value = { "resume", "photo" }, ignoreUnknown = true)
 public class LabAssistant {
 	
 	private int studentId;
 	private String firstName;
 	private String lastName;
-	private String username;
 	private String phone;
-	private String address;
 	private Status status;
 	private String email;
 	private String education;
@@ -23,9 +19,9 @@ public class LabAssistant {
 	private String profileLink;
 	private byte[] resume;
 	private byte[] photo;
-	private Date dateApplied;
-	private Date dateHired;
-	private Date firstWorkingDate;
+	private String dateApplied;
+	private String dateHired;
+	private String firstWorkingDate;
 	
 	public int getStudentId() {
 		return studentId;
@@ -51,28 +47,12 @@ public class LabAssistant {
 		this.lastName = lastName;
 	}
 	
-	public String getUsername() {
-		return username;
-	}
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
 	public String getPhone() {
 		return phone;
 	}
 	
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-	
-	public String getAddress() {
-		return address;
-	}
-	
-	public void setAddress(String address) {
-		this.address = address;
 	}
 	
 	public Status getStatus() {
@@ -139,27 +119,27 @@ public class LabAssistant {
 		this.photo = photo;
 	}
 
-	public Date getDateHired() {
+	public String getDateHired() {
 		return dateHired;
 	}
 
-	public void setDateHired(Date dateHired) {
+	public void setDateHired(String dateHired) {
 		this.dateHired = dateHired;
 	}
 
-	public Date getFirstWorkingDate() {
+	public String getFirstWorkingDate() {
 		return firstWorkingDate;
 	}
 
-	public void setFirstWorkingDate(Date firstWorkingDate) {
+	public void setFirstWorkingDate(String firstWorkingDate) {
 		this.firstWorkingDate = firstWorkingDate;
 	}
 
-	public Date getDateApplied() {
+	public String getDateApplied() {
 		return dateApplied;
 	}
 
-	public void setDateApplied(Date dateApplied) {
+	public void setDateApplied(String dateApplied) {
 		this.dateApplied = dateApplied;
 	}
 
