@@ -59,7 +59,7 @@ public class GeneralOperationsImpl implements GeneralOperations {
 			jobApplicant = new ObjectMapper().readValue(application, JobApplicant.class);
 			jobApplicant.setResume(IOUtils.toByteArray((InputStream) resume));
 			LOGGER.info("Recording a new job application " + jobApplicant.getStudentId());
-			response = getCareersServiceInstance().careeers(jobApplicant);
+			response = getCareersServiceInstance().careers(jobApplicant);
 			LOGGER.info("Save Job applicant details " + jobApplicant.getStudentId() + " success");
 		} catch (Exception e) {
 			LOGGER.error("Error while saving job applicant details " + jobApplicant.getStudentId(), e);

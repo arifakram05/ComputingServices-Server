@@ -1,5 +1,7 @@
 package com.fdu.interfaces;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.fdu.exception.ComputingServicesException;
@@ -16,7 +18,7 @@ public interface CareersService {
 
 	final static Logger LOGGER = Logger.getLogger(CareersService.class);
 
-	default ComputingServicesResponse<Void> careeers(JobApplicant jobApplicant) {
+	default ComputingServicesResponse<Void> careers(JobApplicant jobApplicant) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		// 1. Validate input
 		try {
@@ -39,6 +41,20 @@ public interface CareersService {
 
 	void validateInput(JobApplicant jobApplicant) throws ComputingServicesException;
 
+	/**
+	 * Save the details of a student who is applying for the Lab Assistant
+	 * position
+	 * 
+	 * @param jobApplicant
+	 *            student details
+	 */
 	void saveJobApplicant(JobApplicant jobApplicant);
+
+	/**
+	 * Get the list of all job applicants
+	 * 
+	 * @return {@link List} of {@link JobApplicant}s
+	 */
+	List<JobApplicant> viewAllJobApplicants();
 
 }

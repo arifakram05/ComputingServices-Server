@@ -40,7 +40,7 @@ public class ComputingServicesDBOperations implements DBOperations {
 			jobApplicant.setEducation(document.get(Constants.EDUCATION.getValue()).toString());
 			jobApplicant.setStudentId(Integer.valueOf(document.get(Constants.STUDENTID.getValue()).toString()));			
 			//jobApplicant.setResume(document.get(Constants.RESUME.getValue()));
-			jobApplicant.setDateApplied((Date)document.get(Constants.DATEAPPPLIED.getValue()));
+			//jobApplicant.setDateApplied((Date)document.get(Constants.DATEAPPPLIED.getValue()));
 
 			allJobApplicants.add(jobApplicant);
 			

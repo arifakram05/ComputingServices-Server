@@ -1,7 +1,5 @@
 package com.fdu.model;
 
-import java.util.Date;
-
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
@@ -10,7 +8,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  * @author arifakrammohammed
  *
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(value = { "resume" }, ignoreUnknown = true)
 public class JobApplicant {
 
 	private String firstName;
@@ -20,7 +18,7 @@ public class JobApplicant {
 	private String education;
 	private byte[] resume;
 	private int studentId;
-	private Date dateApplied;
+	private String dateApplied;
 
 	public String getFirstName() {
 		return firstName;
@@ -78,11 +76,11 @@ public class JobApplicant {
 		this.studentId = studentId;
 	}
 
-	public Date getDateApplied() {
+	public String getDateApplied() {
 		return dateApplied;
 	}
 
-	public void setDateApplied(Date dateApplied) {
+	public void setDateApplied(String dateApplied) {
 		this.dateApplied = dateApplied;
 	}
 
