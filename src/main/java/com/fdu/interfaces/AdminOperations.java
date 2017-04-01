@@ -2,7 +2,6 @@ package com.fdu.interfaces;
 
 import com.fdu.core.AdminOperationsImpl;
 import com.fdu.model.ComputingServicesResponse;
-import com.fdu.model.JobApplicant;
 import com.fdu.model.LabSchedule;
 
 /**
@@ -11,13 +10,6 @@ import com.fdu.model.LabSchedule;
  *
  */
 public interface AdminOperations {
-	
-	/**
-	 * hire a job applicant for a role of Lab Assistant
-	 * @param jobApplicant the details of the job applicant
-	 * @return <b>boolean</b> true if operation success, false otherwise
-	 */
-	ComputingServicesResponse hireJobApplicant(JobApplicant jobApplicant);
 	
 	ComputingServicesResponse saveLabSchedule(LabSchedule labSchedule);
 	

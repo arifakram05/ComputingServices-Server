@@ -1,10 +1,7 @@
 package com.fdu.interfaces;
 
-import java.util.List;
-
 import com.fdu.impl.ComputingServicesOperations;
 import com.fdu.model.ComputingServicesResponse;
-import com.fdu.model.JobApplicant;
 import com.fdu.model.LabSchedule;
 
 /**
@@ -13,20 +10,7 @@ import com.fdu.model.LabSchedule;
  *
  */
 public interface Operations {
-	
-	/**
-	 * view all job applicants
-	 * @return {@link List} of all {@link JobApplicant}s
-	 */
-	List<JobApplicant> getAllJobApplicants();
-	
-	/**
-	 * hire a job applicant for a role of Lab Assistant
-	 * @param jobApplicant the details of the job applicant
-	 * @return <b>boolean</b> true if operation success, false otherwise
-	 */
-	ComputingServicesResponse hireJobApplicant(JobApplicant jobApplicant);
-	
+
 	/**
 	 * save lab schedule
 	 * @param labSchedule the details about a session occurring in a lab

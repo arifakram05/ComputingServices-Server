@@ -3,6 +3,7 @@ package com.fdu.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.interfaces.ManagerOperations;
 import com.fdu.model.ComputingServicesResponse;
@@ -69,6 +70,25 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			LOGGER.error("Error while deleting job applicant "+studentId, e);
 			response.setStatusCode(500);
 			response.setMessage("Error occurred. Could not delete job applicant");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> hireJobApplicant(String labAssistantDetails) {
+		ComputingServicesResponse<Void> response = null;
+		LabAssistant labAssistant = null;
+		try {
+			LOGGER.info("Preparing to hire job applicant");
+			labAssistant = new ObjectMapper().readValue(labAssistantDetails, LabAssistant.class);
+			LOGGER.info("Hiring job applicant " + labAssistant.getStudentId());
+			response = getManagerServiceInstance().hire(labAssistant);
+			LOGGER.info("Hire job applicant success " + labAssistant.getStudentId());
+		} catch (Exception e) {
+			LOGGER.error("Error while hiring job applicant " + labAssistant.getStudentId(), e);
+			response = new ComputingServicesResponse<>();
+			response.setStatusCode(500);
+			response.setMessage("Error Occurred while processing hire operation for "+labAssistant.getStudentId());
 		}
 		return response;
 	}

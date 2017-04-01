@@ -1,7 +1,9 @@
 package com.fdu.rest;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -12,6 +14,7 @@ import com.fdu.interfaces.ManagerOperations;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabAssistant;
+import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/admin")
 @Produces(MediaType.APPLICATION_JSON)
@@ -57,6 +60,14 @@ public class ManagerResources {
 	@Path("/deleteJobApplicant")
 	public Response deleteJobApplicant(@QueryParam("studentId") int studentId) {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().deleteJobApplicant(studentId);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	@POST
+	@Path("/hireJobApplicant")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response hireJobApplicant(@FormDataParam("labAssistant") String labAssistant) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().hireJobApplicant(labAssistant);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 

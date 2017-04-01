@@ -28,6 +28,8 @@ public interface ManagerOperations extends Connection {
 
 	ComputingServicesResponse<Void> deleteJobApplicant(int studentId);
 
+	ComputingServicesResponse<Void> hireJobApplicant(String labAssistant);
+
 	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class
