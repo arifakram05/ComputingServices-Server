@@ -7,6 +7,7 @@ import com.fdu.impl.AssistantServiceImpl;
 import com.fdu.impl.CareersServiceImpl;
 import com.fdu.impl.GeneralOperationsImpl;
 import com.fdu.impl.ManagerOperationsImpl;
+import com.fdu.impl.ManagerServiceImpl;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabAssistant;
@@ -24,6 +25,8 @@ public interface ManagerOperations extends Connection {
 	ComputingServicesResponse<JobApplicant> viewJobApplicants();
 
 	ComputingServicesResponse<LabAssistant> viewLabAssistants();
+
+	ComputingServicesResponse<Void> deleteJobApplicant(int studentId);
 
 	/**
 	 * Java 8 feature.<br/>
@@ -55,6 +58,13 @@ public interface ManagerOperations extends Connection {
 			instanceMap.put("AssistantService", new AssistantServiceImpl(getDBConnection()));
 		}
 		return (AssistantServiceImpl) instanceMap.get("AssistantService");
+	}
+
+	default ManagerService getManagerServiceInstance() {
+		if (instanceMap.get("ManagerService") == null) {
+			instanceMap.put("ManagerService", new ManagerServiceImpl(getDBConnection()));
+		}
+		return (ManagerServiceImpl) instanceMap.get("ManagerService");
 	}
 
 }

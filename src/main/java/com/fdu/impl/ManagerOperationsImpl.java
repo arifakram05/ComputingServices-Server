@@ -51,4 +51,26 @@ public class ManagerOperationsImpl implements ManagerOperations {
 		return response;
 	}
 
+	@Override
+	public ComputingServicesResponse<Void> deleteJobApplicant(int studentId) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("Preparing to delete job applicant");
+			if(getManagerServiceInstance().deleteJobApplicant(studentId)) {
+				LOGGER.info("Job applicant deleted - "+studentId);
+				response.setStatusCode(200);
+				response.setMessage("Successfully deleted job applicant "+studentId);
+			} else {
+				LOGGER.info("Job applicant NOT deleted - "+studentId);
+				response.setStatusCode(404);
+				response.setMessage("Could not delete job applicant "+studentId);
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error while deleting job applicant "+studentId, e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred. Could not delete job applicant");
+		}
+		return response;
+	}
+
 }

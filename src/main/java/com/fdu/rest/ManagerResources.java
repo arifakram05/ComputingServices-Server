@@ -1,8 +1,10 @@
 package com.fdu.rest;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -50,4 +52,12 @@ public class ManagerResources {
 		ComputingServicesResponse<LabAssistant> labAssistants = ManagerOperations.getInstance().viewLabAssistants();
 		return Response.status(labAssistants.getStatusCode()).entity(labAssistants).build();
 	}
+
+	@DELETE
+	@Path("/deleteJobApplicant")
+	public Response deleteJobApplicant(@QueryParam("studentId") int studentId) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().deleteJobApplicant(studentId);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
 }
