@@ -68,6 +68,12 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public ComputingServicesResponse<Void> authorizeUser(User user) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		if (isUserAuthorized(user)) {
+			LOGGER.info("User with ID " + user.getUserId()+" is registered already");
+			response.setStatusCode(404);
+			response.setMessage("User with ID " + user.getUserId() + " is already authorized to register");
+			return response;
+		}
 		// get collection
 		MongoCollection<Document> userCollection = database.getCollection(Constants.USERS.getValue());
 		Document document = new Document();
@@ -82,6 +88,17 @@ public class ManagerServiceImpl implements ManagerService {
 		response.setStatusCode(200);
 		response.setMessage("User with ID " + user.getUserId() + " authorized to register");
 		return response;
+	}
+
+	@Override
+	public boolean isUserAuthorized(User user) {
+		// get collection
+		MongoCollection<Document> userCollection = database.getCollection(Constants.USERS.getValue());
+		if (userCollection.count(eq(Constants.USERID.getValue(), user.getUserId())) > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

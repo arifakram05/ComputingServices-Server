@@ -30,6 +30,16 @@ public interface ManagerService {
 	boolean saveLabAssistant(LabAssistant labAssistant);
 
 	/**
+	 * Check if a user is authorized for system access
+	 * 
+	 * @param user
+	 *            user to check
+	 * @return <code>true</code> if user is already authorized,
+	 *         <code>false</code> otherwise
+	 */
+	boolean isUserAuthorized(User user);
+
+	/**
 	 * Grant a user permissions to access system services
 	 * 
 	 * @param user
