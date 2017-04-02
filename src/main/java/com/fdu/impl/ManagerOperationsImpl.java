@@ -34,25 +34,6 @@ public class ManagerOperationsImpl implements ManagerOperations {
 	}
 
 	@Override
-	public ComputingServicesResponse<LabAssistant> viewLabAssistants() {
-		ComputingServicesResponse<LabAssistant> response = new ComputingServicesResponse<>();
-		List<LabAssistant> labAssistantList = null;
-		try {
-			LOGGER.info("Preparing to fetch all lab assistants");
-			labAssistantList = getAssistantServiceInstance().viewAllLabAssistants();
-			LOGGER.info("All lab assistants successfully retrieved");
-			response.setStatusCode(200);
-			response.setMessage("List of all lab assistants");
-			response.setResponse(labAssistantList);
-		} catch (Exception e) {
-			LOGGER.error("Error while fetching all lab assistants ", e);
-			response.setStatusCode(500);
-			response.setMessage("Error occurred. Could not get lab assistant list");
-		}
-		return response;
-	}
-
-	@Override
 	public ComputingServicesResponse<Void> deleteJobApplicant(int studentId) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
@@ -60,11 +41,11 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			if(getManagerServiceInstance().deleteJobApplicant(studentId)) {
 				LOGGER.info("Job applicant deleted - "+studentId);
 				response.setStatusCode(200);
-				response.setMessage("Successfully deleted job applicant "+studentId);
+				response.setMessage("Successfully deleted job applicant with ID "+studentId);
 			} else {
-				LOGGER.info("Job applicant NOT deleted - "+studentId);
+				LOGGER.info("Job applicant could not NOT deleted - "+studentId);
 				response.setStatusCode(404);
-				response.setMessage("Could not delete job applicant "+studentId);
+				response.setMessage("Could not delete job applicant with ID "+studentId);
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error while deleting job applicant "+studentId, e);
@@ -89,6 +70,47 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			response = new ComputingServicesResponse<>();
 			response.setStatusCode(500);
 			response.setMessage("Error Occurred while processing hire operation for "+labAssistant.getStudentId());
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<LabAssistant> viewLabAssistants() {
+		ComputingServicesResponse<LabAssistant> response = new ComputingServicesResponse<>();
+		List<LabAssistant> labAssistantList = null;
+		try {
+			LOGGER.info("Preparing to fetch all lab assistants");
+			labAssistantList = getAssistantServiceInstance().viewAllLabAssistants();
+			LOGGER.info("All lab assistants successfully retrieved");
+			response.setStatusCode(200);
+			response.setMessage("List of all lab assistants");
+			response.setResponse(labAssistantList);
+		} catch (Exception e) {
+			LOGGER.error("Error while fetching all lab assistants ", e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred. Could not get lab assistant list");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> deleteLabAssistant(int studentId) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("Preparing to delete lab assistant");
+			if(getAssistantServiceInstance().deleteLabAssistant(studentId)) {
+				LOGGER.info("Lab Assistant deleted - "+studentId);
+				response.setStatusCode(200);
+				response.setMessage("Successfully deleted lab assistant with ID "+studentId);
+			} else {
+				LOGGER.info("Lab Assistant could NOT be deleted - "+studentId);
+				response.setStatusCode(404);
+				response.setMessage("Could not delete lab assistant with ID "+studentId);
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error while deleting lab assistant "+studentId, e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred. Could not delete lab assistant");
 		}
 		return response;
 	}

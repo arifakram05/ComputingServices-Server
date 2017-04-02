@@ -20,17 +20,9 @@ import com.sun.jersey.multipart.FormDataParam;
 @Produces(MediaType.APPLICATION_JSON)
 public class ManagerResources {
 
-	/*@POST
-	@Path("/saveLabSchedule")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response hireJobApplicant(String labScheduleJSON)
-			throws JsonParseException, JsonMappingException, IOException {
-
-		LabSchedule labSchedule = new ObjectMapper().readValue(labScheduleJSON, LabSchedule.class);
-		ComputingServicesResponse response = Operations.getInstance().saveLabSchedule(labSchedule);
-		return Response.ok(response).build();
-	}*/
+	/*
+	 * Below are services related to Job Applicant
+	 */
 
 	/**
 	 * View all job applicants
@@ -42,18 +34,6 @@ public class ManagerResources {
 	public Response viewJobApplicants() {
 		ComputingServicesResponse<JobApplicant> jobApplicants = ManagerOperations.getInstance().viewJobApplicants();
 		return Response.status(jobApplicants.getStatusCode()).entity(jobApplicants).build();
-	}
-
-	/**
-	 * View all lab assistants
-	 * 
-	 * @return {@link ComputingServicesResponse} containing response details
-	 */
-	@GET
-	@Path("/viewLabAssistants")
-	public Response viewLabAssistants() {
-		ComputingServicesResponse<LabAssistant> labAssistants = ManagerOperations.getInstance().viewLabAssistants();
-		return Response.status(labAssistants.getStatusCode()).entity(labAssistants).build();
 	}
 
 	@DELETE
@@ -68,6 +48,29 @@ public class ManagerResources {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response hireJobApplicant(@FormDataParam("labAssistant") String labAssistant) {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().hireJobApplicant(labAssistant);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	/*
+	 * Below are services related to Lab Assistant
+	 */
+
+	/**
+	 * View all lab assistants
+	 * 
+	 * @return {@link ComputingServicesResponse} containing response details
+	 */
+	@GET
+	@Path("/viewLabAssistants")
+	public Response viewLabAssistants() {
+		ComputingServicesResponse<LabAssistant> labAssistants = ManagerOperations.getInstance().viewLabAssistants();
+		return Response.status(labAssistants.getStatusCode()).entity(labAssistants).build();
+	}
+
+	@DELETE
+	@Path("/deleteLabAssistant")
+	public Response deleteLabAssistant(@QueryParam("studentId") int studentId) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().deleteLabAssistant(studentId);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 

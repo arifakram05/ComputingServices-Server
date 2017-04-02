@@ -21,7 +21,6 @@ public class LabAssistant {
 	private byte[] photo;
 	private String dateApplied;
 	private String dateHired;
-	private String firstWorkingDate;
 	
 	public int getStudentId() {
 		return studentId;
@@ -125,14 +124,6 @@ public class LabAssistant {
 
 	public void setDateHired(String dateHired) {
 		this.dateHired = dateHired;
-	}
-
-	public String getFirstWorkingDate() {
-		return firstWorkingDate;
-	}
-
-	public void setFirstWorkingDate(String firstWorkingDate) {
-		this.firstWorkingDate = firstWorkingDate;
 	}
 
 	public String getDateApplied() {

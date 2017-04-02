@@ -17,4 +17,12 @@ public interface AssistantService {
 	 */
 	List<LabAssistant> viewAllLabAssistants();
 
+	/**
+	 * Delete a given lab assistant from DB records.
+	 * 
+	 * @param studentId
+	 *            LA to be deleted
+	 * @return boolean indicating the success status of the operation
+	 */
+	boolean deleteLabAssistant(int studentId);
 }

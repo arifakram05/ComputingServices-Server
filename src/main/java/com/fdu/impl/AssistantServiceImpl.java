@@ -1,5 +1,6 @@
 package com.fdu.impl;
 
+import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Sorts.ascending;
@@ -18,6 +19,7 @@ import com.fdu.model.LabAssistant;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 
 public class AssistantServiceImpl implements AssistantService {
 
@@ -52,6 +54,15 @@ public class AssistantServiceImpl implements AssistantService {
 				.forEach(processRetreivedData);
 		LOGGER.info("All job applicant details fetched");
 		return allLabAssistants;
+	}
+
+	@Override
+	public boolean deleteLabAssistant(int studentId) {
+		// get collection
+		MongoCollection<Document> labAssistantCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+		// query
+		DeleteResult result = labAssistantCollection.deleteOne(eq(Constants.STUDENTID.getValue(), studentId));
+		return result.wasAcknowledged();
 	}
 
 }

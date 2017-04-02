@@ -16,6 +16,10 @@ public interface ManagerOperations extends Connection {
 
 	Map<String, Object> instanceMap = new ConcurrentHashMap<>();
 
+	/*
+	 * Below are services related to Job Applicant
+	 */
+
 	/**
 	 * View the details of all the students who applied for lab assistant job
 	 * 
@@ -24,11 +28,26 @@ public interface ManagerOperations extends Connection {
 	 */
 	ComputingServicesResponse<JobApplicant> viewJobApplicants();
 
-	ComputingServicesResponse<LabAssistant> viewLabAssistants();
-
 	ComputingServicesResponse<Void> deleteJobApplicant(int studentId);
 
 	ComputingServicesResponse<Void> hireJobApplicant(String labAssistant);
+
+	/*
+	 * Below are services related to Lab Assistant
+	 */
+
+	ComputingServicesResponse<LabAssistant> viewLabAssistants();
+
+	/**
+	 * Delete a Lab Assistant. This operation removes a Lab Assistant from the
+	 * DB records
+	 * 
+	 * @param studentId
+	 *            ID of the Lab Assistant to be deleted
+	 * @return a {@link ComputingServicesResponse} containing success status of
+	 *         the operation
+	 */
+	ComputingServicesResponse<Void> deleteLabAssistant(int studentId);
 
 	/**
 	 * Java 8 feature.<br/>
