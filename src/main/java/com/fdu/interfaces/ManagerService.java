@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.LabAssistant;
+import com.fdu.model.User;
 
 public interface ManagerService {
 
@@ -27,5 +28,14 @@ public interface ManagerService {
 	boolean hireJobApplicant(LabAssistant labAssistant);
 
 	boolean saveLabAssistant(LabAssistant labAssistant);
+
+	/**
+	 * Grant a user permissions to access system services
+	 * 
+	 * @param user
+	 *            user to register
+	 * @return {@link ComputingServicesResponse} containing response details
+	 */
+	ComputingServicesResponse<Void> authorizeUser(User user);
 
 }

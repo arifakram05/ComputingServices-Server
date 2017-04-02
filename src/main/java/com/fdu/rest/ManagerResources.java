@@ -82,4 +82,20 @@ public class ManagerResources {
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
+	/**
+	 * Authorize a user such that he/she can register and start using this
+	 * system
+	 * 
+	 * @param user
+	 *            user who needs to be registered
+	 * @return {@link ComputingServicesResponse} containing response details
+	 */
+	@POST
+	@Path("/authorize")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response authorizeUser(@FormDataParam("user") String user) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().authorizeUser(user);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
 }

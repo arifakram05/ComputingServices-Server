@@ -27,7 +27,13 @@ public enum Constants {
 	PROFESSORNAME("profName"),
 	SUBJECT("subject"),
 
+	//USERS
+	USERID("userId"),
+	ROLE("role"),
+	PASSWORD("password"),
+
 	// names of collections
+	USERS("users"),
 	LABSCHECULE("labschedule"),
 	LABASSISTANTS("labassistants"),
 	JOBAPPLICANTS("jobapplicants");

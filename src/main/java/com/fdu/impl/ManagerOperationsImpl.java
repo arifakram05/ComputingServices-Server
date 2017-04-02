@@ -9,6 +9,7 @@ import com.fdu.interfaces.ManagerOperations;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabAssistant;
+import com.fdu.model.User;
 
 public class ManagerOperationsImpl implements ManagerOperations {
 
@@ -130,6 +131,25 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			response = new ComputingServicesResponse<>();
 			response.setStatusCode(500);
 			response.setMessage("Error occurred while updating lab assistant with ID "+labAssistant.getStudentId());
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> authorizeUser(String userDetails) {
+		ComputingServicesResponse<Void> response = null;
+		User user = null;
+		try {
+			LOGGER.info("Preparing to grant a user access to the system");
+			user = new ObjectMapper().readValue(userDetails, User.class);
+			LOGGER.info("Authorizing for registering " + user.getUserId());
+			response = getManagerServiceInstance().authorizeUser(user);
+			LOGGER.info("Granting user system access success " + user.getUserId());
+		} catch (Exception e) {
+			LOGGER.error("Error while authorizing user " + user.getUserId(), e);
+			response = new ComputingServicesResponse<>();
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while authorizing user with ID "+user.getUserId());
 		}
 		return response;
 	}

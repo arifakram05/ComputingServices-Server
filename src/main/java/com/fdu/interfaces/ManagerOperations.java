@@ -66,6 +66,16 @@ public interface ManagerOperations extends Connection {
 	ComputingServicesResponse<Void> updateLabAssistant(String labAssistant);
 
 	/**
+	 * Grant a user access for registering with this system
+	 * 
+	 * @param user
+	 *            user to register
+	 * @return a {@link ComputingServicesResponse} containing success status of
+	 *         the operation
+	 */
+	ComputingServicesResponse<Void> authorizeUser(String user);
+
+	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class
 	 * 
