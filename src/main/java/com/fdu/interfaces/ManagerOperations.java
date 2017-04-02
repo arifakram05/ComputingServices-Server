@@ -36,6 +36,12 @@ public interface ManagerOperations extends Connection {
 	 * Below are services related to Lab Assistant
 	 */
 
+	/**
+	 * Get all the lab assistant details
+	 * 
+	 * @return a {@link ComputingServicesResponse} containing list of all lab
+	 *         assistants
+	 */
 	ComputingServicesResponse<LabAssistant> viewLabAssistants();
 
 	/**
@@ -48,6 +54,16 @@ public interface ManagerOperations extends Connection {
 	 *         the operation
 	 */
 	ComputingServicesResponse<Void> deleteLabAssistant(int studentId);
+
+	/**
+	 * Update the details of a given lab assistant
+	 * 
+	 * @param labAssistant
+	 *            LA whose details are to be updated
+	 * @return a {@link ComputingServicesResponse} containing success status of
+	 *         the operation
+	 */
+	ComputingServicesResponse<Void> updateLabAssistant(String labAssistant);
 
 	/**
 	 * Java 8 feature.<br/>

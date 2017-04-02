@@ -14,6 +14,7 @@ import org.bson.Document;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.constants.Constants;
+import com.fdu.exception.ComputingServicesException;
 import com.fdu.interfaces.AssistantService;
 import com.fdu.model.LabAssistant;
 import com.mongodb.Block;
@@ -62,7 +63,30 @@ public class AssistantServiceImpl implements AssistantService {
 		MongoCollection<Document> labAssistantCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
 		// query
 		DeleteResult result = labAssistantCollection.deleteOne(eq(Constants.STUDENTID.getValue(), studentId));
+		LOGGER.info("Deleted a Lab Assistant with ID "+studentId);
 		return result.wasAcknowledged();
+	}
+
+	@Override
+	public void updateLA(LabAssistant labAssistant) throws ComputingServicesException {
+		try {
+			// get collection
+			MongoCollection<Document> labAssistantCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+			// create document to save
+			Document laDetailsDocument = new Document();
+			// add stuff to update
+			laDetailsDocument.put(Constants.STATUS.getValue(), labAssistant.getStatus().getValue());
+			laDetailsDocument.put(Constants.COMMENTS.getValue(), labAssistant.getComments());
+	
+			Document command = new Document();
+			command.put("$set", laDetailsDocument);
+			// update lab assistant details
+			labAssistantCollection.updateOne(eq(Constants.STUDENTID.getValue(), labAssistant.getStudentId()), command);
+			LOGGER.info("Updated Lab Assistant with ID "+labAssistant.getStudentId());
+		} catch (Exception e) {
+			LOGGER.error("Error occurred while updating lab assistant "+labAssistant.getStudentId(), e);
+			throw new ComputingServicesException(e.getMessage());
+		}
 	}
 
 }

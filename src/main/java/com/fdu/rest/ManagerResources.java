@@ -74,4 +74,12 @@ public class ManagerResources {
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
+	@POST
+	@Path("/updateLabAssistant")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response updateLabAssistant(@FormDataParam("labAssistant") String labAssistant) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateLabAssistant(labAssistant);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
 }

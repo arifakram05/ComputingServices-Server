@@ -12,6 +12,8 @@ public enum Constants {
 	EDUCATION("education"),
 	RESUME("resume"),
 	STUDENTID("studentId"),
+	STATUS("status"),
+	COMMENTS("comments"),
 
 	// LABSCHEDULE
 	LABSCHEDULEID("labScheduleId"),

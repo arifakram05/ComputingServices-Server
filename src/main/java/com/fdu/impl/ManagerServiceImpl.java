@@ -29,6 +29,7 @@ public class ManagerServiceImpl implements ManagerService {
 		MongoCollection<Document> jobApplicantsCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
 		// query
 		DeleteResult result = jobApplicantsCollection.deleteOne(eq(Constants.STUDENTID.getValue(), studentId));
+		LOGGER.info("Deleted a job applicant with with ID "+studentId);
 		return result.wasAcknowledged();
 	}
 
@@ -58,6 +59,7 @@ public class ManagerServiceImpl implements ManagerService {
 				.append(Constants.EDUCATION.getValue(), labAssistant.getEducation());
 		// query
 		labAssistantsCollection.insertOne(document);
+		LOGGER.info("Saved a new LA with ID "+labAssistant.getStudentId());
 		return true;
 	}
 

@@ -115,4 +115,23 @@ public class ManagerOperationsImpl implements ManagerOperations {
 		return response;
 	}
 
+	@Override
+	public ComputingServicesResponse<Void> updateLabAssistant(String labAssistantDetails) {
+		ComputingServicesResponse<Void> response = null;
+		LabAssistant labAssistant = null;
+		try {
+			LOGGER.info("Preparing to update lab assistant");
+			labAssistant = new ObjectMapper().readValue(labAssistantDetails, LabAssistant.class);
+			LOGGER.info("Updating Lab Assistant " + labAssistant.getStudentId());
+			response = getAssistantServiceInstance().updateLabAssistant(labAssistant);
+			LOGGER.info("Update Lab Assistant success " + labAssistant.getStudentId());
+		} catch (Exception e) {
+			LOGGER.error("Error while updating lab assistant details " + labAssistant.getStudentId(), e);
+			response = new ComputingServicesResponse<>();
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while updating lab assistant with ID "+labAssistant.getStudentId());
+		}
+		return response;
+	}
+
 }
