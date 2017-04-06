@@ -1,5 +1,7 @@
 package com.fdu.interfaces;
 
+import java.util.List;
+
 import com.fdu.exception.ComputingServicesException;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.Role;
@@ -18,7 +20,7 @@ public interface RoleService {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
 			update(role);
-			response.setMessage("Updated role " + role.getRoleName() + " and privileges");
+			response.setMessage("Updated the role - " + role.getRoleName() + " - and its privileges");
 			response.setStatusCode(200);
 		} catch (ComputingServicesException e) {
 			response.setStatusCode(500);
@@ -27,6 +29,20 @@ public interface RoleService {
 		return response;
 	}
 
-	public void update(Role role) throws ComputingServicesException;
+	/**
+	 * Update a given role
+	 * 
+	 * @param role
+	 *            role to update
+	 * @throws ComputingServicesException
+	 */
+	void update(Role role) throws ComputingServicesException;
+
+	/**
+	 * get all the available roles and privileges associated with a role
+	 * 
+	 * @return {@link List} of {@link Role}s
+	 */
+	List<Role> getRoles();
 
 }

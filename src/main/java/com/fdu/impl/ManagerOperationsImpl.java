@@ -174,4 +174,23 @@ public class ManagerOperationsImpl implements ManagerOperations {
 		return response;
 	}
 
+	@Override
+	public ComputingServicesResponse<Role> getRoles() {
+		ComputingServicesResponse<Role> response = new ComputingServicesResponse<>();
+		List<Role> rolesList = null;
+		try {
+			LOGGER.info("Preparing to fetch all roles and privileges");
+			rolesList = getRoleServiceInstance().getRoles();
+			LOGGER.info("All roles successfully retrieved");
+			response.setStatusCode(200);
+			response.setMessage("List of all roles");
+			response.setResponse(rolesList);
+		} catch (Exception e) {
+			LOGGER.error("Error while fetching all roles ", e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred. Could not get roles and privileges list");
+		}
+		return response;
+	}
+
 }

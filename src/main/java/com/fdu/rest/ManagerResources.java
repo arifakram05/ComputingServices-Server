@@ -14,6 +14,7 @@ import com.fdu.interfaces.ManagerOperations;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabAssistant;
+import com.fdu.model.Role;
 import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/admin")
@@ -95,6 +96,13 @@ public class ManagerResources {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response authorizeUser(@FormDataParam("user") String user) {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().authorizeUser(user);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	@GET
+	@Path("/roles")
+	public Response getRoles() {
+		ComputingServicesResponse<Role> response = ManagerOperations.getInstance().getRoles();
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 

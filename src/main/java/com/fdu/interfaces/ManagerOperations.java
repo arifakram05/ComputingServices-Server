@@ -12,6 +12,7 @@ import com.fdu.impl.RoleServiceImpl;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabAssistant;
+import com.fdu.model.Role;
 
 public interface ManagerOperations extends Connection {
 
@@ -76,6 +77,10 @@ public interface ManagerOperations extends Connection {
 	 */
 	ComputingServicesResponse<Void> authorizeUser(String user);
 
+	/*
+	 * Below are related to roles and privileges
+	 */
+
 	/**
 	 * Update a role and privileges
 	 * 
@@ -85,6 +90,13 @@ public interface ManagerOperations extends Connection {
 	 *         the operation
 	 */
 	ComputingServicesResponse<Void> updateRole(String role);
+
+	/**
+	 * Get all roles and privileges associated with the role
+	 * 
+	 * @return a {@link ComputingServicesResponse} containing list of all roles
+	 */
+	ComputingServicesResponse<Role> getRoles();
 
 	/**
 	 * Java 8 feature.<br/>
