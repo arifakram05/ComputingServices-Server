@@ -98,4 +98,12 @@ public class ManagerResources {
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
+	@POST
+	@Path("/updateRole")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response updateRole(@FormDataParam("role") String role) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateRole(role);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
 }

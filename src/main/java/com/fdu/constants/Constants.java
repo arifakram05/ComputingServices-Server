@@ -2,6 +2,9 @@ package com.fdu.constants;
 
 public enum Constants {
 
+	//object id
+	OBJECTID("_id"),
+
 	// LABASSISTANT AND JOBAPPLICANT
 	FIRSTNAME("firstName"),
 	LASTNAME("lastName"),
@@ -32,8 +35,18 @@ public enum Constants {
 	ROLE("role"),
 	PASSWORD("password"),
 
+	//ROLES
+	ROLENAME("roleName"),
+	AVAILABLEPRIVS("availablePrivs"),
+	ASSIGNEDPRIVS("assignedPrivs"),
+
+	//PRIVILEGES
+	NAME("name"),
+	DESCRIPTION("description"),
+
 	// names of collections
 	USERS("users"),
+	ROLES("roles"),
 	LABSCHECULE("labschedule"),
 	LABASSISTANTS("labassistants"),
 	JOBAPPLICANTS("jobapplicants");

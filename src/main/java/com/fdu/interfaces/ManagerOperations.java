@@ -8,6 +8,7 @@ import com.fdu.impl.CareersServiceImpl;
 import com.fdu.impl.GeneralOperationsImpl;
 import com.fdu.impl.ManagerOperationsImpl;
 import com.fdu.impl.ManagerServiceImpl;
+import com.fdu.impl.RoleServiceImpl;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabAssistant;
@@ -76,6 +77,16 @@ public interface ManagerOperations extends Connection {
 	ComputingServicesResponse<Void> authorizeUser(String user);
 
 	/**
+	 * Update a role and privileges
+	 * 
+	 * @param role
+	 *            role and privileges to udpate
+	 * @return a {@link ComputingServicesResponse} containing success status of
+	 *         the operation
+	 */
+	ComputingServicesResponse<Void> updateRole(String role);
+
+	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class
 	 * 
@@ -112,6 +123,13 @@ public interface ManagerOperations extends Connection {
 			instanceMap.put("ManagerService", new ManagerServiceImpl(getDBConnection()));
 		}
 		return (ManagerServiceImpl) instanceMap.get("ManagerService");
+	}
+
+	default RoleService getRoleServiceInstance() {
+		if (instanceMap.get("RoleService") == null) {
+			instanceMap.put("RoleService", new RoleServiceImpl(getDBConnection()));
+		}
+		return (RoleServiceImpl) instanceMap.get("RoleService");
 	}
 
 }
