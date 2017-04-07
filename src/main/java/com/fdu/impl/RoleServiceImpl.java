@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.constants.Constants;
+import com.fdu.exception.ComputingServicesException;
 import com.fdu.interfaces.RoleService;
 import com.fdu.model.Privilege;
 import com.fdu.model.Role;
@@ -31,6 +32,39 @@ public class RoleServiceImpl implements RoleService {
 	public RoleServiceImpl(MongoDatabase database) {
 		super();
 		this.database = database;
+	}
+
+	@Override
+	public void save(Role role) throws ComputingServicesException {
+		// get collection
+		MongoCollection<Document> rolesCollection = database.getCollection(Constants.ROLES.getValue());
+
+		// processing available privileges
+		List<Object> availablePrivsList = new BasicDBList();
+		for (Privilege privilege : role.getAvailablePrivs()) {
+			DBObject privilegeDBObject = new BasicDBObject();
+			privilegeDBObject.put(Constants.NAME.getValue(), privilege.getName());
+			privilegeDBObject.put(Constants.DESCRIPTION.getValue(), privilege.getDescription());
+			availablePrivsList.add(privilegeDBObject);
+		}
+
+		// processing assigned privileges
+		List<Object> assignedPrivsList = new BasicDBList();
+		for (Privilege privilege : role.getAssignedPrivs()) {
+			DBObject privilegeDBObject = new BasicDBObject();
+			privilegeDBObject.put(Constants.NAME.getValue(), privilege.getName());
+			privilegeDBObject.put(Constants.DESCRIPTION.getValue(), privilege.getDescription());
+			assignedPrivsList.add(privilegeDBObject);
+		}
+
+		// construct object to persist
+		BasicDBObject rolesObject = new BasicDBObject();
+		rolesObject.put(Constants.ROLENAME.getValue(), role.getRoleName());
+		rolesObject.put(Constants.AVAILABLEPRIVS.getValue(), availablePrivsList);
+		rolesObject.put(Constants.ASSIGNEDPRIVS.getValue(), assignedPrivsList);
+
+		//query
+		rolesCollection.insertOne(new Document(rolesObject));
 	}
 
 	@Override
@@ -68,7 +102,7 @@ public class RoleServiceImpl implements RoleService {
 
 		// query to update
 		rolesCollection.updateOne(eq(Constants.OBJECTID.getValue(), new ObjectId(role.get_id().toString())), command);
-		LOGGER.info("Updated roles and privilges for the role - "+role.getRoleName());
+		LOGGER.info("Updated roles and privilges for the role - " + role.getRoleName());
 	}
 
 	@Override

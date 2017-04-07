@@ -193,4 +193,23 @@ public class ManagerOperationsImpl implements ManagerOperations {
 		return response;
 	}
 
+	@Override
+	public ComputingServicesResponse<Void> saveRole(String roleDetails) {
+		ComputingServicesResponse<Void> response = null;
+		Role role = null;
+		try {
+			LOGGER.info("Preparing to save role and privileges");
+			role = new ObjectMapper().readValue(roleDetails, Role.class);
+			LOGGER.info("Saving role " + role.getRoleName());
+			response = getRoleServiceInstance().saveRole(role);
+			LOGGER.info("Saving role and privs success " + role.getRoleName());
+		} catch (Exception e) {
+			LOGGER.error("Error while saving role and priv details " + role.getRoleName(), e);
+			response = new ComputingServicesResponse<>();
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while saving role "+role.getRoleName()+" and its privileges");
+		}
+		return response;
+	}
+
 }

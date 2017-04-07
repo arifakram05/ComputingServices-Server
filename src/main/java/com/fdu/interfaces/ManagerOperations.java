@@ -82,6 +82,16 @@ public interface ManagerOperations extends Connection {
 	 */
 
 	/**
+	 * Save a new role and its privileges
+	 * 
+	 * @param role
+	 *            role and privileges to save
+	 * @return a {@link ComputingServicesResponse} containing success status of
+	 *         the operation
+	 */
+	ComputingServicesResponse<Void> saveRole(String role);
+
+	/**
 	 * Update a role and privileges
 	 * 
 	 * @param role

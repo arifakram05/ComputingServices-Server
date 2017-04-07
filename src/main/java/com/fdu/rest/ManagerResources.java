@@ -114,4 +114,12 @@ public class ManagerResources {
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
+	@POST
+	@Path("/saveRole")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response saveRole(@FormDataParam("role") String role) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().saveRole(role);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
 }
