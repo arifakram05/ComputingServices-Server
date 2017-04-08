@@ -212,4 +212,26 @@ public class ManagerOperationsImpl implements ManagerOperations {
 		return response;
 	}
 
+	@Override
+	public ComputingServicesResponse<Void> deleteRole(String roleId) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("Preparing to delete role");
+			if(getRoleServiceInstance().deleteRole(roleId)) {
+				LOGGER.info("Role deleted - "+roleId);
+				response.setStatusCode(200);
+				response.setMessage("Role deleted");
+			} else {
+				LOGGER.warn("Failed to delete the role with id "+roleId);
+				response.setStatusCode(500);
+				response.setMessage("Could not delete the role");
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error while deleting the role "+roleId, e);
+			response.setStatusCode(500);
+			response.setMessage("Failed to delete the role");
+		}
+		return response;
+	}
+
 }

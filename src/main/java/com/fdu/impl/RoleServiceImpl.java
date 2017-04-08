@@ -22,6 +22,7 @@ import com.mongodb.Block;
 import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 
 public class RoleServiceImpl implements RoleService {
 
@@ -63,7 +64,7 @@ public class RoleServiceImpl implements RoleService {
 		rolesObject.put(Constants.AVAILABLEPRIVS.getValue(), availablePrivsList);
 		rolesObject.put(Constants.ASSIGNEDPRIVS.getValue(), assignedPrivsList);
 
-		//query
+		// query
 		rolesCollection.insertOne(new Document(rolesObject));
 	}
 
@@ -126,6 +127,16 @@ public class RoleServiceImpl implements RoleService {
 		rolesCollection.find().forEach(processRetreivedData);
 		LOGGER.info("All roles fetched");
 		return rolesList;
+	}
+
+	@Override
+	public boolean deleteRole(String roleId) {
+		// get collection
+		MongoCollection<Document> rolesCollection = database.getCollection(Constants.ROLES.getValue());
+		// query
+		DeleteResult result = rolesCollection.deleteOne(eq(Constants.OBJECTID.getValue(), new ObjectId(roleId)));
+		LOGGER.info("Deleted role with ID " + roleId);
+		return result.wasAcknowledged();
 	}
 
 }

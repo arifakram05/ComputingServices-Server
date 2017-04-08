@@ -75,4 +75,12 @@ public interface RoleService {
 	 */
 	List<Role> getRoles();
 
+	/**
+	 * Delete a given role
+	 * 
+	 * @param roleId
+	 *            role to delete
+	 * @return boolean value indicating the operation success status
+	 */
+	boolean deleteRole(String roleId);
 }

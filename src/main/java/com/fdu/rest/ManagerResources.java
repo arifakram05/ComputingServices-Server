@@ -122,4 +122,11 @@ public class ManagerResources {
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
+	@DELETE
+	@Path("/deleteRole")
+	public Response deleteRole(@QueryParam("roleId") String roleId) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().deleteRole(roleId);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
 }

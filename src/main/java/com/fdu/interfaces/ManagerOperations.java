@@ -95,7 +95,7 @@ public interface ManagerOperations extends Connection {
 	 * Update a role and privileges
 	 * 
 	 * @param role
-	 *            role and privileges to udpate
+	 *            role and privileges to update
 	 * @return a {@link ComputingServicesResponse} containing success status of
 	 *         the operation
 	 */
@@ -107,6 +107,16 @@ public interface ManagerOperations extends Connection {
 	 * @return a {@link ComputingServicesResponse} containing list of all roles
 	 */
 	ComputingServicesResponse<Role> getRoles();
+
+	/**
+	 * Delete a role
+	 * 
+	 * @param roleId
+	 *            Role Id to delete
+	 * @return a {@link ComputingServicesResponse} containing success status of
+	 *         the operation
+	 */
+	ComputingServicesResponse<Void> deleteRole(String roleId);
 
 	/**
 	 * Java 8 feature.<br/>

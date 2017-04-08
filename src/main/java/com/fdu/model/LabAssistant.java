@@ -21,6 +21,7 @@ public class LabAssistant {
 	private byte[] photo;
 	private String dateApplied;
 	private String dateHired;
+	private String description;
 	
 	public int getStudentId() {
 		return studentId;
@@ -132,6 +133,14 @@ public class LabAssistant {
 
 	public void setDateApplied(String dateApplied) {
 		this.dateApplied = dateApplied;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
