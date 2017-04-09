@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.constants.Constants;
@@ -63,7 +64,7 @@ public class AssistantServiceImpl implements AssistantService {
 		MongoCollection<Document> labAssistantCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
 		// query
 		DeleteResult result = labAssistantCollection.deleteOne(eq(Constants.STUDENTID.getValue(), studentId));
-		LOGGER.info("Deleted a Lab Assistant with ID "+studentId);
+		LOGGER.info("Deleted a Lab Assistant with ID " + studentId);
 		return result.wasAcknowledged();
 	}
 
@@ -71,22 +72,63 @@ public class AssistantServiceImpl implements AssistantService {
 	public void updateLA(LabAssistant labAssistant) throws ComputingServicesException {
 		try {
 			// get collection
-			MongoCollection<Document> labAssistantCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+			MongoCollection<Document> labAssistantCollection = database
+					.getCollection(Constants.LABASSISTANTS.getValue());
 			// create document to save
 			Document laDetailsDocument = new Document();
 			// add stuff to update
 			laDetailsDocument.put(Constants.STATUS.getValue(), labAssistant.getStatus().getValue());
 			laDetailsDocument.put(Constants.COMMENTS.getValue(), labAssistant.getComments());
-	
+
 			Document command = new Document();
 			command.put("$set", laDetailsDocument);
 			// update lab assistant details
 			labAssistantCollection.updateOne(eq(Constants.STUDENTID.getValue(), labAssistant.getStudentId()), command);
-			LOGGER.info("Updated Lab Assistant with ID "+labAssistant.getStudentId());
+			LOGGER.info("Updated Lab Assistant with ID " + labAssistant.getStudentId());
 		} catch (Exception e) {
-			LOGGER.error("Error occurred while updating lab assistant "+labAssistant.getStudentId(), e);
+			LOGGER.error("Error occurred while updating lab assistant " + labAssistant.getStudentId(), e);
 			throw new ComputingServicesException(e.getMessage());
 		}
+	}
+
+	@Override
+	public void updateLAProfile(LabAssistant labAssistant)
+			throws ComputingServicesException {
+		// get collection
+		MongoCollection<Document> laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+
+		Document laDocument = new Document();
+
+		if (labAssistant.getEducation() != null) {
+			laDocument.put(Constants.EDUCATION.getValue(), labAssistant.getEducation());
+		}
+		if (labAssistant.getSpecialization() != null) {
+			laDocument.put(Constants.SPECIALIZATION.getValue(), labAssistant.getSpecialization());
+		}
+		if (labAssistant.getProfileLink() != null) {
+			laDocument.put(Constants.PROFILELINK.getValue(), labAssistant.getProfileLink());
+		}
+		if (labAssistant.getPhone() != null) {
+			laDocument.put(Constants.PHONE.getValue(), labAssistant.getPhone());
+		}
+		if (labAssistant.getDescription() != null) {
+			laDocument.put(Constants.DESCRIPTION.getValue(), labAssistant.getDescription());
+		}
+		if (labAssistant.getResume() != null) {
+			laDocument.put(Constants.RESUME.getValue(), labAssistant.getResume());
+		}
+		if (labAssistant.getPhoto() != null) {
+			laDocument.put(Constants.PHOTO.getValue(), labAssistant.getPhoto());
+		}
+
+		Document command = new Document();
+		command.put("$set", laDocument);
+
+		// query to update
+		laCollection.updateOne(eq(Constants.OBJECTID.getValue(), new ObjectId(labAssistant.get_id().toString())),
+				command);
+		LOGGER.info(
+				"Updated lab assistant profile - " + labAssistant.getLastName() + "," + labAssistant.getFirstName());
 	}
 
 }

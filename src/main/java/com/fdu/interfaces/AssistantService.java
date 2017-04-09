@@ -41,11 +41,12 @@ public interface AssistantService {
 		try {
 			updateLA(labAssistant);
 			response.setStatusCode(200);
-			response.setMessage("Successfully updated details for lab assistant with ID "+labAssistant.getStudentId());
+			response.setMessage(
+					"Successfully updated details for lab assistant with ID " + labAssistant.getStudentId());
 		} catch (ComputingServicesException e) {
-			LOGGER.error("Error occurred while updating lab assistant "+labAssistant.getStudentId(), e);
+			LOGGER.error("Error occurred while updating lab assistant " + labAssistant.getStudentId(), e);
 			response.setStatusCode(500);
-			response.setMessage("Error occurred while updating lab assistant with ID "+labAssistant.getStudentId());
+			response.setMessage("Error occurred while updating lab assistant with ID " + labAssistant.getStudentId());
 		}
 		return response;
 	}
@@ -58,5 +59,16 @@ public interface AssistantService {
 	 * 
 	 */
 	void updateLA(LabAssistant labAssistant) throws ComputingServicesException;
+
+	/**
+	 * Update a given lab assistant's profile
+	 * 
+	 * @param labAssistant
+	 *            lab assistant details to update
+	 * @return {@link ComputingServicesResponse} containing success status of
+	 *         the operation
+	 */
+	void updateLAProfile(LabAssistant labAssistant)
+			throws ComputingServicesException;
 
 }

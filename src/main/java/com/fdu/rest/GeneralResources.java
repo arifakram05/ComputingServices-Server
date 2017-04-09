@@ -50,4 +50,5 @@ public class GeneralResources {
 		ComputingServicesResponse<Void> response = GeneralOperations.getInstance().careers(application, resume);
 		return response;
 	}
+
 }
