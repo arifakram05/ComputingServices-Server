@@ -10,4 +10,6 @@ public interface ScheduleService {
 
 	void saveLabSchedule(List<LabSchedule> labschedule);
 
+	void updateLabSchedule(LabSchedule labschedule);
+
 }

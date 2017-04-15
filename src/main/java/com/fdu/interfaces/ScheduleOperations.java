@@ -24,6 +24,8 @@ public interface ScheduleOperations extends Connection {
 
 	ComputingServicesResponse<LabSchedule> getLabSchedule();
 
+	ComputingServicesResponse<Void> updateLabSchedule(String labschedule);
+
 	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class

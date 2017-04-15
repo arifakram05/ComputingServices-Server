@@ -26,7 +26,7 @@ public class ScheduleOperationsImpl implements ScheduleOperations {
 			getScheduleServiceInstance().saveLabSchedule(labschedule);
 			response.setStatusCode(200);
 			response.setMessage("Lab Schedule Saved");
-			LOGGER.info("Saving lab schedule success " + labscheduleDetails.toString());
+			LOGGER.info("Saving lab schedule success " + labschedule.toString());
 		} catch (Exception e) {
 			LOGGER.error("Error while saving lab schedule details " + labschedule.toString(), e);
 			response.setStatusCode(500);
@@ -50,6 +50,26 @@ public class ScheduleOperationsImpl implements ScheduleOperations {
 			LOGGER.error("Error while fetching lab schedule ", e);
 			response.setStatusCode(500);
 			response.setMessage("Error occurred. Could not get lab schedule");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> updateLabSchedule(String labscheduleDetails) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		LabSchedule labschedule = null;
+		try {
+			LOGGER.info("Preparing to update an event on lab schedule");
+			labschedule = new ObjectMapper().readValue(labscheduleDetails, LabSchedule.class);
+			LOGGER.info("Updating the event " + labschedule.toString());
+			getScheduleServiceInstance().updateLabSchedule(labschedule);
+			response.setStatusCode(200);
+			response.setMessage("Lab Schedule Updated");
+			LOGGER.info("Updating lab schedule success " + labschedule.toString());
+		} catch (Exception e) {
+			LOGGER.error("Error while updating lab schedule details " + labschedule.toString(), e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while updating lab schedule");
 		}
 		return response;
 	}

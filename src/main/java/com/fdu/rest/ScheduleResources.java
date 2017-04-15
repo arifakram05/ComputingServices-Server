@@ -40,7 +40,7 @@ public class ScheduleResources {
 	}
 
 	/**
-	 * get all events hapenning in a lab
+	 * get all events happening in a lab
 	 * 
 	 * @return {@link ComputingServicesResponse} containing {@link LabSchedule}
 	 */
@@ -48,6 +48,22 @@ public class ScheduleResources {
 	@Path("/fetch")
 	public Response getLabSchedule() {
 		ComputingServicesResponse<LabSchedule> response = ScheduleOperations.getInstance().getLabSchedule();
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	/**
+	 * update an event on the lab calendar
+	 * 
+	 * @param labschedule
+	 *            event to udpate
+	 * @return {@link ComputingServicesResponse} containing operation status
+	 *         details
+	 */
+	@POST
+	@Path("/update")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response updateLabSchedule(@FormDataParam("labschedule") String labschedule) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().updateLabSchedule(labschedule);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 

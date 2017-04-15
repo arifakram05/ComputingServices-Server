@@ -1,5 +1,7 @@
 package com.fdu.impl;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.constants.Constants;
@@ -74,6 +77,28 @@ public class ScheduleServiceImpl implements ScheduleService {
 		labscheduleCollection.find().forEach(processRetreivedData);
 		LOGGER.info("Lab Schedule Fetched");
 		return labschedule;
+	}
+
+	@Override
+	public void updateLabSchedule(LabSchedule labschedule) {
+		// get collection
+		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		// set data
+		Document document = new Document();
+		document.append(Constants.LABNAME.getValue(), labschedule.getLabName());
+		document.append(Constants.START.getValue(), labschedule.getStart());
+		document.append(Constants.END.getValue(), labschedule.getEnd());
+		document.append(Constants.ALLDAY.getValue(), labschedule.isAllDay());
+		document.append(Constants.PROFESSOR.getValue(), labschedule.getProfessor());
+		document.append(Constants.TITLE.getValue(), labschedule.getTitle());
+		document.append(Constants.BGCOLOR.getValue(), labschedule.getBackgroundColor());
+		document.append(Constants.GROUPID.getValue(), labschedule.getGroupId());
+		// command
+		Document command = new Document();
+		command.put("$set", document);
+		// query to update
+		labscheduleCollection.updateOne(eq(Constants.OBJECTID.getValue(), new ObjectId(labschedule.get_id().toString())), command);
+		LOGGER.info("Updated lab schedule");
 	}
 
 }
