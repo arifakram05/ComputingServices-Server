@@ -4,96 +4,87 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LabSchedule {
-	
-	private int labScheduleId;
-	private byte campus;
-	private byte lab;
-	private String startDate;
-	private String endDate;
-	private String startTime;
-	private String endTime;
-	private boolean isRecurring;
-	private String profName;
-	private String subject;
-	
-	public int getLabScheduleId() {
-		return labScheduleId;
+
+	private Object _id;
+	private String groupId;
+	private String labName;
+	private String start;
+	private String end;
+	private boolean allDay;
+	private String professor;
+	private String title;
+	private String backgroundColor;
+
+	public Object get_id() {
+		return _id;
 	}
-	
-	public void setLabScheduleId(int labScheduleId) {
-		this.labScheduleId = labScheduleId;
+
+	public void set_id(Object _id) {
+		this._id = _id;
 	}
-	
-	public byte getCampus() {
-		return campus;
+
+	public String getGroupId() {
+		return groupId;
 	}
-	
-	public void setCampus(byte campus) {
-		this.campus = campus;
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
 	}
-	
-	public byte getLab() {
-		return lab;
+
+	public String getLabName() {
+		return labName;
 	}
-	
-	public void setLab(byte lab) {
-		this.lab = lab;
+
+	public void setLabName(String labName) {
+		this.labName = labName;
 	}
-	
-	public String getStartDate() {
-		return startDate;
+
+	public String getStart() {
+		return start;
 	}
-	
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+
+	public void setStart(String start) {
+		this.start = start;
 	}
-	
-	public String getEndDate() {
-		return endDate;
+
+	public String getEnd() {
+		return end;
 	}
-	
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+
+	public void setEnd(String end) {
+		this.end = end;
 	}
-	
-	public String getStartTime() {
-		return startTime;
+
+	public boolean isAllDay() {
+		return allDay;
 	}
-	
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
+
+	public void setAllDay(boolean allDay) {
+		this.allDay = allDay;
 	}
-	
-	public String getEndTime() {
-		return endTime;
+
+	public String getProfessor() {
+		return professor;
 	}
-	
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+
+	public void setProfessor(String professor) {
+		this.professor = professor;
 	}
-	
-	public boolean isRecurring() {
-		return isRecurring;
+
+	public String getTitle() {
+		return title;
 	}
-	
-	public void setRecurring(boolean isRecurring) {
-		this.isRecurring = isRecurring;
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	
-	public String getProfName() {
-		return profName;
+
+	public String getBackgroundColor() {
+		return backgroundColor;
 	}
-	
-	public void setProfName(String profName) {
-		this.profName = profName;
+
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
 	}
-	
-	public String getSubject() {
-		return subject;
-	}
-	
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-	
+
 }

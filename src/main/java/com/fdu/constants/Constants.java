@@ -22,16 +22,14 @@ public enum Constants {
 	COMMENTS("comments"),
 
 	// LABSCHEDULE
-	LABSCHEDULEID("labScheduleId"),
-	CAMPUS("campus"),
-	LAB("lab"),
-	STARTDATE("startDate"),
-	ENDDATE("endDate"),
-	STARTTIME("startTime"),
-	ENDTIME("endTime"),
-	ISRECURRING("isRecurring"),
-	PROFESSORNAME("profName"),
-	SUBJECT("subject"),
+	GROUPID("groupId"),
+	LABNAME("labName"),
+	START("start"),
+	END("end"),
+	ALLDAY("allDay"),
+	PROFESSOR("professor"),
+	TITLE("title"),
+	BGCOLOR("backgroundColor"),
 
 	//USERS
 	USERID("userId"),
