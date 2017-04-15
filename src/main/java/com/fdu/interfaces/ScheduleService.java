@@ -6,6 +6,8 @@ import com.fdu.model.LabSchedule;
 
 public interface ScheduleService {
 
+	List<LabSchedule> getLabSchedule();
+
 	void saveLabSchedule(List<LabSchedule> labschedule);
 
 }

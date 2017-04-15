@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.fdu.impl.ScheduleOperationsImpl;
 import com.fdu.impl.ScheduleServiceImpl;
 import com.fdu.model.ComputingServicesResponse;
+import com.fdu.model.LabSchedule;
 
 public interface ScheduleOperations extends Connection {
 
@@ -20,6 +21,8 @@ public interface ScheduleOperations extends Connection {
 	 *         the operation
 	 */
 	ComputingServicesResponse<Void> saveLabSchedule(String labschedule);
+
+	ComputingServicesResponse<LabSchedule> getLabSchedule();
 
 	/**
 	 * Java 8 feature.<br/>

@@ -1,6 +1,7 @@
 package com.fdu.rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -9,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import com.fdu.interfaces.ScheduleOperations;
 import com.fdu.model.ComputingServicesResponse;
+import com.fdu.model.LabSchedule;
 import com.sun.jersey.multipart.FormDataParam;
 
 /**
@@ -26,7 +28,8 @@ public class ScheduleResources {
 	 * 
 	 * @param labschedule
 	 *            schedule to save
-	 * @return {@link ComputingServicesResponse} containing operation status details
+	 * @return {@link ComputingServicesResponse} containing operation status
+	 *         details
 	 */
 	@POST
 	@Path("/save")
@@ -35,4 +38,17 @@ public class ScheduleResources {
 		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().saveLabSchedule(labschedule);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
+
+	/**
+	 * get all events hapenning in a lab
+	 * 
+	 * @return {@link ComputingServicesResponse} containing {@link LabSchedule}
+	 */
+	@GET
+	@Path("/fetch")
+	public Response getLabSchedule() {
+		ComputingServicesResponse<LabSchedule> response = ScheduleOperations.getInstance().getLabSchedule();
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
 }

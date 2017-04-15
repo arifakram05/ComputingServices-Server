@@ -35,4 +35,23 @@ public class ScheduleOperationsImpl implements ScheduleOperations {
 		return response;
 	}
 
+	@Override
+	public ComputingServicesResponse<LabSchedule> getLabSchedule() {
+		ComputingServicesResponse<LabSchedule> response = new ComputingServicesResponse<>();
+		List<LabSchedule> labschedule = null;
+		try {
+			LOGGER.info("Preparing to fetch events hapenning in a lab");
+			labschedule = getScheduleServiceInstance().getLabSchedule();
+			LOGGER.info("Lab Schedule successfully retrieved");
+			response.setStatusCode(200);
+			response.setMessage("Lab Schedule");
+			response.setResponse(labschedule);
+		} catch (Exception e) {
+			LOGGER.error("Error while fetching lab schedule ", e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred. Could not get lab schedule");
+		}
+		return response;
+	}
+
 }
