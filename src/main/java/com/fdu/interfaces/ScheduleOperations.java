@@ -26,6 +26,12 @@ public interface ScheduleOperations extends Connection {
 
 	ComputingServicesResponse<Void> updateLabSchedule(String labschedule);
 
+	ComputingServicesResponse<Void> updateManyEvents(String labschedule);
+
+	ComputingServicesResponse<Void> deleteLabSchedule(String eventId);
+
+	ComputingServicesResponse<Void> deleteManyEvents(String groupId);
+
 	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class

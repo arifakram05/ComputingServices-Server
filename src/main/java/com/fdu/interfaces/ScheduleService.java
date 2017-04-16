@@ -12,4 +12,10 @@ public interface ScheduleService {
 
 	void updateLabSchedule(LabSchedule labschedule);
 
+	void updateManyEvents(LabSchedule labschedule);
+
+	void deleteLabSchedule(String eventId);
+
+	void deleteManyEvents(String groupId);
+
 }

@@ -74,4 +74,58 @@ public class ScheduleOperationsImpl implements ScheduleOperations {
 		return response;
 	}
 
+	@Override
+	public ComputingServicesResponse<Void> updateManyEvents(String labscheduleDetails) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		LabSchedule labschedule = null;
+		try {
+			LOGGER.info("Preparing to update all related events");
+			labschedule = new ObjectMapper().readValue(labscheduleDetails, LabSchedule.class);
+			LOGGER.info("Updating all related events " + labschedule.toString());
+			getScheduleServiceInstance().updateManyEvents(labschedule);
+			response.setStatusCode(200);
+			response.setMessage("All events updated");
+			LOGGER.info("Updating all events on lab calendar success " + labschedule.toString());
+		} catch (Exception e) {
+			LOGGER.error("Error while updating all events on lab schedule " + labschedule.toString(), e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while updating all events on the calendar");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> deleteLabSchedule(String eventId) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("Preparing to delete an event from lab calendar");
+			getScheduleServiceInstance().deleteLabSchedule(eventId);
+			LOGGER.info("Event to deleted - "+eventId);
+			response.setStatusCode(200);
+			response.setMessage("Deleted");			
+		} catch (Exception e) {
+			LOGGER.error("Error while deleting event from lab calendar "+eventId, e);
+			response.setStatusCode(500);
+			response.setMessage("Failed to delete event from lab calendar");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> deleteManyEvents(String groupId) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("Preparing to delete multiple events from lab calendar");
+			getScheduleServiceInstance().deleteManyEvents(groupId);
+			LOGGER.info("Group Events to deleted - "+groupId);
+			response.setStatusCode(200);
+			response.setMessage("Deleted");			
+		} catch (Exception e) {
+			LOGGER.error("Error while deleting many events from lab calendar "+groupId, e);
+			response.setStatusCode(500);
+			response.setMessage("Failed to delete events from lab calendar");
+		}
+		return response;
+	}
+
 }

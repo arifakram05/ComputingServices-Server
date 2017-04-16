@@ -83,6 +83,24 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public void updateLabSchedule(LabSchedule labschedule) {
 		// get collection
 		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		// query to update
+		labscheduleCollection.updateOne(
+				eq(Constants.OBJECTID.getValue(), new ObjectId(labschedule.get_id().toString())),
+				createDataToUpdate(labschedule));
+		LOGGER.info("Updated lab schedule");
+	}
+
+	@Override
+	public void updateManyEvents(LabSchedule labschedule) {
+		// get collection
+		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		// query to update
+		labscheduleCollection.updateMany(eq(Constants.GROUPID.getValue(), labschedule.getGroupId()),
+				createDataToUpdate(labschedule));
+		LOGGER.info("Updated all related events on the lab schedule");
+	}
+
+	private Document createDataToUpdate(LabSchedule labschedule) {
 		// set data
 		Document document = new Document();
 		document.append(Constants.LABNAME.getValue(), labschedule.getLabName());
@@ -96,9 +114,26 @@ public class ScheduleServiceImpl implements ScheduleService {
 		// command
 		Document command = new Document();
 		command.put("$set", document);
-		// query to update
-		labscheduleCollection.updateOne(eq(Constants.OBJECTID.getValue(), new ObjectId(labschedule.get_id().toString())), command);
-		LOGGER.info("Updated lab schedule");
+
+		return command;
+	}
+
+	@Override
+	public void deleteLabSchedule(String eventId) {
+		// get collection
+		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		// query
+		labscheduleCollection.deleteOne(eq(Constants.OBJECTID.getValue(), new ObjectId(eventId)));
+		LOGGER.info("Deleted event with ID " + eventId);
+	}
+
+	@Override
+	public void deleteManyEvents(String groupId) {
+		// get collection
+		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		// query
+		labscheduleCollection.deleteMany(eq(Constants.GROUPID.getValue(), groupId));
+		LOGGER.info("Deleted all events of group " + groupId);
 	}
 
 }

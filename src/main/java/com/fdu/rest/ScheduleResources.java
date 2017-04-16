@@ -1,10 +1,12 @@
 package com.fdu.rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -64,6 +66,52 @@ public class ScheduleResources {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response updateLabSchedule(@FormDataParam("labschedule") String labschedule) {
 		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().updateLabSchedule(labschedule);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	/**
+	 * update all related events
+	 * 
+	 * @param labschedule
+	 *            event to update
+	 * @return {@link ComputingServicesResponse} containing operation status
+	 *         details
+	 */
+	@POST
+	@Path("/update-all")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response updateManyEvents(@FormDataParam("labschedule") String labschedule) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().updateManyEvents(labschedule);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	/**
+	 * delete an event from lab calendar
+	 * 
+	 * @param eventId
+	 *            event to delete
+	 * @return {@link ComputingServicesResponse} containing operation status
+	 *         details
+	 */
+	@DELETE
+	@Path("/delete")
+	public Response deleteLabSchedule(@QueryParam("eventId") String eventId) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().deleteLabSchedule(eventId);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	/**
+	 * delete all related events from lab calendar
+	 * 
+	 * @param groupId
+	 *            group of events to delete
+	 * @return {@link ComputingServicesResponse} containing operation status
+	 *         details
+	 */
+	@DELETE
+	@Path("/delete-all")
+	public Response deleteManyEvents(@QueryParam("groupId") String groupId) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().deleteManyEvents(groupId);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
