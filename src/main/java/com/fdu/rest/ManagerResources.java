@@ -9,7 +9,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import com.fdu.constants.Constants;
 import com.fdu.interfaces.ManagerOperations;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
@@ -87,9 +89,10 @@ public class ManagerResources {
 	@Path("/download")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public Response download(@QueryParam("studentId") int studentId) {
-		//ComputingServicesResponse<Object> response = ManagerOperations.getInstance().download(studentId);
-		Object response = ManagerOperations.getInstance().download(studentId);
-		return Response.status(200).entity(response).build();
+		Object data = ManagerOperations.getInstance().download(studentId);
+		// TODO: get file extension from database
+		String fileName = new StringBuilder().append(String.valueOf(studentId)).append(".pdf").toString();
+		return Response.status(Status.OK).header(Constants.FILENAME.getValue(), fileName).entity(data).build();
 	}
 
 	/**

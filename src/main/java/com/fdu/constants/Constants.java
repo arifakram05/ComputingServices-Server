@@ -4,6 +4,8 @@ public enum Constants {
 
 	//object id
 	OBJECTID("_id"),
+	//file name
+	FILENAME("filename"),
 
 	// LABASSISTANT AND JOBAPPLICANT
 	FIRSTNAME("firstName"),

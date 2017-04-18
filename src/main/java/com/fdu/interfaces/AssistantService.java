@@ -1,5 +1,6 @@
 package com.fdu.interfaces;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -71,6 +72,6 @@ public interface AssistantService {
 	void updateLAProfile(LabAssistant labAssistant)
 			throws ComputingServicesException;
 
-	Object download(int studentId);
+	Object download(int studentId) throws IOException;
 
 }

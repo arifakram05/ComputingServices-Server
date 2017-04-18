@@ -236,18 +236,12 @@ public class ManagerOperationsImpl implements ManagerOperations {
 
 	@Override
 	public Object download(int studentId) {
-		ComputingServicesResponse<Object> response = new ComputingServicesResponse<>();
 		Object data = null;
 		try {
 			LOGGER.info("Preparing to download file for "+studentId);
 			data = getAssistantServiceInstance().download(studentId);
-			/*response.setStatusCode(500);
-			response.setMessage("Could not delete the role");
-			response.setResponse(data);*/
 		} catch (Exception e) {
 			LOGGER.error("Error while downloading file for "+studentId, e);
-			response.setStatusCode(500);
-			response.setMessage("Failed to download the file");
 		}
 		return data;
 	}

@@ -136,26 +136,22 @@ public class AssistantServiceImpl implements AssistantService {
 	}
 
 	@Override
-	public Object download(int studentId) {
+	public Object download(int studentId) throws IOException {
+		InputStream inputStream = null;
 		// get collection
 		MongoCollection<Document> laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
 		// query
 		Object[] result = laCollection.find(eq(Constants.STUDENTID.getValue(), studentId))
 				.projection(Projections.include(Constants.RESUME.getValue())).first().values().toArray();
-		Object data = result[1];
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		InputStream is = null;
-		try {
+		if (result[1] != null) {
+			LOGGER.info("Binary data exists and obtained for " + studentId);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(baos);
-			oos.writeObject(data);
-			is = new ByteArrayInputStream(baos.toByteArray());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			oos.writeObject(result[1]);
+			inputStream = new ByteArrayInputStream(baos.toByteArray());
 		}
-
-		LOGGER.info("Download complete");
-		return is;
+		LOGGER.info("Download operation complete");
+		return inputStream;
 	}
 
 }
