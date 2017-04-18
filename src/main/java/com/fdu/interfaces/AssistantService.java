@@ -71,4 +71,6 @@ public interface AssistantService {
 	void updateLAProfile(LabAssistant labAssistant)
 			throws ComputingServicesException;
 
+	Object download(int studentId);
+
 }

@@ -5,7 +5,11 @@ import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Sorts.ascending;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +25,7 @@ import com.fdu.model.LabAssistant;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.result.DeleteResult;
 
 public class AssistantServiceImpl implements AssistantService {
@@ -92,8 +97,7 @@ public class AssistantServiceImpl implements AssistantService {
 	}
 
 	@Override
-	public void updateLAProfile(LabAssistant labAssistant)
-			throws ComputingServicesException {
+	public void updateLAProfile(LabAssistant labAssistant) throws ComputingServicesException {
 		// get collection
 		MongoCollection<Document> laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
 
@@ -129,6 +133,29 @@ public class AssistantServiceImpl implements AssistantService {
 				command);
 		LOGGER.info(
 				"Updated lab assistant profile - " + labAssistant.getLastName() + "," + labAssistant.getFirstName());
+	}
+
+	@Override
+	public Object download(int studentId) {
+		// get collection
+		MongoCollection<Document> laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+		// query
+		Object[] result = laCollection.find(eq(Constants.STUDENTID.getValue(), studentId))
+				.projection(Projections.include(Constants.RESUME.getValue())).first().values().toArray();
+		Object data = result[1];
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		InputStream is = null;
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(data);
+			is = new ByteArrayInputStream(baos.toByteArray());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		LOGGER.info("Download complete");
+		return is;
 	}
 
 }

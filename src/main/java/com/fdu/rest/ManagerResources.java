@@ -83,6 +83,15 @@ public class ManagerResources {
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
+	@POST
+	@Path("/download")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public Response download(@QueryParam("studentId") int studentId) {
+		//ComputingServicesResponse<Object> response = ManagerOperations.getInstance().download(studentId);
+		Object response = ManagerOperations.getInstance().download(studentId);
+		return Response.status(200).entity(response).build();
+	}
+
 	/**
 	 * Authorize a user such that he/she can register and start using this
 	 * system

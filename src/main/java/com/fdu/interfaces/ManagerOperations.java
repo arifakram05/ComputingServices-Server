@@ -118,6 +118,8 @@ public interface ManagerOperations extends Connection {
 	 */
 	ComputingServicesResponse<Void> deleteRole(String roleId);
 
+	Object download(int studentId);
+
 	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class
