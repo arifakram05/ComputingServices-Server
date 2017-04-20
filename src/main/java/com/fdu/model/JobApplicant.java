@@ -17,6 +17,7 @@ public class JobApplicant {
 	private String phone;
 	private String education;
 	private byte[] resume;
+	private String resumeExtn;
 	private int studentId;
 	private String dateApplied;
 
@@ -82,6 +83,14 @@ public class JobApplicant {
 
 	public void setDateApplied(String dateApplied) {
 		this.dateApplied = dateApplied;
+	}
+
+	public String getResumeExtn() {
+		return resumeExtn;
+	}
+
+	public void setResumeExtn(String resumeExtn) {
+		this.resumeExtn = resumeExtn;
 	}
 
 }
