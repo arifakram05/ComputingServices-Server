@@ -37,7 +37,7 @@ public interface LoginService {
 		// 1. validate the input
 		try {
 			LOGGER.debug("Validating input for user login");
-			validateInput(user.getUserId());
+			validateInput(Long.parseLong(user.getUserId()));
 			LOGGER.debug("Input validated - OK. Proceeding with login");
 		} catch (ComputingServicesException e) {
 			LOGGER.error("User Input Not Valid : " + user.getUserId(), e);
@@ -57,7 +57,7 @@ public interface LoginService {
 		User userDetails = getUserDetails(user);
 		if (userDetails != null) {
 			LOGGER.debug("Associate login success "+user.getUserId());
-			String authToken = SecureLogin.createJWT(user.getUserId(), -1);
+			String authToken = SecureLogin.createJWT(Long.parseLong(user.getUserId()), -1);
 			LOGGER.debug("JWT Token generated for User. User is granted system access");
 			// construct response with Associate details and JWT token
 			response.setAuthToken(authToken);

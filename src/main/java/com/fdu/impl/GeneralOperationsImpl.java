@@ -70,4 +70,26 @@ public class GeneralOperationsImpl implements GeneralOperations {
 		return response;
 	}
 
+	@Override
+	public ComputingServicesResponse<Void> canUserRegister(String userId) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("Preparing to check if a user can register "+userId);
+			response = getRegisterServiceInstance().canUserRegister(userId);
+			if (response.getStatusCode() == 200) {
+				response.setMessage("You are authorized to register");
+			} else if (response.getStatusCode() == 403) {
+				response.setMessage("You are not is not authorized to register. Please contact Lab Assistant or Lab Manager");
+			} else if (response.getStatusCode() == 404) {
+				response.setMessage("This ID not authorized to regsiter. If you are hired recently as a Lab Assistant, please contact Lab Manager");
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error occurred while verifying ", e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while verifying. Please contact Lab Assistant or Lab Manager");
+		}
+		LOGGER.info("User Registration check for complete for "+userId);
+		return response;
+	}
+
 }

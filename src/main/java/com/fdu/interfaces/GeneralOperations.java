@@ -33,6 +33,8 @@ public interface GeneralOperations extends Connection {
 	 */
 	ComputingServicesResponse<Void> register(String userDetails);
 
+	ComputingServicesResponse<Void> canUserRegister(String userId);
+
 	/**
 	 * Apply for a job as a lab assistant
 	 * 

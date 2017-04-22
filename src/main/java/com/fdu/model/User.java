@@ -5,18 +5,18 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
-	private Long userId;
+	private String userId;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
 	private String role;
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

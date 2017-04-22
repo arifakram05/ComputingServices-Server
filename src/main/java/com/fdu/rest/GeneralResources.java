@@ -3,9 +3,11 @@ package com.fdu.rest;
 import java.io.InputStream;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.fdu.interfaces.GeneralOperations;
@@ -38,6 +40,13 @@ public class GeneralResources {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public ComputingServicesResponse<Void> register(@FormDataParam("userDetails") String userDetails) {
 		ComputingServicesResponse<Void> response = GeneralOperations.getInstance().register(userDetails);
+		return response;
+	}
+
+	@GET
+	@Path("/check")
+	public ComputingServicesResponse<Void> canUserRegister(@QueryParam("userId") String userId) {
+		ComputingServicesResponse<Void> response = GeneralOperations.getInstance().canUserRegister(userId);
 		return response;
 	}
 
