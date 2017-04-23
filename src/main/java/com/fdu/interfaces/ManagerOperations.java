@@ -55,7 +55,7 @@ public interface ManagerOperations extends Connection {
 	 * @return a {@link ComputingServicesResponse} containing success status of
 	 *         the operation
 	 */
-	ComputingServicesResponse<Void> deleteLabAssistant(int studentId);
+	ComputingServicesResponse<Void> deleteLabAssistant(String studentId);
 
 	/**
 	 * Update the details of a given lab assistant

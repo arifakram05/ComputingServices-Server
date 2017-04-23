@@ -27,7 +27,7 @@ public interface AssistantService {
 	 *            LA to be deleted
 	 * @return boolean indicating the success status of the operation
 	 */
-	boolean deleteLabAssistant(int studentId);
+	boolean deleteLabAssistant(String studentId);
 
 	/**
 	 * Update a given lab assistant

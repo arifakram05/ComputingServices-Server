@@ -18,7 +18,7 @@ public class JobApplicant {
 	private String education;
 	private byte[] resume;
 	private String resumeExtn;
-	private int studentId;
+	private String studentId;
 	private String dateApplied;
 
 	public String getFirstName() {
@@ -69,11 +69,11 @@ public class JobApplicant {
 		this.resume = resume;
 	}
 
-	public int getStudentId() {
+	public String getStudentId() {
 		return studentId;
 	}
 
-	public void setStudentId(int studentId) {
+	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
 

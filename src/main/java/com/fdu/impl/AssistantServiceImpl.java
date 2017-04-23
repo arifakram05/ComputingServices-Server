@@ -64,7 +64,7 @@ public class AssistantServiceImpl implements AssistantService {
 	}
 
 	@Override
-	public boolean deleteLabAssistant(int studentId) {
+	public boolean deleteLabAssistant(String studentId) {
 		// get collection
 		MongoCollection<Document> labAssistantCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
 		// query

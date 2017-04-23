@@ -72,7 +72,7 @@ public class ManagerResources {
 
 	@DELETE
 	@Path("/deleteLabAssistant")
-	public Response deleteLabAssistant(@QueryParam("studentId") int studentId) {
+	public Response deleteLabAssistant(@QueryParam("studentId") String studentId) {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().deleteLabAssistant(studentId);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}

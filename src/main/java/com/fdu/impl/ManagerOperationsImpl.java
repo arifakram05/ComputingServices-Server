@@ -96,7 +96,7 @@ public class ManagerOperationsImpl implements ManagerOperations {
 	}
 
 	@Override
-	public ComputingServicesResponse<Void> deleteLabAssistant(int studentId) {
+	public ComputingServicesResponse<Void> deleteLabAssistant(String studentId) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
 			LOGGER.info("Preparing to delete lab assistant");
