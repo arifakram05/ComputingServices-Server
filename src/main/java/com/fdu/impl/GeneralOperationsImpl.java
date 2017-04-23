@@ -47,7 +47,7 @@ public class GeneralOperationsImpl implements GeneralOperations {
 			LOGGER.error("Error while registering new user " + user.getUserId(), e);
 			response = new ComputingServicesResponse<>();
 			response.setStatusCode(500);
-			response.setMessage("Error Occurred while registering you");
+			response.setMessage("Error occurred while registering you. Please contact Lab Manager");
 		}
 		return response;
 	}
@@ -78,11 +78,11 @@ public class GeneralOperationsImpl implements GeneralOperations {
 			LOGGER.info("Preparing to check if a user can register "+userId);
 			response = getRegisterServiceInstance().canUserRegister(userId);
 			if (response.getStatusCode() == 200) {
-				response.setMessage("You are authorized to register");
+				response.setMessage("You are authorized to register, please continue");
 			} else if (response.getStatusCode() == 403) {
-				response.setMessage("You are not is not authorized to register. Please contact Lab Assistant or Lab Manager");
+				response.setMessage("You are not authorized to register. Please contact Lab Assistant or Lab Manager");
 			} else if (response.getStatusCode() == 404) {
-				response.setMessage("This ID not authorized to regsiter. If you are hired recently as a Lab Assistant, please contact Lab Manager");
+				response.setMessage("You are already registered, please continue to login");
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error occurred while verifying ", e);

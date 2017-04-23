@@ -1,5 +1,7 @@
 package com.fdu.impl;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -11,6 +13,7 @@ import com.fdu.exception.ComputingServicesException;
 import com.fdu.interfaces.RegisterService;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.User;
+import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -29,8 +32,22 @@ public class RegisterServiceImpl implements RegisterService {
 
 	@Override
 	public void register(User user) throws ComputingServicesException {
-		// TODO Auto-generated method stub
-		
+		// get collection
+		MongoCollection<Document> usersCollection = database.getCollection(Constants.USERS.getValue());
+		try {
+			// create document to save
+			BasicDBObject userObject = new BasicDBObject();
+			userObject.put(Constants.PASSWORD.getValue(), user.getPassword());
+
+			Document command = new Document();
+			command.put("$set", userObject);
+
+			// update password
+			usersCollection.updateOne(eq(Constants.USERID.getValue(), user.getUserId()), command);
+		} catch (Exception e) {
+			LOGGER.error("Error while registering user ", e);
+			throw new ComputingServicesException(e);
+		}
 	}
 
 	@Override
@@ -48,21 +65,21 @@ public class RegisterServiceImpl implements RegisterService {
 				user = new ObjectMapper().readValue(retrivedDataAsJSON, User.class);
 				if (user.getPassword() == null) {
 					response.setStatusCode(200);
-					LOGGER.info(userId+" is authorized to register");
-				}
-				else {
+					LOGGER.info(userId + " is authorized to register");
+				} else {
 					response.setStatusCode(404);
-					LOGGER.info(userId+" is already registered");
+					LOGGER.info(userId + " is already registered");
 				}
 			} catch (IOException e) {
-				LOGGER.error("Error occurred while processing retrieved associate details for search associates operation");
+				LOGGER.error(
+						"Error occurred while processing retrieved associate details for search associates operation");
 			}
 		};
 		// query
 		usersCollection.find(Filters.eq(Constants.USERID.getValue(), userId)).forEach(processRetreivedData);
 		if (response.getStatusCode() == 0) {
 			response.setStatusCode(403);
-			LOGGER.info(userId+" is NOT authorized to register");
+			LOGGER.info(userId + " is NOT authorized to register");
 		}
 		return response;
 	}

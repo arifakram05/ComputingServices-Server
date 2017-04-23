@@ -17,4 +17,9 @@ public class ComputingServicesException extends Exception {
 	public ComputingServicesException(String message) {
 		super(message);
 	}
+
+	public ComputingServicesException(Exception e) {
+		super(e);
+	}
+
 }
