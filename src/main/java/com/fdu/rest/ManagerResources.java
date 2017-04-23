@@ -118,6 +118,13 @@ public class ManagerResources {
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
+	@GET
+	@Path("/role-names")
+	public Response getRoleNames() {
+		ComputingServicesResponse<Role> response = ManagerOperations.getInstance().getRoleNames();
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
 	@POST
 	@Path("/updateRole")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)

@@ -22,6 +22,7 @@ import com.mongodb.Block;
 import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.result.DeleteResult;
 
 public class RoleServiceImpl implements RoleService {
@@ -126,6 +127,29 @@ public class RoleServiceImpl implements RoleService {
 		// query
 		rolesCollection.find().forEach(processRetreivedData);
 		LOGGER.info("All roles fetched");
+		return rolesList;
+	}
+
+	@Override
+	public List<Role> getRoleNames() {
+		List<Role> rolesList = new ArrayList<>();
+		// get collection
+		MongoCollection<Document> rolesCollection = database.getCollection(Constants.ROLES.getValue());
+		// processed retrieved data
+		Block<Document> processRetreivedData = (document) -> {
+
+			String retrivedDataAsJSON = document.toJson();
+			Role role;
+			try {
+				role = new ObjectMapper().readValue(retrivedDataAsJSON, Role.class);
+				rolesList.add(role);
+			} catch (IOException e) {
+				LOGGER.error("Error while processing retrieved role names ", e);
+			}
+		};
+		// query
+		rolesCollection.find().projection(Projections.fields(Projections.include(Constants.ROLENAME.getValue()))).forEach(processRetreivedData);
+		LOGGER.info("All role names fetched");
 		return rolesList;
 	}
 

@@ -75,6 +75,8 @@ public interface RoleService {
 	 */
 	List<Role> getRoles();
 
+	List<Role> getRoleNames();
+
 	/**
 	 * Delete a given role
 	 * 

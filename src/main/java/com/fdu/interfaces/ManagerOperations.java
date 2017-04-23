@@ -108,6 +108,8 @@ public interface ManagerOperations extends Connection {
 	 */
 	ComputingServicesResponse<Role> getRoles();
 
+	ComputingServicesResponse<Role> getRoleNames();
+
 	/**
 	 * Delete a role
 	 * 
