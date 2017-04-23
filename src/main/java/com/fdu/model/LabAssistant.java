@@ -8,7 +8,7 @@ import com.fdu.constants.Status;
 public class LabAssistant {
 
 	private Object _id;
-	private int studentId;
+	private String studentId;
 	private String firstName;
 	private String lastName;
 	private String phone;
@@ -24,11 +24,11 @@ public class LabAssistant {
 	private String dateHired;
 	private String description;
 
-	public int getStudentId() {
+	public String getStudentId() {
 		return studentId;
 	}
 
-	public void setStudentId(int studentId) {
+	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
 

@@ -1,6 +1,7 @@
 package com.fdu.impl;
 
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -89,6 +90,25 @@ public class GeneralOperationsImpl implements GeneralOperations {
 			response.setMessage("Error occurred while verifying. Please contact Lab Assistant or Lab Manager");
 		}
 		LOGGER.info("User Registration check for complete for "+userId);
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<User> searchUsers(String searchText) {
+		ComputingServicesResponse<User> response = new ComputingServicesResponse<>();
+		List<User> userList = null;
+		try {
+			LOGGER.info("Preparing to search for users with pattern: "+searchText);
+			userList = getManagerServiceInstance().searchUsers(searchText);
+			LOGGER.info("Users searched and retrieved number is "+userList.size());
+			response.setStatusCode(200);
+			response.setMessage("List of all users that match search criteria");
+			response.setResponse(userList);
+		} catch (Exception e) {
+			LOGGER.error("Error while fetching users per search criteria", e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred. Could not retrieve users per your search criteria");
+		}
 		return response;
 	}
 

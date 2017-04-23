@@ -1,17 +1,25 @@
 package com.fdu.impl;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.text;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.bson.Document;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.constants.Constants;
 import com.fdu.interfaces.ManagerService;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.LabAssistant;
 import com.fdu.model.User;
+import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.TextSearchOptions;
 import com.mongodb.client.result.DeleteResult;
 
 public class ManagerServiceImpl implements ManagerService {
@@ -26,7 +34,7 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
-	public boolean deleteJobApplicant(int studentId) {
+	public boolean deleteJobApplicant(String studentId) {
 		// get collection
 		MongoCollection<Document> jobApplicantsCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
 		// query
@@ -99,6 +107,33 @@ public class ManagerServiceImpl implements ManagerService {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public List<User> searchUsers(String searchText) {
+		// get collection
+		MongoCollection<Document> usersCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+		List<User> userList = new ArrayList<>();
+		// process each retrieved record
+		Block<Document> processRetreivedData = (document) -> {
+
+			String retrivedDataAsJSON = document.toJson();
+			User user;
+			LabAssistant labAssistant;
+			try {
+				labAssistant = new ObjectMapper().readValue(retrivedDataAsJSON, LabAssistant.class);
+				user = new User();
+				user.setFirstName(labAssistant.getFirstName());
+				user.setLastName(labAssistant.getLastName());
+				user.setUserId(labAssistant.getStudentId());
+				userList.add(user);
+			} catch (IOException e) {
+				LOGGER.error("Error occurred while processing retrieved user details for search associates operation");
+			}
+		};
+		/*in order to do a text search, you must have already created an index on associates collection, otherwise mongoDB throws error*/
+		usersCollection.find(text(searchText, new TextSearchOptions().caseSensitive(false))).forEach(processRetreivedData);
+		return userList;
 	}
 
 }

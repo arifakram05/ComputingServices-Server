@@ -36,7 +36,7 @@ public class ManagerOperationsImpl implements ManagerOperations {
 	}
 
 	@Override
-	public ComputingServicesResponse<Void> deleteJobApplicant(int studentId) {
+	public ComputingServicesResponse<Void> deleteJobApplicant(String studentId) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
 			LOGGER.info("Preparing to delete job applicant");

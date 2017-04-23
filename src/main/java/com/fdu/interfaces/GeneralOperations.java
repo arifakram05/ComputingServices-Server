@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.fdu.impl.CareersServiceImpl;
 import com.fdu.impl.GeneralOperationsImpl;
 import com.fdu.impl.LoginServiceImpl;
+import com.fdu.impl.ManagerServiceImpl;
 import com.fdu.impl.RegisterServiceImpl;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.User;
@@ -34,6 +35,8 @@ public interface GeneralOperations extends Connection {
 	ComputingServicesResponse<Void> register(String userDetails);
 
 	ComputingServicesResponse<Void> canUserRegister(String userId);
+
+	ComputingServicesResponse<User> searchUsers(String searchText);
 
 	/**
 	 * Apply for a job as a lab assistant
@@ -83,6 +86,13 @@ public interface GeneralOperations extends Connection {
 			instanceMap.put("CareersService", new CareersServiceImpl(getDBConnection()));
 		}
 		return (CareersServiceImpl) instanceMap.get("CareersService");
+	}
+
+	default ManagerService getManagerServiceInstance() {
+		if(instanceMap.get("ManagerService") == null) {
+			instanceMap.put("ManagerService", new ManagerServiceImpl(getDBConnection()));
+		}
+		return (ManagerServiceImpl) instanceMap.get("ManagerService");
 	}
 
 }

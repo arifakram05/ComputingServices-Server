@@ -50,6 +50,13 @@ public class GeneralResources {
 		return response;
 	}
 
+	@GET
+	@Path("/search")
+	public ComputingServicesResponse<User> searchUsers(@QueryParam("user") String searchText) {
+		ComputingServicesResponse<User> response = GeneralOperations.getInstance().searchUsers(searchText);
+		return response;
+	}
+
 	@POST
 	@Path("/careers")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)

@@ -30,7 +30,7 @@ public interface ManagerOperations extends Connection {
 	 */
 	ComputingServicesResponse<JobApplicant> viewJobApplicants();
 
-	ComputingServicesResponse<Void> deleteJobApplicant(int studentId);
+	ComputingServicesResponse<Void> deleteJobApplicant(String studentId);
 
 	ComputingServicesResponse<Void> hireJobApplicant(String labAssistant);
 

@@ -1,5 +1,7 @@
 package com.fdu.interfaces;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.fdu.model.ComputingServicesResponse;
@@ -10,7 +12,7 @@ public interface ManagerService {
 
 	final static Logger LOGGER = Logger.getLogger(ManagerService.class);
 
-	boolean deleteJobApplicant(int studentId);
+	boolean deleteJobApplicant(String studentId);
 
 	default ComputingServicesResponse<Void> hire(LabAssistant labAssistant) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
@@ -47,5 +49,7 @@ public interface ManagerService {
 	 * @return {@link ComputingServicesResponse} containing response details
 	 */
 	ComputingServicesResponse<Void> authorizeUser(User user);
+
+	List<User> searchUsers(String searchText);
 
 }

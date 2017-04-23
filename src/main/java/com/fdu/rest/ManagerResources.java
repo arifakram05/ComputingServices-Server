@@ -41,7 +41,7 @@ public class ManagerResources {
 
 	@DELETE
 	@Path("/deleteJobApplicant")
-	public Response deleteJobApplicant(@QueryParam("studentId") int studentId) {
+	public Response deleteJobApplicant(@QueryParam("studentId") String studentId) {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().deleteJobApplicant(studentId);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
