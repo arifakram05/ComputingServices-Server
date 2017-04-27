@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.fdu.exception.ComputingServicesException;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.LabAssistant;
 import com.fdu.model.User;
@@ -14,7 +15,7 @@ public interface ManagerService {
 
 	boolean deleteJobApplicant(String studentId);
 
-	default ComputingServicesResponse<Void> hire(LabAssistant labAssistant) {
+	default ComputingServicesResponse<Void> hire(LabAssistant labAssistant) throws ComputingServicesException {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		if (hireJobApplicant(labAssistant)) {
 			response.setStatusCode(200);
@@ -27,7 +28,7 @@ public interface ManagerService {
 		return response;
 	}
 
-	boolean hireJobApplicant(LabAssistant labAssistant);
+	boolean hireJobApplicant(LabAssistant labAssistant) throws ComputingServicesException;
 
 	boolean saveLabAssistant(LabAssistant labAssistant);
 

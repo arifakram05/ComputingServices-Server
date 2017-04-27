@@ -147,10 +147,13 @@ public class AssistantServiceImpl implements AssistantService {
 			laCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
 		} else if(requester.equalsIgnoreCase("labassistants")) {
 			laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+		} else {
+			throw new ComputingServicesException("Requester not recognized");
 		}
 		// query
 		Object[] result = laCollection.find(eq(Constants.STUDENTID.getValue(), id))
 				.projection(Projections.include(Constants.RESUME.getValue())).first().values().toArray();
+
 		try {
 			if (result[1] != null) {
 				LOGGER.info("Binary data exists and obtained for " + id);

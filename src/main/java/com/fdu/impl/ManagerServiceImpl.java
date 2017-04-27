@@ -3,7 +3,9 @@ package com.fdu.impl;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import org.bson.Document;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.constants.Constants;
+import com.fdu.exception.ComputingServicesException;
 import com.fdu.interfaces.ManagerService;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.LabAssistant;
@@ -19,6 +22,7 @@ import com.fdu.model.User;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.TextSearchOptions;
 import com.mongodb.client.result.DeleteResult;
 
@@ -44,13 +48,15 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
-	public boolean hireJobApplicant(LabAssistant labAssistant) {
-		// delete job applicant
-		deleteJobApplicant(labAssistant.getStudentId());
+	public boolean hireJobApplicant(LabAssistant labAssistant) throws ComputingServicesException {
+		// get resume of the applicant
+		byte[] resume = getFileDataFromDB(labAssistant.getStudentId());
+		// set resume
+		labAssistant.setResume(resume);
 		// save lab assistant
 		if (saveLabAssistant(labAssistant)) {
-			// save resume
-			// TODO: Get resume from jobapplicants and save it in labassistants
+			// delete job applicant
+			deleteJobApplicant(labAssistant.getStudentId());
 			return true;
 		}
 		return false;
@@ -140,6 +146,28 @@ public class ManagerServiceImpl implements ManagerService {
 		/*in order to do a text search, you must have already created an index on associates collection, otherwise mongoDB throws error*/
 		usersCollection.find(text(searchText, new TextSearchOptions().caseSensitive(false))).forEach(processRetreivedData);
 		return userList;
+	}
+
+	private byte[] getFileDataFromDB(String id) throws ComputingServicesException {
+		// get collection
+		MongoCollection<Document> laCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
+		// query
+		Object[] result = laCollection.find(eq(Constants.STUDENTID.getValue(), id))
+				.projection(Projections.include(Constants.RESUME.getValue())).first().values().toArray();
+		// convert to byte array
+		try {
+			if (result[1] != null) {
+				LOGGER.info("Binary data exists and obtained for " + id);
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ObjectOutputStream oos = new ObjectOutputStream(baos);
+				oos.writeObject(result[1]);
+				return baos.toByteArray();
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error while processing the retrieved file data");
+			throw new ComputingServicesException("Error while doing file processing");
+		}
+		return null;
 	}
 
 }
