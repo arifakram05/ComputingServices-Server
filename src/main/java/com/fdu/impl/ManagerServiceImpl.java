@@ -48,7 +48,12 @@ public class ManagerServiceImpl implements ManagerService {
 		// delete job applicant
 		deleteJobApplicant(labAssistant.getStudentId());
 		// save lab assistant
-		return saveLabAssistant(labAssistant);
+		if (saveLabAssistant(labAssistant)) {
+			// save resume
+			// TODO: Get resume from jobapplicants and save it in labassistants
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -66,7 +71,8 @@ public class ManagerServiceImpl implements ManagerService {
 				.append(Constants.PHONE.getValue(), labAssistant.getPhone())
 				.append(Constants.RESUME.getValue(), labAssistant.getResume())
 				.append(Constants.STUDENTID.getValue(), labAssistant.getStudentId())
-				.append(Constants.EDUCATION.getValue(), labAssistant.getEducation());
+				.append(Constants.EDUCATION.getValue(), labAssistant.getEducation())
+				.append(Constants.RESUME_EXTN.getValue(), labAssistant.getResumeExtn());
 		// query
 		labAssistantsCollection.insertOne(document);
 		LOGGER.info("Saved a new LA with ID " + labAssistant.getStudentId());

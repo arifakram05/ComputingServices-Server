@@ -136,19 +136,32 @@ public class AssistantServiceImpl implements AssistantService {
 	}
 
 	@Override
-	public Object download(int studentId) throws IOException {
+	public Object download(String id, String requester) throws ComputingServicesException {
+		if (requester == null || requester.isEmpty()) {
+			throw new ComputingServicesException("Requester cannot be null");
+		}
 		InputStream inputStream = null;
+		MongoCollection<Document> laCollection = null;
 		// get collection
-		MongoCollection<Document> laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+		if(requester.equalsIgnoreCase("jobapplicants")) {
+			laCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
+		} else if(requester.equalsIgnoreCase("labassistants")) {
+			laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+		}
 		// query
-		Object[] result = laCollection.find(eq(Constants.STUDENTID.getValue(), studentId))
+		Object[] result = laCollection.find(eq(Constants.STUDENTID.getValue(), id))
 				.projection(Projections.include(Constants.RESUME.getValue())).first().values().toArray();
-		if (result[1] != null) {
-			LOGGER.info("Binary data exists and obtained for " + studentId);
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(baos);
-			oos.writeObject(result[1]);
-			inputStream = new ByteArrayInputStream(baos.toByteArray());
+		try {
+			if (result[1] != null) {
+				LOGGER.info("Binary data exists and obtained for " + id);
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ObjectOutputStream oos = new ObjectOutputStream(baos);
+				oos.writeObject(result[1]);
+				inputStream = new ByteArrayInputStream(baos.toByteArray());
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error while processing the retrieved file data");
+			throw new ComputingServicesException("Error while doing file processing");
 		}
 		LOGGER.info("Download operation complete");
 		return inputStream;

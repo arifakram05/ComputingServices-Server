@@ -120,7 +120,16 @@ public interface ManagerOperations extends Connection {
 	 */
 	ComputingServicesResponse<Void> deleteRole(String roleId);
 
-	Object download(int studentId);
+	/**
+	 * Download the file from requested source for the requested ID
+	 * 
+	 * @param id
+	 *            job applicant Id or lab assistant Id
+	 * @param requester
+	 *            view that is making this request
+	 * @return the resume
+	 */
+	Object download(String id, String requester);
 
 	/**
 	 * Java 8 feature.<br/>

@@ -88,10 +88,10 @@ public class ManagerResources {
 	@POST
 	@Path("/download")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	public Response download(@QueryParam("studentId") int studentId) {
-		Object data = ManagerOperations.getInstance().download(studentId);
+	public Response download(@QueryParam("id") String id, @QueryParam("requester") String requester) {
+		Object data = ManagerOperations.getInstance().download(id, requester);
 		// TODO: get file extension from database
-		String fileName = new StringBuilder().append(String.valueOf(studentId)).append(".pdf").toString();
+		String fileName = new StringBuilder().append(id).append(".pdf").toString();
 		return Response.status(Status.OK).header(Constants.FILENAME.getValue(), fileName).entity(data).build();
 	}
 

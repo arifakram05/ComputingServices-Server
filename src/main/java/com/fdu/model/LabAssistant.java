@@ -23,6 +23,7 @@ public class LabAssistant {
 	private String dateApplied;
 	private String dateHired;
 	private String description;
+	private String resumeExtn;
 
 	public String getStudentId() {
 		return studentId;
@@ -150,6 +151,14 @@ public class LabAssistant {
 
 	public void set_id(Object _id) {
 		this._id = _id;
+	}
+
+	public String getResumeExtn() {
+		return resumeExtn;
+	}
+
+	public void setResumeExtn(String resumeExtn) {
+		this.resumeExtn = resumeExtn;
 	}
 
 }

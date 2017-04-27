@@ -254,13 +254,13 @@ public class ManagerOperationsImpl implements ManagerOperations {
 	}
 
 	@Override
-	public Object download(int studentId) {
+	public Object download(String id, String requester) {
 		Object data = null;
 		try {
-			LOGGER.info("Preparing to download file for "+studentId);
-			data = getAssistantServiceInstance().download(studentId);
+			LOGGER.info("Preparing to download file for "+id+" for the requester "+requester);
+			data = getAssistantServiceInstance().download(id, requester);
 		} catch (Exception e) {
-			LOGGER.error("Error while downloading file for "+studentId, e);
+			LOGGER.error("Error while downloading file for "+id, e);
 		}
 		return data;
 	}
