@@ -34,12 +34,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public void saveLabSchedule(List<LabSchedule> labschedule) {
 		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
-		Function<LabSchedule, Document> processEvents = event -> processEvents(event);
+		String groupId = getGroupId();
+		Function<LabSchedule, Document> processEvents = event -> processEvents(event, groupId);
 		List<Document> events = labschedule.stream().map(processEvents).collect(Collectors.toList());
 		labscheduleCollection.insertMany(events);
 	}
 
-	private Document processEvents(LabSchedule labschedule) {
+	private Document processEvents(LabSchedule labschedule, String groupId) {
 		Document document = new Document();
 		document.append(Constants.LABNAME.getValue(), labschedule.getLabName());
 		document.append(Constants.START.getValue(), labschedule.getStart());
@@ -48,12 +49,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 		document.append(Constants.PROFESSOR.getValue(), labschedule.getProfessor());
 		document.append(Constants.TITLE.getValue(), labschedule.getTitle());
 		document.append(Constants.BGCOLOR.getValue(), labschedule.getBackgroundColor());
-		document.append(Constants.GROUPID.getValue(), getGroupId());
+		document.append(Constants.GROUPID.getValue(), groupId);
 		return document;
 	}
 
 	private String getGroupId() {
-		return null;
+		ObjectId objectId = ObjectId.get();
+		return objectId.toString();
 	}
 
 	@Override
