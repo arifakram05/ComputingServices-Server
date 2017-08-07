@@ -25,6 +25,9 @@ public enum Constants {
 	STATUS("status"),
 	COMMENTS("comments"),
 
+	// JOB STATUSES
+	SUBMITTED("Submitted"),
+
 	// LABSCHEDULE
 	GROUPID("groupId"),
 	LABNAME("labName"),

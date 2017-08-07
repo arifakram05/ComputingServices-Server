@@ -52,6 +52,7 @@ public class CareersServiceImpl implements CareersService {
 		document.append(Constants.EDUCATION.getValue(), jobApplicantDetails.getEducation());
 		document.append(Constants.RESUME.getValue(), jobApplicantDetails.getResume());
 		document.append(Constants.RESUME_EXTN.getValue(), jobApplicantDetails.getResumeExtn());
+		document.append(Constants.STATUS.getValue(), Constants.SUBMITTED.getValue());
 		// save document
 		jobApplicantsCollection.insertOne(document);
 	}

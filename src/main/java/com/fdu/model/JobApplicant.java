@@ -20,6 +20,7 @@ public class JobApplicant {
 	private String resumeExtn;
 	private String studentId;
 	private String dateApplied;
+	private String status;
 
 	public String getFirstName() {
 		return firstName;
@@ -91,6 +92,14 @@ public class JobApplicant {
 
 	public void setResumeExtn(String resumeExtn) {
 		this.resumeExtn = resumeExtn;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
