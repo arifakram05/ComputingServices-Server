@@ -15,7 +15,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.constants.Constants;
 import com.fdu.interfaces.ScheduleService;
-import com.fdu.model.LabSchedule;
+import com.fdu.model.StaffSchedule;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -32,23 +32,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public void saveLabSchedule(List<LabSchedule> labschedule) {
-		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+	public void saveStaffSchedule(List<StaffSchedule> staffschedule) {
+		MongoCollection<Document> staffscheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
 		String groupId = getGroupId();
-		Function<LabSchedule, Document> processEvents = event -> processEvents(event, groupId);
-		List<Document> events = labschedule.stream().map(processEvents).collect(Collectors.toList());
-		labscheduleCollection.insertMany(events);
+		Function<StaffSchedule, Document> processEvents = event -> processEvents(event, groupId);
+		List<Document> events = staffschedule.stream().map(processEvents).collect(Collectors.toList());
+		staffscheduleCollection.insertMany(events);
 	}
 
-	private Document processEvents(LabSchedule labschedule, String groupId) {
+	private Document processEvents(StaffSchedule staffschedule, String groupId) {
 		Document document = new Document();
-		document.append(Constants.LABNAME.getValue(), labschedule.getLabName());
-		document.append(Constants.START.getValue(), labschedule.getStart());
-		document.append(Constants.END.getValue(), labschedule.getEnd());
-		document.append(Constants.ALLDAY.getValue(), labschedule.isAllDay());
-		document.append(Constants.PROFESSOR.getValue(), labschedule.getProfessor());
-		document.append(Constants.TITLE.getValue(), labschedule.getTitle());
-		document.append(Constants.BGCOLOR.getValue(), labschedule.getBackgroundColor());
+		document.append(Constants.LABNAME.getValue(), staffschedule.getLabName());
+		document.append(Constants.START.getValue(), staffschedule.getStart());
+		document.append(Constants.END.getValue(), staffschedule.getEnd());
+		document.append(Constants.ALLDAY.getValue(), staffschedule.isAllDay());
+		document.append(Constants.STUDENTID.getValue(), staffschedule.getStudentId());
+		document.append(Constants.TITLE.getValue(), staffschedule.getTitle());
+		document.append(Constants.BGCOLOR.getValue(), staffschedule.getBackgroundColor());
 		document.append(Constants.GROUPID.getValue(), groupId);
 		return document;
 	}
@@ -59,60 +59,60 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public List<LabSchedule> getLabSchedule() {
-		List<LabSchedule> labschedule = new ArrayList<>();
+	public List<StaffSchedule> getStaffSchedule() {
+		List<StaffSchedule> staffschedule = new ArrayList<>();
 		// get collection
-		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		MongoCollection<Document> staffscheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
 		// processed retrieved data
 		Block<Document> processRetreivedData = (document) -> {
 
 			String retrivedDataAsJSON = document.toJson();
-			LabSchedule schedule;
+			StaffSchedule schedule;
 			try {
-				schedule = new ObjectMapper().readValue(retrivedDataAsJSON, LabSchedule.class);
-				labschedule.add(schedule);
+				schedule = new ObjectMapper().readValue(retrivedDataAsJSON, StaffSchedule.class);
+				staffschedule.add(schedule);
 			} catch (IOException e) {
-				LOGGER.error("Error while processing lab schedule", e);
+				LOGGER.error("Error while processing staff schedule", e);
 			}
 		};
 		// query
-		labscheduleCollection.find().forEach(processRetreivedData);
-		LOGGER.info("Lab Schedule Fetched");
-		return labschedule;
+		staffscheduleCollection.find().forEach(processRetreivedData);
+		LOGGER.info("Staff Schedule Fetched");
+		return staffschedule;
 	}
 
 	@Override
-	public void updateLabSchedule(LabSchedule labschedule) {
+	public void updateStaffSchedule(StaffSchedule staffschedule) {
 		// get collection
-		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		MongoCollection<Document> staffscheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
 		// query to update
-		labscheduleCollection.updateOne(
-				eq(Constants.OBJECTID.getValue(), new ObjectId(labschedule.get_id().toString())),
-				createDataToUpdate(labschedule));
-		LOGGER.info("Updated lab schedule");
+		staffscheduleCollection.updateOne(
+				eq(Constants.OBJECTID.getValue(), new ObjectId(staffschedule.get_id().toString())),
+				createDataToUpdate(staffschedule));
+		LOGGER.info("Updated staff schedule");
 	}
 
 	@Override
-	public void updateManyEvents(LabSchedule labschedule) {
+	public void updateManyEvents(StaffSchedule staffschedule) {
 		// get collection
-		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		MongoCollection<Document> staffscheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
 		// query to update
-		labscheduleCollection.updateMany(eq(Constants.GROUPID.getValue(), labschedule.getGroupId()),
-				createDataToUpdate(labschedule));
-		LOGGER.info("Updated all related events on the lab schedule");
+		staffscheduleCollection.updateMany(eq(Constants.GROUPID.getValue(), staffschedule.getGroupId()),
+				createDataToUpdate(staffschedule));
+		LOGGER.info("Updated all related events on the staff schedule");
 	}
 
-	private Document createDataToUpdate(LabSchedule labschedule) {
+	private Document createDataToUpdate(StaffSchedule staffschedule) {
 		// set data
 		Document document = new Document();
-		document.append(Constants.LABNAME.getValue(), labschedule.getLabName());
-		document.append(Constants.START.getValue(), labschedule.getStart());
-		document.append(Constants.END.getValue(), labschedule.getEnd());
-		document.append(Constants.ALLDAY.getValue(), labschedule.isAllDay());
-		document.append(Constants.PROFESSOR.getValue(), labschedule.getProfessor());
-		document.append(Constants.TITLE.getValue(), labschedule.getTitle());
-		document.append(Constants.BGCOLOR.getValue(), labschedule.getBackgroundColor());
-		document.append(Constants.GROUPID.getValue(), labschedule.getGroupId());
+		document.append(Constants.LABNAME.getValue(), staffschedule.getLabName());
+		document.append(Constants.START.getValue(), staffschedule.getStart());
+		document.append(Constants.END.getValue(), staffschedule.getEnd());
+		document.append(Constants.ALLDAY.getValue(), staffschedule.isAllDay());
+		document.append(Constants.STUDENTID.getValue(), staffschedule.getStudentId());
+		document.append(Constants.TITLE.getValue(), staffschedule.getTitle());
+		document.append(Constants.BGCOLOR.getValue(), staffschedule.getBackgroundColor());
+		document.append(Constants.GROUPID.getValue(), staffschedule.getGroupId());
 		// command
 		Document command = new Document();
 		command.put("$set", document);
@@ -121,20 +121,20 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public void deleteLabSchedule(String eventId) {
+	public void deleteStaffSchedule(String eventId) {
 		// get collection
-		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		MongoCollection<Document> staffscheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
 		// query
-		labscheduleCollection.deleteOne(eq(Constants.OBJECTID.getValue(), new ObjectId(eventId)));
+		staffscheduleCollection.deleteOne(eq(Constants.OBJECTID.getValue(), new ObjectId(eventId)));
 		LOGGER.info("Deleted event with ID " + eventId);
 	}
 
 	@Override
 	public void deleteManyEvents(String groupId) {
 		// get collection
-		MongoCollection<Document> labscheduleCollection = database.getCollection(Constants.LABSCHECULE.getValue());
+		MongoCollection<Document> staffscheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
 		// query
-		labscheduleCollection.deleteMany(eq(Constants.GROUPID.getValue(), groupId));
+		staffscheduleCollection.deleteMany(eq(Constants.GROUPID.getValue(), groupId));
 		LOGGER.info("Deleted all events of group " + groupId);
 	}
 

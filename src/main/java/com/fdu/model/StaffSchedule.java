@@ -3,7 +3,7 @@ package com.fdu.model;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LabSchedule {
+public class StaffSchedule {
 
 	private Object _id;
 	private String groupId;
@@ -11,8 +11,8 @@ public class LabSchedule {
 	private String start;
 	private String end;
 	private boolean allDay;
-	private String professor;
-	private String title;
+	private String studentId;
+	private String title; // corresponds to student's name
 	private String backgroundColor;
 
 	public Object get_id() {
@@ -63,12 +63,12 @@ public class LabSchedule {
 		this.allDay = allDay;
 	}
 
-	public String getProfessor() {
-		return professor;
+	public String getStudentId() {
+		return studentId;
 	}
 
-	public void setProfessor(String professor) {
-		this.professor = professor;
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
 
 	public String getTitle() {

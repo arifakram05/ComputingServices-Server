@@ -34,7 +34,6 @@ public enum Constants {
 	START("start"),
 	END("end"),
 	ALLDAY("allDay"),
-	PROFESSOR("professor"),
 	TITLE("title"),
 	BGCOLOR("backgroundColor"),
 
@@ -55,7 +54,7 @@ public enum Constants {
 	// names of collections
 	USERS("users"),
 	ROLES("roles"),
-	LABSCHECULE("labschedule"),
+	STAFFSCHECULE("staffschedule"),
 	LABASSISTANTS("labassistants"),
 	JOBAPPLICANTS("jobapplicants");
 

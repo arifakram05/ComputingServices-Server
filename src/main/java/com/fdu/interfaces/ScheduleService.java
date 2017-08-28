@@ -2,19 +2,19 @@ package com.fdu.interfaces;
 
 import java.util.List;
 
-import com.fdu.model.LabSchedule;
+import com.fdu.model.StaffSchedule;
 
 public interface ScheduleService {
 
-	List<LabSchedule> getLabSchedule();
+	List<StaffSchedule> getStaffSchedule();
 
-	void saveLabSchedule(List<LabSchedule> labschedule);
+	void saveStaffSchedule(List<StaffSchedule> staffschedule);
 
-	void updateLabSchedule(LabSchedule labschedule);
+	void updateStaffSchedule(StaffSchedule staffschedule);
 
-	void updateManyEvents(LabSchedule labschedule);
+	void updateManyEvents(StaffSchedule staffschedule);
 
-	void deleteLabSchedule(String eventId);
+	void deleteStaffSchedule(String eventId);
 
 	void deleteManyEvents(String groupId);
 

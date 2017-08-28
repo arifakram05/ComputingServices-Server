@@ -6,29 +6,29 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.fdu.impl.ScheduleOperationsImpl;
 import com.fdu.impl.ScheduleServiceImpl;
 import com.fdu.model.ComputingServicesResponse;
-import com.fdu.model.LabSchedule;
+import com.fdu.model.StaffSchedule;
 
 public interface ScheduleOperations extends Connection {
 
 	Map<String, Object> instanceMap = new ConcurrentHashMap<>();
 
 	/**
-	 * save all the given events in a lab schedule calendar
+	 * save all the given events in a staff schedule calendar
 	 * 
-	 * @param labschedule
+	 * @param staffschedule
 	 *            schedule to save
 	 * @return a {@link ComputingServicesResponse} containing success status of
 	 *         the operation
 	 */
-	ComputingServicesResponse<Void> saveLabSchedule(String labschedule);
+	ComputingServicesResponse<Void> saveStaffSchedule(String staffschedule);
 
-	ComputingServicesResponse<LabSchedule> getLabSchedule();
+	ComputingServicesResponse<StaffSchedule> getStaffSchedule();
 
-	ComputingServicesResponse<Void> updateLabSchedule(String labschedule);
+	ComputingServicesResponse<Void> updateStaffSchedule(String staffschedule);
 
-	ComputingServicesResponse<Void> updateManyEvents(String labschedule);
+	ComputingServicesResponse<Void> updateManyEvents(String staffschedule);
 
-	ComputingServicesResponse<Void> deleteLabSchedule(String eventId);
+	ComputingServicesResponse<Void> deleteStaffSchedule(String eventId);
 
 	ComputingServicesResponse<Void> deleteManyEvents(String groupId);
 

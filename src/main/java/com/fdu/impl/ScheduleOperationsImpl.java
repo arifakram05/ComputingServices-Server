@@ -8,86 +8,86 @@ import org.codehaus.jackson.map.type.TypeFactory;
 
 import com.fdu.interfaces.ScheduleOperations;
 import com.fdu.model.ComputingServicesResponse;
-import com.fdu.model.LabSchedule;
+import com.fdu.model.StaffSchedule;
 
 public class ScheduleOperationsImpl implements ScheduleOperations {
 
 	private final static Logger LOGGER = Logger.getLogger(ManagerOperationsImpl.class);
 	
 	@Override
-	public ComputingServicesResponse<Void> saveLabSchedule(String labscheduleDetails) {
+	public ComputingServicesResponse<Void> saveStaffSchedule(String staffscheduleDetails) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
-		List<LabSchedule> labschedule = null;
+		List<StaffSchedule> staffschedule = null;
 		try {
-			LOGGER.info("Preparing to save lab schedule");
-			labschedule = new ObjectMapper().readValue(labscheduleDetails,
-					TypeFactory.collectionType(List.class, LabSchedule.class));
-			LOGGER.info("Saving lab schedule " + labschedule.toString());
-			getScheduleServiceInstance().saveLabSchedule(labschedule);
+			LOGGER.info("Preparing to save staff schedule");
+			staffschedule = new ObjectMapper().readValue(staffscheduleDetails,
+					TypeFactory.collectionType(List.class, StaffSchedule.class));
+			LOGGER.info("Saving staff schedule " + staffschedule.toString());
+			getScheduleServiceInstance().saveStaffSchedule(staffschedule);
 			response.setStatusCode(200);
-			response.setMessage("Lab Schedule Saved");
-			LOGGER.info("Saving lab schedule success " + labschedule.toString());
+			response.setMessage("Staff Schedule Saved");
+			LOGGER.info("Saving staff schedule success " + staffschedule.toString());
 		} catch (Exception e) {
-			LOGGER.error("Error while saving lab schedule details " + labschedule.toString(), e);
+			LOGGER.error("Error while saving staff schedule details " + staffschedule.toString(), e);
 			response.setStatusCode(500);
-			response.setMessage("Error occurred while saving lab schedule");
+			response.setMessage("Error occurred while saving staff schedule");
 		}
 		return response;
 	}
 
 	@Override
-	public ComputingServicesResponse<LabSchedule> getLabSchedule() {
-		ComputingServicesResponse<LabSchedule> response = new ComputingServicesResponse<>();
-		List<LabSchedule> labschedule = null;
+	public ComputingServicesResponse<StaffSchedule> getStaffSchedule() {
+		ComputingServicesResponse<StaffSchedule> response = new ComputingServicesResponse<>();
+		List<StaffSchedule> staffschedule = null;
 		try {
-			LOGGER.info("Preparing to fetch events hapenning in a lab");
-			labschedule = getScheduleServiceInstance().getLabSchedule();
-			LOGGER.info("Lab Schedule successfully retrieved");
+			LOGGER.info("Preparing to fetch events hapenning in a staff");
+			staffschedule = getScheduleServiceInstance().getStaffSchedule();
+			LOGGER.info("Staff Schedule successfully retrieved");
 			response.setStatusCode(200);
-			response.setMessage("Lab Schedule");
-			response.setResponse(labschedule);
+			response.setMessage("Staff Schedule");
+			response.setResponse(staffschedule);
 		} catch (Exception e) {
-			LOGGER.error("Error while fetching lab schedule ", e);
+			LOGGER.error("Error while fetching staff schedule ", e);
 			response.setStatusCode(500);
-			response.setMessage("Error occurred. Could not get lab schedule");
+			response.setMessage("Error occurred. Could not get staff schedule");
 		}
 		return response;
 	}
 
 	@Override
-	public ComputingServicesResponse<Void> updateLabSchedule(String labscheduleDetails) {
+	public ComputingServicesResponse<Void> updateStaffSchedule(String staffscheduleDetails) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
-		LabSchedule labschedule = null;
+		StaffSchedule staffschedule = null;
 		try {
-			LOGGER.info("Preparing to update an event on lab schedule");
-			labschedule = new ObjectMapper().readValue(labscheduleDetails, LabSchedule.class);
-			LOGGER.info("Updating the event " + labschedule.toString());
-			getScheduleServiceInstance().updateLabSchedule(labschedule);
+			LOGGER.info("Preparing to update an event on staff schedule");
+			staffschedule = new ObjectMapper().readValue(staffscheduleDetails, StaffSchedule.class);
+			LOGGER.info("Updating the event " + staffschedule.toString());
+			getScheduleServiceInstance().updateStaffSchedule(staffschedule);
 			response.setStatusCode(200);
-			response.setMessage("Lab Schedule Updated");
-			LOGGER.info("Updating lab schedule success " + labschedule.toString());
+			response.setMessage("Staff Schedule Updated");
+			LOGGER.info("Updating staff schedule success " + staffschedule.toString());
 		} catch (Exception e) {
-			LOGGER.error("Error while updating lab schedule details " + labschedule.toString(), e);
+			LOGGER.error("Error while updating staff schedule details " + staffschedule.toString(), e);
 			response.setStatusCode(500);
-			response.setMessage("Error occurred while updating lab schedule");
+			response.setMessage("Error occurred while updating staff schedule");
 		}
 		return response;
 	}
 
 	@Override
-	public ComputingServicesResponse<Void> updateManyEvents(String labscheduleDetails) {
+	public ComputingServicesResponse<Void> updateManyEvents(String staffscheduleDetails) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
-		LabSchedule labschedule = null;
+		StaffSchedule staffschedule = null;
 		try {
 			LOGGER.info("Preparing to update all related events");
-			labschedule = new ObjectMapper().readValue(labscheduleDetails, LabSchedule.class);
-			LOGGER.info("Updating all related events " + labschedule.toString());
-			getScheduleServiceInstance().updateManyEvents(labschedule);
+			staffschedule = new ObjectMapper().readValue(staffscheduleDetails, StaffSchedule.class);
+			LOGGER.info("Updating all related events " + staffschedule.toString());
+			getScheduleServiceInstance().updateManyEvents(staffschedule);
 			response.setStatusCode(200);
 			response.setMessage("All events updated");
-			LOGGER.info("Updating all events on lab calendar success " + labschedule.toString());
+			LOGGER.info("Updating all events on staff calendar success " + staffschedule.toString());
 		} catch (Exception e) {
-			LOGGER.error("Error while updating all events on lab schedule " + labschedule.toString(), e);
+			LOGGER.error("Error while updating all events on staff schedule " + staffschedule.toString(), e);
 			response.setStatusCode(500);
 			response.setMessage("Error occurred while updating all events on the calendar");
 		}
@@ -95,18 +95,18 @@ public class ScheduleOperationsImpl implements ScheduleOperations {
 	}
 
 	@Override
-	public ComputingServicesResponse<Void> deleteLabSchedule(String eventId) {
+	public ComputingServicesResponse<Void> deleteStaffSchedule(String eventId) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
-			LOGGER.info("Preparing to delete an event from lab calendar");
-			getScheduleServiceInstance().deleteLabSchedule(eventId);
+			LOGGER.info("Preparing to delete an event from staff calendar");
+			getScheduleServiceInstance().deleteStaffSchedule(eventId);
 			LOGGER.info("Event to deleted - "+eventId);
 			response.setStatusCode(200);
 			response.setMessage("Deleted");			
 		} catch (Exception e) {
-			LOGGER.error("Error while deleting event from lab calendar "+eventId, e);
+			LOGGER.error("Error while deleting event from staff calendar "+eventId, e);
 			response.setStatusCode(500);
-			response.setMessage("Failed to delete event from lab calendar");
+			response.setMessage("Failed to delete event from staff calendar");
 		}
 		return response;
 	}
@@ -115,15 +115,15 @@ public class ScheduleOperationsImpl implements ScheduleOperations {
 	public ComputingServicesResponse<Void> deleteManyEvents(String groupId) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
-			LOGGER.info("Preparing to delete multiple events from lab calendar");
+			LOGGER.info("Preparing to delete multiple events from staff calendar");
 			getScheduleServiceInstance().deleteManyEvents(groupId);
 			LOGGER.info("Group Events to deleted - "+groupId);
 			response.setStatusCode(200);
 			response.setMessage("Deleted");			
 		} catch (Exception e) {
-			LOGGER.error("Error while deleting many events from lab calendar "+groupId, e);
+			LOGGER.error("Error while deleting many events from staff calendar "+groupId, e);
 			response.setStatusCode(500);
-			response.setMessage("Failed to delete events from lab calendar");
+			response.setMessage("Failed to delete events from staff calendar");
 		}
 		return response;
 	}

@@ -12,23 +12,23 @@ import javax.ws.rs.core.Response;
 
 import com.fdu.interfaces.ScheduleOperations;
 import com.fdu.model.ComputingServicesResponse;
-import com.fdu.model.LabSchedule;
+import com.fdu.model.StaffSchedule;
 import com.sun.jersey.multipart.FormDataParam;
 
 /**
- * Consists of all end-points concerning lab schedule and lab assistant schedule
+ * Consists of all end-points concerning staff schedule and staff assistant schedule
  * 
  * @author arifakrammohammed
  *
  */
-@Path("/lab-schedule")
+@Path("/staff-schedule")
 @Produces(MediaType.APPLICATION_JSON)
 public class ScheduleResources {
 
 	/**
-	 * save given events in a lab's schedule
+	 * save given events in a staff's schedule
 	 * 
-	 * @param labschedule
+	 * @param staffschedule
 	 *            schedule to save
 	 * @return {@link ComputingServicesResponse} containing operation status
 	 *         details
@@ -36,27 +36,27 @@ public class ScheduleResources {
 	@POST
 	@Path("/save")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response saveLabSchedule(@FormDataParam("labschedule") String labschedule) {
-		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().saveLabSchedule(labschedule);
+	public Response saveStaffSchedule(@FormDataParam("staffschedule") String staffschedule) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().saveStaffSchedule(staffschedule);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
 	/**
-	 * get all events happening in a lab
+	 * get all events happening in a staff
 	 * 
-	 * @return {@link ComputingServicesResponse} containing {@link LabSchedule}
+	 * @return {@link ComputingServicesResponse} containing {@link StaffSchedule}
 	 */
 	@GET
 	@Path("/fetch")
-	public Response getLabSchedule() {
-		ComputingServicesResponse<LabSchedule> response = ScheduleOperations.getInstance().getLabSchedule();
+	public Response getStaffSchedule() {
+		ComputingServicesResponse<StaffSchedule> response = ScheduleOperations.getInstance().getStaffSchedule();
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
 	/**
-	 * update an event on the lab calendar
+	 * update an event on the staff calendar
 	 * 
-	 * @param labschedule
+	 * @param staffschedule
 	 *            event to udpate
 	 * @return {@link ComputingServicesResponse} containing operation status
 	 *         details
@@ -64,15 +64,15 @@ public class ScheduleResources {
 	@POST
 	@Path("/update")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response updateLabSchedule(@FormDataParam("labschedule") String labschedule) {
-		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().updateLabSchedule(labschedule);
+	public Response updateStaffSchedule(@FormDataParam("staffschedule") String staffschedule) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().updateStaffSchedule(staffschedule);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
 	/**
 	 * update all related events
 	 * 
-	 * @param labschedule
+	 * @param staffschedule
 	 *            event to update
 	 * @return {@link ComputingServicesResponse} containing operation status
 	 *         details
@@ -80,13 +80,13 @@ public class ScheduleResources {
 	@POST
 	@Path("/update-all")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response updateManyEvents(@FormDataParam("labschedule") String labschedule) {
-		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().updateManyEvents(labschedule);
+	public Response updateManyEvents(@FormDataParam("staffschedule") String staffschedule) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().updateManyEvents(staffschedule);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
 	/**
-	 * delete an event from lab calendar
+	 * delete an event from staff calendar
 	 * 
 	 * @param eventId
 	 *            event to delete
@@ -95,13 +95,13 @@ public class ScheduleResources {
 	 */
 	@DELETE
 	@Path("/delete")
-	public Response deleteLabSchedule(@QueryParam("eventId") String eventId) {
-		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().deleteLabSchedule(eventId);
+	public Response deleteStaffSchedule(@QueryParam("eventId") String eventId) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().deleteStaffSchedule(eventId);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
 	/**
-	 * delete all related events from lab calendar
+	 * delete all related events from staff calendar
 	 * 
 	 * @param groupId
 	 *            group of events to delete
