@@ -6,6 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.fdu.impl.AssistantOperationsImpl;
 import com.fdu.impl.AssistantServiceImpl;
 import com.fdu.model.ComputingServicesResponse;
+import com.fdu.model.Shift;
+import com.sun.jersey.multipart.FormDataParam;
 
 public interface AssistantOperations extends Connection {
 
@@ -13,15 +15,17 @@ public interface AssistantOperations extends Connection {
 
 	ComputingServicesResponse<Void> updateProfile(String labassistant, Object resume, Object photo);
 
+	ComputingServicesResponse<Shift> schedule(@FormDataParam("request") String request);
+
 	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class
 	 * 
-	 * @return {@link AssistantOperationsImpl} Object of the class that implements
-	 *         this interface
+	 * @return {@link AssistantOperationsImpl} Object of the class that
+	 *         implements this interface
 	 */
-	static AssistantOperationsImpl getInstance() {
-		if(instanceMap.get("AssistantOperations") == null) {
+	static AssistantOperations getInstance() {
+		if (instanceMap.get("AssistantOperations") == null) {
 			instanceMap.put("AssistantOperations", new AssistantOperationsImpl());
 		}
 		return (AssistantOperationsImpl) instanceMap.get("AssistantOperations");

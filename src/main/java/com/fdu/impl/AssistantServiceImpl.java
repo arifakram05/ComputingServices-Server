@@ -21,10 +21,13 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.fdu.constants.Constants;
 import com.fdu.exception.ComputingServicesException;
 import com.fdu.interfaces.AssistantService;
+import com.fdu.model.ComputingServicesRequest;
 import com.fdu.model.LabAssistant;
+import com.fdu.model.Shift;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.result.DeleteResult;
 
@@ -143,9 +146,9 @@ public class AssistantServiceImpl implements AssistantService {
 		InputStream inputStream = null;
 		MongoCollection<Document> laCollection = null;
 		// get collection
-		if(requester.equalsIgnoreCase("jobapplicants")) {
+		if (requester.equalsIgnoreCase("jobapplicants")) {
 			laCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
-		} else if(requester.equalsIgnoreCase("labassistants")) {
+		} else if (requester.equalsIgnoreCase("labassistants")) {
 			laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
 		} else {
 			throw new ComputingServicesException("Requester not recognized");
@@ -168,6 +171,16 @@ public class AssistantServiceImpl implements AssistantService {
 		}
 		LOGGER.info("Download operation complete");
 		return inputStream;
+	}
+
+	@Override
+	public List<Shift> getSchedule(ComputingServicesRequest request) throws ComputingServicesException {
+		List<Shift> assignedShifts;
+		// get collection
+		MongoCollection<Document> staffScheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
+		// query
+		//staffScheduleCollection.find(and(eq(Constants.STUDENTID.getValue(), request.getId()), regex(Constants.START.getValue(), request.));
+		return null;
 	}
 
 }

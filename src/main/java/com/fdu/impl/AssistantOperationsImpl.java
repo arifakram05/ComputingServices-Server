@@ -2,13 +2,17 @@ package com.fdu.impl;
 
 import java.io.InputStream;
 
+import javax.ws.rs.core.Response;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.interfaces.AssistantOperations;
+import com.fdu.model.ComputingServicesRequest;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.LabAssistant;
+import com.fdu.model.Shift;
 
 public class AssistantOperationsImpl implements AssistantOperations {
 
@@ -31,9 +35,27 @@ public class AssistantOperationsImpl implements AssistantOperations {
 		} catch (Exception e) {
 			LOGGER.error("Error while updating lab assistant details " + labAssistant.getLastName() + ","
 					+ labAssistant.getFirstName(), e);
-			response = new ComputingServicesResponse<>();
 			response.setStatusCode(500);
 			response.setMessage("Error Occurred while updating");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Shift> schedule(String request) {
+		ComputingServicesResponse<Shift> response = new ComputingServicesResponse<>();
+		ComputingServicesRequest csRequest = null;
+		try {
+			csRequest = new ObjectMapper().readValue(request, ComputingServicesRequest.class);
+			LOGGER.info("User request received to show work schedule for " + csRequest.getId() + " between dates "
+					+ csRequest.getStartDate() + " and " + csRequest.getEndDate());
+			response.setStatusCode(Response.Status.OK.getStatusCode());
+			response.setResponse(null);
+		} catch (Exception e) {
+			LOGGER.error("Error while fetching work schedule details of" + csRequest.getId() + " for dates "
+					+ csRequest.getStartDate() + " and " + csRequest.getEndDate(), e);
+			response.setStatusCode(500);
+			response.setMessage("Error Occurred while fetching work schedule");
 		}
 		return response;
 	}
