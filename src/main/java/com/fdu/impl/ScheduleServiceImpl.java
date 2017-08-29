@@ -16,6 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.fdu.constants.Constants;
 import com.fdu.interfaces.ScheduleService;
 import com.fdu.model.StaffSchedule;
+import com.fdu.util.DateMechanic;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -43,8 +44,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private Document processEvents(StaffSchedule staffschedule, String groupId) {
 		Document document = new Document();
 		document.append(Constants.LABNAME.getValue(), staffschedule.getLabName());
-		document.append(Constants.START.getValue(), staffschedule.getStart());
-		document.append(Constants.END.getValue(), staffschedule.getEnd());
+		document.append(Constants.DATE.getValue(), DateMechanic.extractDateOnly(staffschedule.getStart()));
+		document.append(Constants.START.getValue(), DateMechanic.extractTimeOnly(staffschedule.getStart()));
+		document.append(Constants.END.getValue(), DateMechanic.extractTimeOnly(staffschedule.getEnd()));
 		document.append(Constants.ALLDAY.getValue(), staffschedule.isAllDay());
 		document.append(Constants.STUDENTID.getValue(), staffschedule.getStudentId());
 		document.append(Constants.TITLE.getValue(), staffschedule.getTitle());
@@ -70,6 +72,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 			StaffSchedule schedule;
 			try {
 				schedule = new ObjectMapper().readValue(retrivedDataAsJSON, StaffSchedule.class);
+				schedule.setStart(schedule.getDate() + " " + schedule.getStart());
+				schedule.setEnd(schedule.getDate() + " " + schedule.getEnd());
 				staffschedule.add(schedule);
 			} catch (IOException e) {
 				LOGGER.error("Error while processing staff schedule", e);
@@ -106,8 +110,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		// set data
 		Document document = new Document();
 		document.append(Constants.LABNAME.getValue(), staffschedule.getLabName());
-		document.append(Constants.START.getValue(), staffschedule.getStart());
-		document.append(Constants.END.getValue(), staffschedule.getEnd());
+		document.append(Constants.DATE.getValue(), DateMechanic.extractDateOnly(staffschedule.getStart()));
+		document.append(Constants.START.getValue(), DateMechanic.extractTimeOnly(staffschedule.getStart()));
+		document.append(Constants.END.getValue(), DateMechanic.extractTimeOnly(staffschedule.getEnd()));
 		document.append(Constants.ALLDAY.getValue(), staffschedule.isAllDay());
 		document.append(Constants.STUDENTID.getValue(), staffschedule.getStudentId());
 		document.append(Constants.TITLE.getValue(), staffschedule.getTitle());

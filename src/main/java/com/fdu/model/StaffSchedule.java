@@ -8,6 +8,7 @@ public class StaffSchedule {
 	private Object _id;
 	private String groupId;
 	private String labName;
+	private String date;
 	private String start;
 	private String end;
 	private boolean allDay;
@@ -37,6 +38,14 @@ public class StaffSchedule {
 
 	public void setLabName(String labName) {
 		this.labName = labName;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public String getStart() {

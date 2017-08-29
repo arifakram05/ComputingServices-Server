@@ -3,7 +3,6 @@ package com.fdu.rest;
 import java.io.InputStream;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -37,8 +36,9 @@ public class AssistantResources {
 	 * @return {@link ComputingServicesResponse} containing all the assigned
 	 *         shifts between two given dates
 	 */
-	@GET
+	@POST
 	@Path("/schedule")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public ComputingServicesResponse<Shift> schedule(@FormDataParam("request") String request) {
 		return AssistantOperations.getInstance().schedule(request);
 	}

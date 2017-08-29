@@ -7,7 +7,6 @@ import com.fdu.impl.AssistantOperationsImpl;
 import com.fdu.impl.AssistantServiceImpl;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.Shift;
-import com.sun.jersey.multipart.FormDataParam;
 
 public interface AssistantOperations extends Connection {
 
@@ -15,7 +14,7 @@ public interface AssistantOperations extends Connection {
 
 	ComputingServicesResponse<Void> updateProfile(String labassistant, Object resume, Object photo);
 
-	ComputingServicesResponse<Shift> schedule(@FormDataParam("request") String request);
+	ComputingServicesResponse<Shift> schedule(String request);
 
 	/**
 	 * Java 8 feature.<br/>

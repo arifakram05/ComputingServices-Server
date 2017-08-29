@@ -28,7 +28,7 @@ public enum Constants {
 	// JOB STATUSES
 	SUBMITTED("Submitted"),
 
-	// LABSCHEDULE
+	// STAFFSCHEDULE
 	GROUPID("groupId"),
 	LABNAME("labName"),
 	START("start"),
@@ -36,6 +36,7 @@ public enum Constants {
 	ALLDAY("allDay"),
 	TITLE("title"),
 	BGCOLOR("backgroundColor"),
+	DATE("date"),
 
 	//USERS
 	USERID("userId"),
