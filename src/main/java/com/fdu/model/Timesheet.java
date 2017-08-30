@@ -12,11 +12,11 @@ public class Timesheet {
 	boolean isClockedOut;
 	LocalDateTime clockedOutDateTime;
 
-	public boolean isClockedIn() {
+	public boolean getIsClockedIn() {
 		return isClockedIn;
 	}
 
-	public void setClockedIn(boolean isClockedIn) {
+	public void setIsClockedIn(boolean isClockedIn) {
 		this.isClockedIn = isClockedIn;
 	}
 
@@ -28,11 +28,11 @@ public class Timesheet {
 		this.clockedInDateTime = clockedInDateTime;
 	}
 
-	public boolean isClockedOut() {
+	public boolean getIsClockedOut() {
 		return isClockedOut;
 	}
 
-	public void setClockedOut(boolean isClockedOut) {
+	public void setIsClockedOut(boolean isClockedOut) {
 		this.isClockedOut = isClockedOut;
 	}
 

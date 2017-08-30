@@ -97,7 +97,7 @@ public class StaffSchedule {
 		this.backgroundColor = backgroundColor;
 	}
 
-	public Timesheet geTimesheet() {
+	public Timesheet getTimesheet() {
 		return timesheet;
 	}
 
