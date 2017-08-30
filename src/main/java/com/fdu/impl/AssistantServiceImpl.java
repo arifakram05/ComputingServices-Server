@@ -21,9 +21,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.fdu.constants.Constants;
 import com.fdu.exception.ComputingServicesException;
 import com.fdu.interfaces.AssistantService;
-import com.fdu.model.ComputingServicesRequest;
 import com.fdu.model.LabAssistant;
-import com.fdu.model.Shift;
+import com.fdu.model.StaffSchedule;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -174,13 +173,26 @@ public class AssistantServiceImpl implements AssistantService {
 	}
 
 	@Override
-	public List<Shift> getSchedule(ComputingServicesRequest request) throws ComputingServicesException {
-		List<Shift> assignedShifts;
+	public List<StaffSchedule> getSchedule(String studentId, String date) throws ComputingServicesException {
+		List<StaffSchedule> staffSchedules = new ArrayList<>();
 		// get collection
 		MongoCollection<Document> staffScheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
+		// processed retrieved data
+		Block<Document> processRetreivedData = (document) -> {
+			String retrivedDataAsJSON = document.toJson();
+			StaffSchedule schedule;
+			try {
+				schedule = new ObjectMapper().readValue(retrivedDataAsJSON, StaffSchedule.class);
+				staffSchedules.add(schedule);
+			} catch (IOException e) {
+				LOGGER.error("Error while processing staff schedule", e);
+			}
+		};
 		// query
-		//staffScheduleCollection.find(and(eq(Constants.STUDENTID.getValue(), request.getId()), regex(Constants.START.getValue(), request.));
-		return null;
+		staffScheduleCollection.find(Filters.and(Filters.eq(Constants.STUDENTID.getValue(), studentId),
+				Filters.eq(Constants.DATE.getValue(), date))).forEach(processRetreivedData);
+		LOGGER.info("Staff Schedule Fetched");
+		return staffSchedules;
 	}
 
 }

@@ -5,10 +5,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.fdu.exception.ComputingServicesException;
-import com.fdu.model.ComputingServicesRequest;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.LabAssistant;
-import com.fdu.model.Shift;
+import com.fdu.model.StaffSchedule;
 
 public interface AssistantService {
 
@@ -79,12 +78,12 @@ public interface AssistantService {
 	 * 
 	 * @param request
 	 *            contains user Id, start and end dates
-	 * @return {@link List} of {@link Shift} containing all assinged shifts for
-	 *         given user between given dates
+	 * @return {@link List} of {@link StaffSchedule} containing all assigned
+	 *         shifts for given user between given dates
 	 * @throws ComputingServicesException
 	 *             {@link ComputingServicesException} containing success status
 	 *             of the operation
 	 */
-	List<Shift> getSchedule(ComputingServicesRequest request) throws ComputingServicesException;
+	List<StaffSchedule> getSchedule(String studentId, String date) throws ComputingServicesException;
 
 }

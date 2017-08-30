@@ -15,6 +15,7 @@ public class StaffSchedule {
 	private String studentId;
 	private String title; // corresponds to student's name
 	private String backgroundColor;
+	private Timesheet timesheet;
 
 	public Object get_id() {
 		return _id;
@@ -94,6 +95,14 @@ public class StaffSchedule {
 
 	public void setBackgroundColor(String backgroundColor) {
 		this.backgroundColor = backgroundColor;
+	}
+
+	public Timesheet geTimesheet() {
+		return timesheet;
+	}
+
+	public void setTimesheet(Timesheet timesheet) {
+		this.timesheet = timesheet;
 	}
 
 }

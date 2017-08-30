@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.fdu.impl.AssistantOperationsImpl;
 import com.fdu.impl.AssistantServiceImpl;
 import com.fdu.model.ComputingServicesResponse;
-import com.fdu.model.Shift;
+import com.fdu.model.StaffSchedule;
 
 public interface AssistantOperations extends Connection {
 
@@ -14,7 +14,7 @@ public interface AssistantOperations extends Connection {
 
 	ComputingServicesResponse<Void> updateProfile(String labassistant, Object resume, Object photo);
 
-	ComputingServicesResponse<Shift> schedule(String request);
+	ComputingServicesResponse<StaffSchedule> schedule(String studentId, String date);
 
 	/**
 	 * Java 8 feature.<br/>

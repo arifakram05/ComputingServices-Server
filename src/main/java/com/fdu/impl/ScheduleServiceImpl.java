@@ -17,6 +17,7 @@ import com.fdu.constants.Constants;
 import com.fdu.interfaces.ScheduleService;
 import com.fdu.model.StaffSchedule;
 import com.fdu.util.DateMechanic;
+import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -52,6 +53,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 		document.append(Constants.TITLE.getValue(), staffschedule.getTitle());
 		document.append(Constants.BGCOLOR.getValue(), staffschedule.getBackgroundColor());
 		document.append(Constants.GROUPID.getValue(), groupId);
+		// insert Shift details
+		BasicDBObject shiftDetails = new BasicDBObject();
+		shiftDetails.put(Constants.ISCLOCKEDIN.getValue(), new Boolean(false));
+		shiftDetails.put(Constants.ISCLOCKEDOUT.getValue(), new Boolean(false));
+		shiftDetails.put(Constants.CLOCKEDINDATETIME.getValue(), null);
+		shiftDetails.put(Constants.CLOCKEDOUTDATETIME.getValue(), null);
+		document.append(Constants.TIMESHEET.getValue(), shiftDetails);
+		
 		return document;
 	}
 

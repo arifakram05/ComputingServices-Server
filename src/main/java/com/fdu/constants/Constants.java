@@ -37,6 +37,7 @@ public enum Constants {
 	TITLE("title"),
 	BGCOLOR("backgroundColor"),
 	DATE("date"),
+	TIMESHEET("timesheet"),
 
 	//USERS
 	USERID("userId"),
@@ -51,6 +52,12 @@ public enum Constants {
 	//PRIVILEGES
 	NAME("name"),
 	DESCRIPTION("description"),
+	
+	// SHIFT
+	ISCLOCKEDIN("isClockedIn"),
+	ISCLOCKEDOUT("isClockedOut"),
+	CLOCKEDINDATETIME("clockedInDateTime"),
+	CLOCKEDOUTDATETIME("clockedOutDateTime"),
 
 	// names of collections
 	USERS("users"),

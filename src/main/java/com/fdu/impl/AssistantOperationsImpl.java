@@ -9,10 +9,9 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.interfaces.AssistantOperations;
-import com.fdu.model.ComputingServicesRequest;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.LabAssistant;
-import com.fdu.model.Shift;
+import com.fdu.model.StaffSchedule;
 
 public class AssistantOperationsImpl implements AssistantOperations {
 
@@ -42,18 +41,14 @@ public class AssistantOperationsImpl implements AssistantOperations {
 	}
 
 	@Override
-	public ComputingServicesResponse<Shift> schedule(String request) {
-		ComputingServicesResponse<Shift> response = new ComputingServicesResponse<>();
-		ComputingServicesRequest csRequest = null;
+	public ComputingServicesResponse<StaffSchedule> schedule(String studentId, String date) {
+		ComputingServicesResponse<StaffSchedule> response = new ComputingServicesResponse<>();
 		try {
-			csRequest = new ObjectMapper().readValue(request, ComputingServicesRequest.class);
-			LOGGER.info("User request received to show work schedule for " + csRequest.getId() + " between dates "
-					+ csRequest.getStartDate() + " and " + csRequest.getEndDate());
+			LOGGER.info("User request received to show work schedule for " + studentId + " for the date " + date);
+			response.setResponse(getAssistantServiceInstance().getSchedule(studentId, date));
 			response.setStatusCode(Response.Status.OK.getStatusCode());
-			response.setResponse(null);
 		} catch (Exception e) {
-			LOGGER.error("Error while fetching work schedule details of" + csRequest.getId() + " for dates "
-					+ csRequest.getStartDate() + " and " + csRequest.getEndDate(), e);
+			LOGGER.error("Error while fetching work schedule details of" + studentId + " for date " + date, e);
 			response.setStatusCode(500);
 			response.setMessage("Error Occurred while fetching work schedule");
 		}

@@ -12,6 +12,7 @@ public class ComputingServicesRequest {
 	String Id;
 	String startDate;
 	String endDate;
+	String givenDate;
 
 	public String getId() {
 		return Id;
@@ -35,6 +36,14 @@ public class ComputingServicesRequest {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getGivenDate() {
+		return givenDate;
+	}
+
+	public void setGivenDate(String givenDate) {
+		this.givenDate = givenDate;
 	}
 
 }
