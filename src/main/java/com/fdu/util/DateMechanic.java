@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
@@ -76,49 +75,29 @@ public class DateMechanic {
 
 	/**
 	 * Convert a given date and time in {@link String} representation to a
-	 * {@link LocalDateTime}
+	 * {@link Date}
 	 * 
 	 * @param datetime
 	 *            date and time in {@link String} representation
-	 * @return date and time stored in {@link LocalDateTime}
+	 * @return date and time stored in {@link Date}
 	 * @throws ParseException
-	 *             if error occurs while given date and time
+	 *             if error occurs while processing given date and time
 	 */
-	public static LocalDateTime processDateTimeAsLocalDateTime(String datetime) throws ParseException {
-		return LocalDateTime.parse(datetime, dateTimeformatter);
-	}
-
-	/**
-	 * Convert a given date and time in {@link String} representation to a
-	 * {@link Calendar}
-	 * 
-	 * @param datetime
-	 *            date and time in {@link String} representation
-	 * @return date and time stored in {@link Calendar}
-	 * @throws ParseException
-	 *             if error occurs while given date and time
-	 */
-	public static Date processDateTimeAsDate(String datetime) throws ParseException {
-		/*
-		 * Calendar calendar = Calendar.getInstance();
-		 * calendar.setTime(simpleDateFormat.parse(datetime)); return calendar;
-		 */
+	public static Date convertStringToDate(String datetime) throws ParseException {
 		return simpleDateFormat.parse(datetime);
 	}
 
 	/**
-	 * Convert a given {@link Calendar} instance to a {@link String}
+	 * Create a {@link Date} using the given time in milliseconds
 	 * 
-	 * @param calendar
-	 *            date and time stored in {@link Calendar}
-	 * @return date and time in {@link String} representation
+	 * @param millis
+	 *            date and time represented in milliseconds
+	 * @return {@link Date}
+	 * @throws ParseException
+	 *             if error occurs while processing given date and time
 	 */
-	public static String processCalendarAsString(Calendar calendar) {
-		return simpleDateFormat.format(calendar.getTime());
-	}
-
-	public static String processCalendarAsString(Date date) {
-		return simpleDateFormat.format(date);
+	public static Date createDateFromMillis(Long millis) {
+		return new Date(millis);
 	}
 
 }

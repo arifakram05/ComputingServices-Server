@@ -3,8 +3,12 @@ package com.fdu.model;
 import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+
+import com.fdu.deserializers.TimesheetDeserializer;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonDeserialize(using = TimesheetDeserializer.class)
 public class Timesheet {
 
 	boolean isClockedIn;

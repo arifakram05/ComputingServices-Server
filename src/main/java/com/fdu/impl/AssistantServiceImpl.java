@@ -207,11 +207,11 @@ public class AssistantServiceImpl implements AssistantService {
 		BasicDBObject detailsToUpdate = new BasicDBObject();
 		try {
 			if (operation.equals("clock-in")) {
-				detailsToUpdate.put(Constants.TIMESHEET+"."+Constants.ISCLOCKEDIN, true);
-				detailsToUpdate.put(Constants.TIMESHEET+"."+Constants.CLOCKEDINDATETIME, DateMechanic.processDateTimeAsDate(datetime));
+				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.ISCLOCKEDIN.getValue(), true);
+				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.CLOCKEDINDATETIME.getValue(), DateMechanic.convertStringToDate(datetime));
 			} else if (operation.equals("clock-out")) {
-				detailsToUpdate.put(Constants.TIMESHEET+"."+Constants.ISCLOCKEDOUT, true);
-				detailsToUpdate.put(Constants.TIMESHEET+"."+Constants.CLOCKEDOUTDATETIME, DateMechanic.processDateTimeAsDate(datetime));
+				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.ISCLOCKEDOUT.getValue(), true);
+				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.CLOCKEDOUTDATETIME.getValue(), DateMechanic.convertStringToDate(datetime));
 			}
 		} catch (Exception exception) {
 			throw new ComputingServicesException(exception);
