@@ -1,19 +1,24 @@
 package com.fdu.util;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class DateMechanic {
 
-	private final static DateTimeFormatter dateTimeformatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+	private final static String sourceFormat = "MMM dd, yyyy HH:mm";
 	private final static String targetFormat = "MMM dd, yyyy";
+	private final static DateTimeFormatter dateTimeformatter = DateTimeFormatter.ofPattern(sourceFormat);
+	private final static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(sourceFormat);
 
 	/**
 	 * Returns a list of all dates between start and end date; both dates being
@@ -67,6 +72,53 @@ public class DateMechanic {
 	 */
 	public static String extractTimeOnly(String givenDate) {
 		return givenDate.substring(givenDate.length() - 5);
+	}
+
+	/**
+	 * Convert a given date and time in {@link String} representation to a
+	 * {@link LocalDateTime}
+	 * 
+	 * @param datetime
+	 *            date and time in {@link String} representation
+	 * @return date and time stored in {@link LocalDateTime}
+	 * @throws ParseException
+	 *             if error occurs while given date and time
+	 */
+	public static LocalDateTime processDateTimeAsLocalDateTime(String datetime) throws ParseException {
+		return LocalDateTime.parse(datetime, dateTimeformatter);
+	}
+
+	/**
+	 * Convert a given date and time in {@link String} representation to a
+	 * {@link Calendar}
+	 * 
+	 * @param datetime
+	 *            date and time in {@link String} representation
+	 * @return date and time stored in {@link Calendar}
+	 * @throws ParseException
+	 *             if error occurs while given date and time
+	 */
+	public static Date processDateTimeAsDate(String datetime) throws ParseException {
+		/*
+		 * Calendar calendar = Calendar.getInstance();
+		 * calendar.setTime(simpleDateFormat.parse(datetime)); return calendar;
+		 */
+		return simpleDateFormat.parse(datetime);
+	}
+
+	/**
+	 * Convert a given {@link Calendar} instance to a {@link String}
+	 * 
+	 * @param calendar
+	 *            date and time stored in {@link Calendar}
+	 * @return date and time in {@link String} representation
+	 */
+	public static String processCalendarAsString(Calendar calendar) {
+		return simpleDateFormat.format(calendar.getTime());
+	}
+
+	public static String processCalendarAsString(Date date) {
+		return simpleDateFormat.format(date);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.fdu.impl;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Projections.fields;
@@ -23,10 +24,11 @@ import com.fdu.exception.ComputingServicesException;
 import com.fdu.interfaces.AssistantService;
 import com.fdu.model.LabAssistant;
 import com.fdu.model.StaffSchedule;
+import com.fdu.util.DateMechanic;
+import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.result.DeleteResult;
 
@@ -189,10 +191,36 @@ public class AssistantServiceImpl implements AssistantService {
 			}
 		};
 		// query
-		staffScheduleCollection.find(Filters.and(Filters.eq(Constants.STUDENTID.getValue(), studentId),
-				Filters.eq(Constants.DATE.getValue(), date))).forEach(processRetreivedData);
+		staffScheduleCollection
+				.find(and(eq(Constants.STUDENTID.getValue(), studentId), eq(Constants.DATE.getValue(), date)))
+				.forEach(processRetreivedData);
 		LOGGER.info("Staff Schedule Fetched");
 		return staffSchedules;
+	}
+
+	@Override
+	public void recordTimesheet(String operation, String studentId, String datetime, String id)
+			throws ComputingServicesException {
+		// get collection
+		MongoCollection<Document> staffScheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
+		// create document to save
+		BasicDBObject detailsToUpdate = new BasicDBObject();
+		try {
+			if (operation.equals("clock-in")) {
+				detailsToUpdate.put(Constants.TIMESHEET+"."+Constants.ISCLOCKEDIN, true);
+				detailsToUpdate.put(Constants.TIMESHEET+"."+Constants.CLOCKEDINDATETIME, DateMechanic.processDateTimeAsDate(datetime));
+			} else if (operation.equals("clock-out")) {
+				detailsToUpdate.put(Constants.TIMESHEET+"."+Constants.ISCLOCKEDOUT, true);
+				detailsToUpdate.put(Constants.TIMESHEET+"."+Constants.CLOCKEDOUTDATETIME, DateMechanic.processDateTimeAsDate(datetime));
+			}
+		} catch (Exception exception) {
+			throw new ComputingServicesException(exception);
+		}
+		// command for updating
+		Document command = new Document();
+		command.put("$set", detailsToUpdate);
+		// query
+		staffScheduleCollection.updateOne(eq(Constants.OBJECTID.getValue(), new ObjectId(id)), command);
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.fdu.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -8,9 +8,9 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 public class Timesheet {
 
 	boolean isClockedIn;
-	LocalDateTime clockedInDateTime;
+	Date clockedInDateTime;
 	boolean isClockedOut;
-	LocalDateTime clockedOutDateTime;
+	Date clockedOutDateTime;
 
 	public boolean getIsClockedIn() {
 		return isClockedIn;
@@ -20,11 +20,11 @@ public class Timesheet {
 		this.isClockedIn = isClockedIn;
 	}
 
-	public LocalDateTime getClockedInDateTime() {
+	public Date getClockedInDateTime() {
 		return clockedInDateTime;
 	}
 
-	public void setClockedInDateTime(LocalDateTime clockedInDateTime) {
+	public void setClockedInDateTime(Date clockedInDateTime) {
 		this.clockedInDateTime = clockedInDateTime;
 	}
 
@@ -36,11 +36,11 @@ public class Timesheet {
 		this.isClockedOut = isClockedOut;
 	}
 
-	public LocalDateTime getClockedOutDateTime() {
+	public Date getClockedOutDateTime() {
 		return clockedOutDateTime;
 	}
 
-	public void setClockedOutDateTime(LocalDateTime clockedOutDateTime) {
+	public void setClockedOutDateTime(Date clockedOutDateTime) {
 		this.clockedOutDateTime = clockedOutDateTime;
 	}
 

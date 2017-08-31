@@ -42,8 +42,19 @@ public class AssistantResources {
 	@GET
 	@Path("/shift-timings")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ComputingServicesResponse<StaffSchedule> schedule(@QueryParam("studentId") String studentId, @QueryParam("date") String date) {
+	public ComputingServicesResponse<StaffSchedule> schedule(@QueryParam("studentId") String studentId,
+			@QueryParam("date") String date) {
 		return AssistantOperations.getInstance().schedule(studentId, date);
+	}
+
+	@POST
+	@Path("/record-work")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ComputingServicesResponse<Void> recordTimesheet(@FormDataParam("operation") String operation,
+			@FormDataParam("studentId") String studentId, @FormDataParam("datetime") String datetime,
+			@FormDataParam("id") String id) {
+		return AssistantOperations.getInstance().recordTimesheet(operation, studentId, datetime, id);
 	}
 
 }

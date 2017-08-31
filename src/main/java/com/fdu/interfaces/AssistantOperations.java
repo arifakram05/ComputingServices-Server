@@ -16,6 +16,8 @@ public interface AssistantOperations extends Connection {
 
 	ComputingServicesResponse<StaffSchedule> schedule(String studentId, String date);
 
+	ComputingServicesResponse<Void> recordTimesheet(String operation, String studentId, String datetime, String id);
+
 	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class

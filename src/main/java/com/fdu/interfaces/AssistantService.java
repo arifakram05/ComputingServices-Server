@@ -74,16 +74,33 @@ public interface AssistantService {
 	Object download(String id, String requester) throws ComputingServicesException;
 
 	/**
-	 * Get assigned work schedule for a given user between given dates.
+	 * Get assigned work schedule of a given user for the given date.
 	 * 
-	 * @param request
-	 *            contains user Id, start and end dates
+	 * @param studentId
+	 *            student Id
+	 * @param date
+	 *            date in String format MMM dd, yyyy HH:mm
 	 * @return {@link List} of {@link StaffSchedule} containing all assigned
-	 *         shifts for given user between given dates
+	 *         shifts for given user for the given date
 	 * @throws ComputingServicesException
-	 *             {@link ComputingServicesException} containing success status
+	 *             {@link ComputingServicesResponse} containing success status
 	 *             of the operation
 	 */
 	List<StaffSchedule> getSchedule(String studentId, String date) throws ComputingServicesException;
+
+	/**
+	 * Record time sheet of the given user.
+	 * 
+	 * @param operation
+	 *            clocking-in or clocking-out
+	 * @param studentId
+	 *            student Id
+	 * @param datetime
+	 *            date and time of the operation in MMM dd, yyyy HH:mm format
+	 * @param id
+	 *            Id of the record to update
+	 */
+	void recordTimesheet(String operation, String studentId, String datetime, String id)
+			throws ComputingServicesException;
 
 }
