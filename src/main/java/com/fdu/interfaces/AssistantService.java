@@ -83,10 +83,10 @@ public interface AssistantService {
 	 * @return {@link List} of {@link StaffSchedule} containing all assigned
 	 *         shifts for given user for the given date
 	 * @throws ComputingServicesException
-	 *             {@link ComputingServicesResponse} containing success status
-	 *             of the operation
+	 *             {@link ComputingServicesException} in case of error during
+	 *             processing
 	 */
-	List<StaffSchedule> getSchedule(String studentId, String date) throws ComputingServicesException;
+	List<StaffSchedule> getShiftSchedule(String studentId, String date) throws ComputingServicesException;
 
 	/**
 	 * Record time sheet of the given user.
@@ -100,7 +100,43 @@ public interface AssistantService {
 	 * @param id
 	 *            Id of the record to update
 	 */
-	void recordTimesheet(String operation, String studentId, String datetime, String id)
+	void saveTimesheet(String operation, String studentId, String datetime, String id)
+			throws ComputingServicesException;
+
+	/**
+	 * Show time sheet for the given Lab Assistant between the given two dates
+	 * 
+	 * @param studentId
+	 *            Lab Assistant Id whose time sheet is to be retrieved
+	 * @param startDate
+	 *            start date
+	 * @param endDate
+	 *            end date
+	 * @return @link List} of {@link StaffSchedule} containing all time sheet
+	 *         information for given user for the given dates
+	 * @throws ComputingServicesException
+	 *             {@link ComputingServicesException} in case of error during
+	 *             processing
+	 */
+	List<StaffSchedule> getTimesheet(String studentId, String startDate, String endDate)
+			throws ComputingServicesException;
+
+	/**
+	 * Get assigned work schedule of a given user for the given two dates.
+	 * 
+	 * @param studentId
+	 *            student Id
+	 * @param startDate
+	 *            start date in String format MMM dd, yyyy HH:mm
+	 * @param endDate
+	 *            end date in String format MMM dd, yyyy HH:mm
+	 * @return {@link List} of {@link StaffSchedule} containing all assigned
+	 *         shifts for given user for the given dates
+	 * @throws ComputingServicesException
+	 *             {@link ComputingServicesException} in case of error during
+	 *             processing
+	 */
+	List<StaffSchedule> getShiftSchedule(String studentId, String startDate, String endDate)
 			throws ComputingServicesException;
 
 }

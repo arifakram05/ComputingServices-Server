@@ -41,11 +41,11 @@ public class AssistantOperationsImpl implements AssistantOperations {
 	}
 
 	@Override
-	public ComputingServicesResponse<StaffSchedule> schedule(String studentId, String date) {
+	public ComputingServicesResponse<StaffSchedule> getShiftSchedule(String studentId, String date) {
 		ComputingServicesResponse<StaffSchedule> response = new ComputingServicesResponse<>();
 		try {
 			LOGGER.info("User request received to show work schedule for " + studentId + " for the date " + date);
-			response.setResponse(getAssistantServiceInstance().getSchedule(studentId, date));
+			response.setResponse(getAssistantServiceInstance().getShiftSchedule(studentId, date));
 			response.setStatusCode(Response.Status.OK.getStatusCode());
 		} catch (Exception e) {
 			LOGGER.error("Error while fetching work schedule details of " + studentId + " for date " + date, e);
@@ -56,18 +56,49 @@ public class AssistantOperationsImpl implements AssistantOperations {
 	}
 
 	@Override
-	public ComputingServicesResponse<Void> recordTimesheet(String operation, String studentId, String datetime,
+	public ComputingServicesResponse<Void> saveTimesheet(String operation, String studentId, String datetime,
 			String id) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
 			LOGGER.info("User request received to record timesheet for " + studentId);
-			getAssistantServiceInstance().recordTimesheet(operation, studentId, datetime, id);
+			getAssistantServiceInstance().saveTimesheet(operation, studentId, datetime, id);
 			response.setMessage("Operation Success");
 			response.setStatusCode(Response.Status.OK.getStatusCode());
 		} catch (Exception e) {
 			LOGGER.error("Error while saving timesheet details of " + studentId, e);
 			response.setStatusCode(500);
 			response.setMessage("Error Occurred while saving timesheet details");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<StaffSchedule> getTimesheet(String studentId, String startDate, String endDate) {
+		ComputingServicesResponse<StaffSchedule> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("User request received to show time sheet for " + studentId + " for the dates " + startDate + " to " + endDate);
+			response.setResponse(getAssistantServiceInstance().getTimesheet(studentId, startDate, endDate));
+			response.setStatusCode(Response.Status.OK.getStatusCode());
+		} catch (Exception e) {
+			LOGGER.error("Error while fetching time sheet of " + studentId + " for dates " + startDate + " to " + endDate, e);
+			response.setStatusCode(500);
+			response.setMessage("Error Occurred while fetching time sheet");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<StaffSchedule> getShiftSchedule(String studentId, String startDate,
+			String endDate) {
+		ComputingServicesResponse<StaffSchedule> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("User request received to show work schedule for " + studentId + " for the dates " + startDate + " to " + endDate);
+			response.setResponse(getAssistantServiceInstance().getShiftSchedule(studentId, startDate, endDate));
+			response.setStatusCode(Response.Status.OK.getStatusCode());
+		} catch (Exception e) {
+			LOGGER.error("Error while fetching work schedule details of " + studentId + " for dates " + startDate + " to " + endDate, e);
+			response.setStatusCode(500);
+			response.setMessage("Error Occurred while fetching work schedule");
 		}
 		return response;
 	}

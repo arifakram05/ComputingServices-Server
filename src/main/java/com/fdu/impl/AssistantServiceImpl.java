@@ -175,7 +175,7 @@ public class AssistantServiceImpl implements AssistantService {
 	}
 
 	@Override
-	public List<StaffSchedule> getSchedule(String studentId, String date) throws ComputingServicesException {
+	public List<StaffSchedule> getShiftSchedule(String studentId, String date) throws ComputingServicesException {
 		List<StaffSchedule> staffSchedules = new ArrayList<>();
 		// get collection
 		MongoCollection<Document> staffScheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
@@ -199,7 +199,7 @@ public class AssistantServiceImpl implements AssistantService {
 	}
 
 	@Override
-	public void recordTimesheet(String operation, String studentId, String datetime, String id)
+	public void saveTimesheet(String operation, String studentId, String datetime, String id)
 			throws ComputingServicesException {
 		// get collection
 		MongoCollection<Document> staffScheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
@@ -221,6 +221,20 @@ public class AssistantServiceImpl implements AssistantService {
 		command.put("$set", detailsToUpdate);
 		// query
 		staffScheduleCollection.updateOne(eq(Constants.OBJECTID.getValue(), new ObjectId(id)), command);
+	}
+
+	@Override
+	public List<StaffSchedule> getTimesheet(String studentId, String startDate, String endDate)
+			throws ComputingServicesException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<StaffSchedule> getShiftSchedule(String studentId, String startDate, String endDate)
+			throws ComputingServicesException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -14,9 +14,13 @@ public interface AssistantOperations extends Connection {
 
 	ComputingServicesResponse<Void> updateProfile(String labassistant, Object resume, Object photo);
 
-	ComputingServicesResponse<StaffSchedule> schedule(String studentId, String date);
+	ComputingServicesResponse<StaffSchedule> getShiftSchedule(String studentId, String date);
 
-	ComputingServicesResponse<Void> recordTimesheet(String operation, String studentId, String datetime, String id);
+	ComputingServicesResponse<Void> saveTimesheet(String operation, String studentId, String datetime, String id);
+
+	ComputingServicesResponse<StaffSchedule> getTimesheet(String studentId, String startDate, String endDate);
+	
+	ComputingServicesResponse<StaffSchedule> getShiftSchedule(String studentId, String startDate, String endDate);
 
 	/**
 	 * Java 8 feature.<br/>

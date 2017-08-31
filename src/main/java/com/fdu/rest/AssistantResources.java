@@ -20,9 +20,9 @@ import com.sun.jersey.multipart.FormDataParam;
 public class AssistantResources {
 
 	@POST
-	@Path("/updateProfile")
+	@Path("/update-profile")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public ComputingServicesResponse<Void> updateLAProfile(@FormDataParam("labassistant") String labassistant,
+	public ComputingServicesResponse<Void> updateProfile(@FormDataParam("labassistant") String labassistant,
 			@FormDataParam("resume") InputStream resume,
 			@FormDataParam("resume") FormDataContentDisposition resumeDetail, @FormDataParam("photo") InputStream photo,
 			@FormDataParam("photo") FormDataContentDisposition photoDetail) {
@@ -32,29 +32,71 @@ public class AssistantResources {
 	}
 
 	/**
-	 * Show a Lab Assistant's schedule for the given dates.
+	 * Show a Lab Assistant's schedule for the given date.
 	 * 
-	 * @param request
-	 *            contains a start and end date.
+	 * @param studentId
+	 *            Lab Assistant Id
+	 * @param date
+	 *            date whose work schedule is to be retrieved
 	 * @return {@link ComputingServicesResponse} containing all the assigned
-	 *         shifts between two given dates
+	 *         shifts for the given date
 	 */
 	@GET
 	@Path("/shift-timings")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ComputingServicesResponse<StaffSchedule> schedule(@QueryParam("studentId") String studentId,
+	public ComputingServicesResponse<StaffSchedule> getShiftSchedule(@QueryParam("studentId") String studentId,
 			@QueryParam("date") String date) {
-		return AssistantOperations.getInstance().schedule(studentId, date);
+		return AssistantOperations.getInstance().getShiftSchedule(studentId, date);
 	}
 
 	@POST
 	@Path("/record-work")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ComputingServicesResponse<Void> recordTimesheet(@FormDataParam("operation") String operation,
+	public ComputingServicesResponse<Void> saveTimesheet(@FormDataParam("operation") String operation,
 			@FormDataParam("studentId") String studentId, @FormDataParam("datetime") String datetime,
 			@FormDataParam("id") String id) {
-		return AssistantOperations.getInstance().recordTimesheet(operation, studentId, datetime, id);
+		return AssistantOperations.getInstance().saveTimesheet(operation, studentId, datetime, id);
+	}
+
+	/**
+	 * Show a Lab Assistant's time sheet.
+	 * 
+	 * @param studentId
+	 *            student Id whose time sheet is to be fetched
+	 * @param startDate
+	 *            from date
+	 * @param endDate
+	 *            to date
+	 * @return {@link ComputingServicesResponse} containing all the time sheet
+	 *         information between two given dates
+	 */
+	@GET
+	@Path("/show/timesheet")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ComputingServicesResponse<StaffSchedule> getTimesheet(@QueryParam("studentId") String studentId,
+			@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+		return null;
+	}
+
+	/**
+	 * Show a Lab Assistant's schedule for the given two dates.
+	 * 
+	 * @param studentId
+	 *            Lab Assistant Id
+	 * @param startDate
+	 *            start date
+	 * @param endDate
+	 *            end date
+	 * @return {@link ComputingServicesResponse} containing all the assigned
+	 *         shifts for the given two dates
+	 */
+	@GET
+	@Path("/shift-timings")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ComputingServicesResponse<StaffSchedule> getShiftSchedule(@QueryParam("studentId") String studentId,
+			@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+		return null;
 	}
 
 }
