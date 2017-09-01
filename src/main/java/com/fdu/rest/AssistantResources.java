@@ -42,7 +42,7 @@ public class AssistantResources {
 	 *         shifts for the given date
 	 */
 	@GET
-	@Path("/shift-timings")
+	@Path("/single-schedule")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ComputingServicesResponse<StaffSchedule> getShiftSchedule(@QueryParam("studentId") String studentId,
 			@QueryParam("date") String date) {
@@ -60,7 +60,7 @@ public class AssistantResources {
 	}
 
 	/**
-	 * Show a Lab Assistant's time sheet.
+	 * Show a Lab Assistant's time sheet for the given two dates.
 	 * 
 	 * @param studentId
 	 *            student Id whose time sheet is to be fetched
@@ -92,11 +92,11 @@ public class AssistantResources {
 	 *         shifts for the given two dates
 	 */
 	@GET
-	@Path("/many-shift-timings")
+	@Path("/many-schedules")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ComputingServicesResponse<StaffSchedule> getShiftSchedule(@QueryParam("studentId") String studentId,
 			@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
-		return null;
+		return AssistantOperations.getInstance().getShiftSchedule(studentId, startDate, endDate);
 	}
 
 }

@@ -30,6 +30,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.result.DeleteResult;
 
@@ -194,10 +195,11 @@ public class AssistantServiceImpl implements AssistantService {
 		// query
 		try {
 			staffScheduleCollection
-					.find(and(eq(Constants.STUDENTID.getValue(), studentId), eq(Constants.DATE.getValue(), DateMechanic.convertStringToDateOnly(date))))
+					.find(and(eq(Constants.STUDENTID.getValue(), studentId),
+							eq(Constants.DATE.getValue(), DateMechanic.convertStringToDateOnly(date))))
 					.forEach(processRetreivedData);
 		} catch (ParseException e) {
-			LOGGER.error("Error while processing date ",e);
+			LOGGER.error("Error while processing date ", e);
 			throw new ComputingServicesException(e);
 		}
 		LOGGER.info("Staff Schedule Fetched");
@@ -213,11 +215,13 @@ public class AssistantServiceImpl implements AssistantService {
 		BasicDBObject detailsToUpdate = new BasicDBObject();
 		try {
 			if (operation.equals("clock-in")) {
-				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.ISCLOCKEDIN.getValue(), true);
-				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.CLOCKEDINDATETIME.getValue(), DateMechanic.convertStringToDateTime(datetime));
+				detailsToUpdate.put(Constants.TIMESHEET.getValue() + "." + Constants.ISCLOCKEDIN.getValue(), true);
+				detailsToUpdate.put(Constants.TIMESHEET.getValue() + "." + Constants.CLOCKEDINDATETIME.getValue(),
+						DateMechanic.convertStringToDateTime(datetime));
 			} else if (operation.equals("clock-out")) {
-				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.ISCLOCKEDOUT.getValue(), true);
-				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.CLOCKEDOUTDATETIME.getValue(), DateMechanic.convertStringToDateTime(datetime));
+				detailsToUpdate.put(Constants.TIMESHEET.getValue() + "." + Constants.ISCLOCKEDOUT.getValue(), true);
+				detailsToUpdate.put(Constants.TIMESHEET.getValue() + "." + Constants.CLOCKEDOUTDATETIME.getValue(),
+						DateMechanic.convertStringToDateTime(datetime));
 			}
 		} catch (Exception exception) {
 			throw new ComputingServicesException(exception);
@@ -239,8 +243,33 @@ public class AssistantServiceImpl implements AssistantService {
 	@Override
 	public List<StaffSchedule> getShiftSchedule(String studentId, String startDate, String endDate)
 			throws ComputingServicesException {
-		// TODO Auto-generated method stub
-		return null;
+		List<StaffSchedule> staffSchedules = new ArrayList<>();
+		// get collection
+		MongoCollection<Document> staffScheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
+		// processed retrieved data
+		Block<Document> processRetreivedData = (document) -> {
+			String retrivedDataAsJSON = document.toJson();
+			StaffSchedule schedule;
+			try {
+				schedule = new ObjectMapper().readValue(retrivedDataAsJSON, StaffSchedule.class);
+				staffSchedules.add(schedule);
+			} catch (IOException e) {
+				LOGGER.error("Error while processing staff schedule", e);
+			}
+		};
+		// query
+		try {
+			staffScheduleCollection
+					.find(and(eq(Constants.STUDENTID.getValue(), studentId),
+							Filters.gte(Constants.DATE.getValue(), DateMechanic.convertStringToDateOnly(startDate)),
+							Filters.lte(Constants.DATE.getValue(), DateMechanic.convertStringToDateOnly(endDate))))
+					.forEach(processRetreivedData);
+		} catch (ParseException e) {
+			LOGGER.error("Error while processing date ", e);
+			throw new ComputingServicesException(e);
+		}
+		LOGGER.info("Staff Schedule Fetched");
+		return staffSchedules;
 	}
 
 }
