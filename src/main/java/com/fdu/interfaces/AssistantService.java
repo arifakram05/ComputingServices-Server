@@ -104,24 +104,6 @@ public interface AssistantService {
 			throws ComputingServicesException;
 
 	/**
-	 * Show time sheet for the given Lab Assistant between the given two dates
-	 * 
-	 * @param studentId
-	 *            Lab Assistant Id whose time sheet is to be retrieved
-	 * @param startDate
-	 *            start date
-	 * @param endDate
-	 *            end date
-	 * @return @link List} of {@link StaffSchedule} containing all time sheet
-	 *         information for given user for the given dates
-	 * @throws ComputingServicesException
-	 *             {@link ComputingServicesException} in case of error during
-	 *             processing
-	 */
-	List<StaffSchedule> getTimesheet(String studentId, String startDate, String endDate)
-			throws ComputingServicesException;
-
-	/**
 	 * Get assigned work schedule of a given user for the given two dates.
 	 * 
 	 * @param studentId

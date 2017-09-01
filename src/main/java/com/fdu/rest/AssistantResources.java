@@ -60,26 +60,6 @@ public class AssistantResources {
 	}
 
 	/**
-	 * Show a Lab Assistant's time sheet for the given two dates.
-	 * 
-	 * @param studentId
-	 *            student Id whose time sheet is to be fetched
-	 * @param startDate
-	 *            from date
-	 * @param endDate
-	 *            to date
-	 * @return {@link ComputingServicesResponse} containing all the time sheet
-	 *         information between two given dates
-	 */
-	@GET
-	@Path("/show/timesheet")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ComputingServicesResponse<StaffSchedule> getTimesheet(@QueryParam("studentId") String studentId,
-			@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
-		return null;
-	}
-
-	/**
 	 * Show a Lab Assistant's schedule for the given two dates.
 	 * 
 	 * @param studentId

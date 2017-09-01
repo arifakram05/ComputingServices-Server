@@ -18,8 +18,6 @@ public interface AssistantOperations extends Connection {
 
 	ComputingServicesResponse<Void> saveTimesheet(String operation, String studentId, String datetime, String id);
 
-	ComputingServicesResponse<StaffSchedule> getTimesheet(String studentId, String startDate, String endDate);
-	
 	ComputingServicesResponse<StaffSchedule> getShiftSchedule(String studentId, String startDate, String endDate);
 
 	/**

@@ -234,13 +234,6 @@ public class AssistantServiceImpl implements AssistantService {
 	}
 
 	@Override
-	public List<StaffSchedule> getTimesheet(String studentId, String startDate, String endDate)
-			throws ComputingServicesException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<StaffSchedule> getShiftSchedule(String studentId, String startDate, String endDate)
 			throws ComputingServicesException {
 		List<StaffSchedule> staffSchedules = new ArrayList<>();

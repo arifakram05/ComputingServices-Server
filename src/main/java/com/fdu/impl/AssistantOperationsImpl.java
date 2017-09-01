@@ -73,30 +73,17 @@ public class AssistantOperationsImpl implements AssistantOperations {
 	}
 
 	@Override
-	public ComputingServicesResponse<StaffSchedule> getTimesheet(String studentId, String startDate, String endDate) {
-		ComputingServicesResponse<StaffSchedule> response = new ComputingServicesResponse<>();
-		try {
-			LOGGER.info("User request received to show time sheet for " + studentId + " for the dates " + startDate + " to " + endDate);
-			response.setResponse(getAssistantServiceInstance().getTimesheet(studentId, startDate, endDate));
-			response.setStatusCode(Response.Status.OK.getStatusCode());
-		} catch (Exception e) {
-			LOGGER.error("Error while fetching time sheet of " + studentId + " for dates " + startDate + " to " + endDate, e);
-			response.setStatusCode(500);
-			response.setMessage("Error Occurred while fetching time sheet");
-		}
-		return response;
-	}
-
-	@Override
 	public ComputingServicesResponse<StaffSchedule> getShiftSchedule(String studentId, String startDate,
 			String endDate) {
 		ComputingServicesResponse<StaffSchedule> response = new ComputingServicesResponse<>();
 		try {
-			LOGGER.info("User request received to show work schedule for " + studentId + " for the dates " + startDate + " to " + endDate);
+			LOGGER.info("User request received to show work schedule for " + studentId + " for the dates " + startDate
+					+ " to " + endDate);
 			response.setResponse(getAssistantServiceInstance().getShiftSchedule(studentId, startDate, endDate));
 			response.setStatusCode(Response.Status.OK.getStatusCode());
 		} catch (Exception e) {
-			LOGGER.error("Error while fetching work schedule details of " + studentId + " for dates " + startDate + " to " + endDate, e);
+			LOGGER.error("Error while fetching work schedule details of " + studentId + " for dates " + startDate
+					+ " to " + endDate, e);
 			response.setStatusCode(500);
 			response.setMessage("Error Occurred while fetching work schedule");
 		}
