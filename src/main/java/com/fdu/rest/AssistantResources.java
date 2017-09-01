@@ -92,7 +92,7 @@ public class AssistantResources {
 	 *         shifts for the given two dates
 	 */
 	@GET
-	@Path("/shift-timings")
+	@Path("/many-shift-timings")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ComputingServicesResponse<StaffSchedule> getShiftSchedule(@QueryParam("studentId") String studentId,
 			@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {

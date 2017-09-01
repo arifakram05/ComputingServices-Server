@@ -1,3 +1,5 @@
+
+
 package com.fdu.util;
 
 import java.text.ParseException;
@@ -14,10 +16,11 @@ import java.util.stream.Stream;
 
 public class DateMechanic {
 
-	private final static String sourceFormat = "MMM dd, yyyy HH:mm";
-	private final static String targetFormat = "MMM dd, yyyy";
-	private final static DateTimeFormatter dateTimeformatter = DateTimeFormatter.ofPattern(sourceFormat);
-	private final static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(sourceFormat);
+	private final static String DATE_TIME_FORMAT = "MMM dd, yyyy HH:mm";
+	private final static String DATE_ONLY_FORMAT = "MMM dd, yyyy";
+	private final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+	private final static SimpleDateFormat SIMPLE_DATE_TIME_FORMATTER = new SimpleDateFormat(DATE_TIME_FORMAT);
+	private final static SimpleDateFormat SIMPLE_DATE_ONLY_FORMATTER = new SimpleDateFormat(DATE_ONLY_FORMAT);
 
 	/**
 	 * Returns a list of all dates between start and end date; both dates being
@@ -35,11 +38,11 @@ public class DateMechanic {
 
 		List<String> dates = new ArrayList<String>();
 
-		LocalDate startLocalDate = LocalDate.parse(startDate, dateTimeformatter);
-		LocalDate endLocalDate = LocalDate.parse(endDate, dateTimeformatter);
+		LocalDate startLocalDate = LocalDate.parse(startDate, DATE_TIME_FORMATTER);
+		LocalDate endLocalDate = LocalDate.parse(endDate, DATE_TIME_FORMATTER);
 
 		Consumer<LocalDate> processLocalDateToString = (localDate) -> {
-			dates.add(localDate.format(dateTimeformatter));
+			dates.add(localDate.format(DATE_TIME_FORMATTER));
 		};
 		Stream.iterate(startLocalDate, date -> date.plusDays(1))
 				.limit(ChronoUnit.DAYS.between(startLocalDate, endLocalDate) + 1).forEach(processLocalDateToString);
@@ -56,8 +59,8 @@ public class DateMechanic {
 	 * @return formatted date in format MMM dd, yyyy
 	 */
 	public static String extractDateOnly(String givenDate) {
-		LocalDateTime localDate = LocalDateTime.parse(givenDate, dateTimeformatter);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(targetFormat);
+		LocalDateTime localDate = LocalDateTime.parse(givenDate, DATE_TIME_FORMATTER);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_ONLY_FORMAT);
 		return localDate.format(formatter);
 	}
 
@@ -83,8 +86,26 @@ public class DateMechanic {
 	 * @throws ParseException
 	 *             if error occurs while processing given date and time
 	 */
-	public static Date convertStringToDate(String datetime) throws ParseException {
-		return simpleDateFormat.parse(datetime);
+	public static Date convertStringToDateTime(String datetime) throws ParseException {
+		return SIMPLE_DATE_TIME_FORMATTER.parse(datetime);
+	}
+
+	/**
+	 * Convert a given date and time in {@link String} representation to a
+	 * {@link Date}
+	 * 
+	 * @param datetime
+	 *            date and time in {@link String} representation
+	 * @return only the date stored in {@link Date}
+	 * @throws ParseException
+	 *             if error occurs while processing given date and time
+	 */
+	public static Date convertStringToDateOnly(String datetime) throws ParseException {
+		return SIMPLE_DATE_ONLY_FORMATTER.parse(datetime);
+	}
+	
+	public static String convertDateToString(Date date) {
+		return SIMPLE_DATE_ONLY_FORMATTER.format(date);
 	}
 
 	/**

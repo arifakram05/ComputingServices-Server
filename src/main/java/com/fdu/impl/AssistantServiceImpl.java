@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,9 +192,14 @@ public class AssistantServiceImpl implements AssistantService {
 			}
 		};
 		// query
-		staffScheduleCollection
-				.find(and(eq(Constants.STUDENTID.getValue(), studentId), eq(Constants.DATE.getValue(), date)))
-				.forEach(processRetreivedData);
+		try {
+			staffScheduleCollection
+					.find(and(eq(Constants.STUDENTID.getValue(), studentId), eq(Constants.DATE.getValue(), DateMechanic.convertStringToDateOnly(date))))
+					.forEach(processRetreivedData);
+		} catch (ParseException e) {
+			LOGGER.error("Error while processing date ",e);
+			throw new ComputingServicesException(e);
+		}
 		LOGGER.info("Staff Schedule Fetched");
 		return staffSchedules;
 	}
@@ -208,10 +214,10 @@ public class AssistantServiceImpl implements AssistantService {
 		try {
 			if (operation.equals("clock-in")) {
 				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.ISCLOCKEDIN.getValue(), true);
-				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.CLOCKEDINDATETIME.getValue(), DateMechanic.convertStringToDate(datetime));
+				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.CLOCKEDINDATETIME.getValue(), DateMechanic.convertStringToDateTime(datetime));
 			} else if (operation.equals("clock-out")) {
 				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.ISCLOCKEDOUT.getValue(), true);
-				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.CLOCKEDOUTDATETIME.getValue(), DateMechanic.convertStringToDate(datetime));
+				detailsToUpdate.put(Constants.TIMESHEET.getValue()+"."+Constants.CLOCKEDOUTDATETIME.getValue(), DateMechanic.convertStringToDateTime(datetime));
 			}
 		} catch (Exception exception) {
 			throw new ComputingServicesException(exception);

@@ -1,14 +1,20 @@
 package com.fdu.model;
 
+import java.util.Date;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+
+import com.fdu.deserializers.StaffScheduleDeserializer;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonDeserialize(using = StaffScheduleDeserializer.class)
 public class StaffSchedule {
 
 	private Object _id;
 	private String groupId;
 	private String labName;
-	private String date;
+	private Date date;
 	private String start;
 	private String end;
 	private boolean allDay;
@@ -39,30 +45,6 @@ public class StaffSchedule {
 
 	public void setLabName(String labName) {
 		this.labName = labName;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public String getStart() {
-		return start;
-	}
-
-	public void setStart(String start) {
-		this.start = start;
-	}
-
-	public String getEnd() {
-		return end;
-	}
-
-	public void setEnd(String end) {
-		this.end = end;
 	}
 
 	public boolean isAllDay() {
@@ -103,6 +85,30 @@ public class StaffSchedule {
 
 	public void setTimesheet(Timesheet timesheet) {
 		this.timesheet = timesheet;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
+	}
+
+	public String getEnd() {
+		return end;
+	}
+
+	public void setEnd(String end) {
+		this.end = end;
 	}
 
 }

@@ -42,25 +42,29 @@ public class TimesheetDeserializer extends StdDeserializer<Timesheet> {
 		timesheet.setIsClockedIn(timesheetNode.get("isClockedIn").getBooleanValue());
 		timesheet.setIsClockedOut(timesheetNode.get("isClockedOut").getBooleanValue());
 
-		if (timesheetNode.get("clockedInDateTime").isNull()) {
-			timesheet.setClockedInDateTime(null);
-		} else {
-			String dateTime = timesheetNode.get("clockedInDateTime").get("$date").toString();
-			try {
-				timesheet.setClockedInDateTime(DateMechanic.createDateFromMillis(Long.parseLong(dateTime)));
-			} catch (NumberFormatException e) {
-				LOGGER.error("Error while deserializing Timesheet object ", e);
+		if (timesheetNode.get("clockedInDateTime") != null) {
+			if (timesheetNode.get("clockedInDateTime").isNull()) {
+				timesheet.setClockedInDateTime(null);
+			} else {
+				String dateTime = timesheetNode.get("clockedInDateTime").get("$date").toString();
+				try {
+					timesheet.setClockedInDateTime(DateMechanic.createDateFromMillis(Long.parseLong(dateTime)));
+				} catch (NumberFormatException e) {
+					LOGGER.error("Error while deserializing Timesheet object ", e);
+				}
 			}
 		}
 
-		if (timesheetNode.get("clockedOutDateTime").isNull()) {
-			timesheet.setClockedOutDateTime(null);
-		} else {
-			String dateTime = timesheetNode.get("clockedOutDateTime").get("$date").toString();
-			try {
-				timesheet.setClockedOutDateTime(DateMechanic.createDateFromMillis(Long.parseLong(dateTime)));
-			} catch (NumberFormatException e) {
-				LOGGER.error("Error while deserializing Timesheet object ", e);
+		if (timesheetNode.get("clockedOutDateTime") != null) {
+			if (timesheetNode.get("clockedOutDateTime").isNull()) {
+				timesheet.setClockedOutDateTime(null);
+			} else {
+				String dateTime = timesheetNode.get("clockedOutDateTime").get("$date").toString();
+				try {
+					timesheet.setClockedOutDateTime(DateMechanic.createDateFromMillis(Long.parseLong(dateTime)));
+				} catch (NumberFormatException e) {
+					LOGGER.error("Error while deserializing Timesheet object ", e);
+				}
 			}
 		}
 
