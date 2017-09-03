@@ -256,6 +256,7 @@ public class AssistantServiceImpl implements AssistantService {
 					.find(and(eq(Constants.STUDENTID.getValue(), studentId),
 							Filters.gte(Constants.DATE.getValue(), DateMechanic.convertStringToDateOnly(startDate)),
 							Filters.lte(Constants.DATE.getValue(), DateMechanic.convertStringToDateOnly(endDate))))
+					.sort(new BasicDBObject(Constants.DATE.getValue(), 1))
 					.forEach(processRetreivedData);
 		} catch (ParseException e) {
 			LOGGER.error("Error while processing date ", e);
