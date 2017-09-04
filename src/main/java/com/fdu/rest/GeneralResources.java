@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.fdu.interfaces.GeneralOperations;
 import com.fdu.model.ComputingServicesResponse;
@@ -30,9 +31,9 @@ public class GeneralResources {
 	@POST
 	@Path("/login")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public ComputingServicesResponse<User> login(@FormDataParam("userDetails") String userDetails) {
+	public Response login(@FormDataParam("userDetails") String userDetails) {
 		ComputingServicesResponse<User> response = GeneralOperations.getInstance().login(userDetails);
-		return response;
+		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
 	@POST
