@@ -22,8 +22,10 @@ import com.fdu.model.User;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.TextSearchOptions;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 
 public class ManagerServiceImpl implements ManagerService {
@@ -89,7 +91,7 @@ public class ManagerServiceImpl implements ManagerService {
 	public ComputingServicesResponse<Void> authorizeUser(User user) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		if (isUserAuthorized(user)) {
-			LOGGER.info("User with ID " + user.getUserId()+" is registered already");
+			LOGGER.info("User with ID " + user.getUserId() + " is registered already");
 			response.setStatusCode(404);
 			response.setMessage("User with ID " + user.getUserId() + " is already authorized to register");
 			return response;
@@ -143,8 +145,12 @@ public class ManagerServiceImpl implements ManagerService {
 				LOGGER.error("Error occurred while processing retrieved user details for search associates operation");
 			}
 		};
-		/*in order to do a text search, you must have already created an index on associates collection, otherwise mongoDB throws error*/
-		usersCollection.find(text(searchText, new TextSearchOptions().caseSensitive(false))).forEach(processRetreivedData);
+		/*
+		 * in order to do a text search, you must have already created an index
+		 * on associates collection, otherwise mongoDB throws error
+		 */
+		usersCollection.find(text(searchText, new TextSearchOptions().caseSensitive(false)))
+				.forEach(processRetreivedData);
 		return userList;
 	}
 
@@ -168,6 +174,21 @@ public class ManagerServiceImpl implements ManagerService {
 			throw new ComputingServicesException("Error while doing file processing");
 		}
 		return null;
+	}
+
+	@Override
+	public boolean updateJobApplicantStatus(String status, String studentId) {
+		// get collection
+		MongoCollection<Document> jobApplicantsCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
+		// query
+		long updatedDocumentsCount = jobApplicantsCollection
+				.updateOne(Filters.eq(Constants.STUDENTID.getValue(), studentId),
+						Updates.set(Constants.STATUS.getValue(), status))
+				.getModifiedCount();
+		if (updatedDocumentsCount == 0) {
+			return false;
+		}
+		return true;
 	}
 
 }

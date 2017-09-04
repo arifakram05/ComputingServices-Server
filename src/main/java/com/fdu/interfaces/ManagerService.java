@@ -30,6 +30,8 @@ public interface ManagerService {
 
 	boolean hireJobApplicant(LabAssistant labAssistant) throws ComputingServicesException;
 
+	boolean updateJobApplicantStatus(String status, String studentId);
+
 	boolean saveLabAssistant(LabAssistant labAssistant);
 
 	/**

@@ -40,17 +40,17 @@ public class ManagerOperationsImpl implements ManagerOperations {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
 			LOGGER.info("Preparing to delete job applicant");
-			if(getManagerServiceInstance().deleteJobApplicant(studentId)) {
-				LOGGER.info("Job applicant deleted - "+studentId);
+			if (getManagerServiceInstance().deleteJobApplicant(studentId)) {
+				LOGGER.info("Job applicant deleted - " + studentId);
 				response.setStatusCode(200);
-				response.setMessage("Successfully deleted job applicant with ID "+studentId);
+				response.setMessage("Successfully deleted job applicant with ID " + studentId);
 			} else {
-				LOGGER.info("Job applicant could not NOT deleted - "+studentId);
+				LOGGER.info("Job applicant could not NOT deleted - " + studentId);
 				response.setStatusCode(404);
-				response.setMessage("Could not delete job applicant with ID "+studentId);
+				response.setMessage("Could not delete job applicant with ID " + studentId);
 			}
 		} catch (Exception e) {
-			LOGGER.error("Error while deleting job applicant "+studentId, e);
+			LOGGER.error("Error while deleting job applicant " + studentId, e);
 			response.setStatusCode(500);
 			response.setMessage("Error occurred. Could not delete job applicant");
 		}
@@ -71,7 +71,29 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			LOGGER.error("Error while hiring job applicant " + labAssistant.getStudentId(), e);
 			response = new ComputingServicesResponse<>();
 			response.setStatusCode(500);
-			response.setMessage("Error Occurred while processing hire operation for "+labAssistant.getStudentId());
+			response.setMessage("Error Occurred while processing hire operation for " + labAssistant.getStudentId());
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> updateJobApplicantStatus(String status, String studentId) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("Updating Job Applicant " + studentId + " with status " + status);
+			if (getManagerServiceInstance().updateJobApplicantStatus(status, studentId)) {
+				LOGGER.info("Update Job Applicant success " + studentId + " with status " + status);
+				response.setStatusCode(200);
+				response.setMessage("Status of applicant with Id " + studentId + " has been updated successfully");
+			} else {
+				LOGGER.info("Update Job Applicant not successful for " + studentId + " for status " + status);
+				response.setStatusCode(500);
+				response.setMessage("Could not update status for " + studentId);
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error while updating job applicant " + studentId + " with status " + status, e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while updating job applicant status for student with Id " + studentId);
 		}
 		return response;
 	}
@@ -100,17 +122,17 @@ public class ManagerOperationsImpl implements ManagerOperations {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
 			LOGGER.info("Preparing to delete lab assistant");
-			if(getAssistantServiceInstance().deleteLabAssistant(studentId)) {
-				LOGGER.info("Lab Assistant deleted - "+studentId);
+			if (getAssistantServiceInstance().deleteLabAssistant(studentId)) {
+				LOGGER.info("Lab Assistant deleted - " + studentId);
 				response.setStatusCode(200);
-				response.setMessage("Successfully deleted lab assistant with ID "+studentId);
+				response.setMessage("Successfully deleted lab assistant with ID " + studentId);
 			} else {
-				LOGGER.info("Lab Assistant could NOT be deleted - "+studentId);
+				LOGGER.info("Lab Assistant could NOT be deleted - " + studentId);
 				response.setStatusCode(404);
-				response.setMessage("Could not delete lab assistant with ID "+studentId);
+				response.setMessage("Could not delete lab assistant with ID " + studentId);
 			}
 		} catch (Exception e) {
-			LOGGER.error("Error while deleting lab assistant "+studentId, e);
+			LOGGER.error("Error while deleting lab assistant " + studentId, e);
 			response.setStatusCode(500);
 			response.setMessage("Error occurred. Could not delete lab assistant");
 		}
@@ -131,7 +153,7 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			LOGGER.error("Error while updating lab assistant details " + labAssistant.getStudentId(), e);
 			response = new ComputingServicesResponse<>();
 			response.setStatusCode(500);
-			response.setMessage("Error occurred while updating lab assistant with ID "+labAssistant.getStudentId());
+			response.setMessage("Error occurred while updating lab assistant with ID " + labAssistant.getStudentId());
 		}
 		return response;
 	}
@@ -150,7 +172,7 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			LOGGER.error("Error while authorizing user " + user.getUserId(), e);
 			response = new ComputingServicesResponse<>();
 			response.setStatusCode(500);
-			response.setMessage("Error occurred while authorizing user with ID "+user.getUserId());
+			response.setMessage("Error occurred while authorizing user with ID " + user.getUserId());
 		}
 		return response;
 	}
@@ -169,7 +191,7 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			LOGGER.error("Error while updating role and priv details " + role.getRoleName(), e);
 			response = new ComputingServicesResponse<>();
 			response.setStatusCode(500);
-			response.setMessage("Error occurred while updating role "+role.getRoleName()+" and its privileges");
+			response.setMessage("Error occurred while updating role " + role.getRoleName() + " and its privileges");
 		}
 		return response;
 	}
@@ -226,7 +248,7 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			LOGGER.error("Error while saving role and priv details " + role.getRoleName(), e);
 			response = new ComputingServicesResponse<>();
 			response.setStatusCode(500);
-			response.setMessage("Error occurred while saving role "+role.getRoleName()+" and its privileges");
+			response.setMessage("Error occurred while saving role " + role.getRoleName() + " and its privileges");
 		}
 		return response;
 	}
@@ -236,17 +258,17 @@ public class ManagerOperationsImpl implements ManagerOperations {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
 			LOGGER.info("Preparing to delete role");
-			if(getRoleServiceInstance().deleteRole(roleId)) {
-				LOGGER.info("Role deleted - "+roleId);
+			if (getRoleServiceInstance().deleteRole(roleId)) {
+				LOGGER.info("Role deleted - " + roleId);
 				response.setStatusCode(200);
 				response.setMessage("Role deleted");
 			} else {
-				LOGGER.warn("Failed to delete the role with id "+roleId);
+				LOGGER.warn("Failed to delete the role with id " + roleId);
 				response.setStatusCode(500);
 				response.setMessage("Could not delete the role");
 			}
 		} catch (Exception e) {
-			LOGGER.error("Error while deleting the role "+roleId, e);
+			LOGGER.error("Error while deleting the role " + roleId, e);
 			response.setStatusCode(500);
 			response.setMessage("Failed to delete the role");
 		}
@@ -257,10 +279,10 @@ public class ManagerOperationsImpl implements ManagerOperations {
 	public Object download(String id, String requester) {
 		Object data = null;
 		try {
-			LOGGER.info("Preparing to download file for "+id+" for the requester "+requester);
+			LOGGER.info("Preparing to download file for " + id + " for the requester " + requester);
 			data = getAssistantServiceInstance().download(id, requester);
 		} catch (Exception e) {
-			LOGGER.error("Error while downloading file for "+id, e);
+			LOGGER.error("Error while downloading file for " + id, e);
 		}
 		return data;
 	}

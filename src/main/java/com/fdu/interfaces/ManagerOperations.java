@@ -33,6 +33,8 @@ public interface ManagerOperations extends Connection {
 	ComputingServicesResponse<Void> deleteJobApplicant(String studentId);
 
 	ComputingServicesResponse<Void> hireJobApplicant(String labAssistant);
+	
+	ComputingServicesResponse<Void> updateJobApplicantStatus(String status, String studentId);
 
 	/*
 	 * Below are services related to Lab Assistant

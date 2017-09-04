@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -51,6 +52,13 @@ public class ManagerResources {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response hireJobApplicant(@FormDataParam("labAssistant") String labAssistant) {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().hireJobApplicant(labAssistant);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+	
+	@PUT
+	@Path("/update-job-applicant-status")
+	public Response updateJobApplicantStatus(@QueryParam("status") String status, @QueryParam("studentId") String studentId) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateJobApplicantStatus(status, studentId);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
