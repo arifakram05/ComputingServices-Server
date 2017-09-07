@@ -27,7 +27,7 @@ public enum Constants {
 	COMMENTS("comments"),
 
 	// JOB STATUSES
-	SUBMITTED("Submitted"),
+	SUBMITTED("SUBMITTED"),
 
 	// STAFFSCHEDULE
 	GROUPID("groupId"),
