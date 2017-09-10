@@ -34,6 +34,8 @@ public interface ManagerService {
 
 	boolean saveLabAssistant(LabAssistant labAssistant);
 
+	boolean updateLabApplicantStatus(String status, String studentId);
+
 	/**
 	 * Check if a user is authorized for system access
 	 * 

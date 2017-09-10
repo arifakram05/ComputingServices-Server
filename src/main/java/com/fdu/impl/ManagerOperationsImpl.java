@@ -159,6 +159,28 @@ public class ManagerOperationsImpl implements ManagerOperations {
 	}
 
 	@Override
+	public ComputingServicesResponse<Void> updateLabApplicantStatus(String status, String studentId) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		try {
+			LOGGER.info("Updating Lab Applicant " + studentId + " with status " + status);
+			if (getManagerServiceInstance().updateLabApplicantStatus(status, studentId)) {
+				LOGGER.info("Update Lab Applicant success " + studentId + " with status " + status);
+				response.setStatusCode(200);
+				response.setMessage("Status of applicant with Id " + studentId + " has been updated successfully");
+			} else {
+				LOGGER.info("Update Lab Applicant not successful for " + studentId + " for status " + status);
+				response.setStatusCode(500);
+				response.setMessage("Could not update status for " + studentId);
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error while updating lab applicant " + studentId + " with status " + status, e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while updating lab applicant status for student with Id " + studentId);
+		}
+		return response;
+	}
+
+	@Override
 	public ComputingServicesResponse<Void> authorizeUser(String userDetails) {
 		ComputingServicesResponse<Void> response = null;
 		User user = null;

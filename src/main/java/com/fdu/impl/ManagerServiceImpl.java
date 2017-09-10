@@ -186,10 +186,19 @@ public class ManagerServiceImpl implements ManagerService {
 				.updateOne(Filters.eq(Constants.STUDENTID.getValue(), studentId),
 						Updates.set(Constants.STATUS.getValue(), status))
 				.getModifiedCount();
-		if (updatedDocumentsCount == 0) {
-			return false;
-		}
-		return true;
+		return updatedDocumentsCount == 0 ? false : true;
+	}
+
+	@Override
+	public boolean updateLabApplicantStatus(String status, String studentId) {
+		// get collection
+		MongoCollection<Document> labAssistantsCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+		// query
+		long updatedDocumentsCount = labAssistantsCollection
+				.updateOne(Filters.eq(Constants.STUDENTID.getValue(), studentId),
+						Updates.set(Constants.STATUS.getValue(), status))
+				.getModifiedCount();
+		return updatedDocumentsCount == 0 ? false : true;
 	}
 
 }

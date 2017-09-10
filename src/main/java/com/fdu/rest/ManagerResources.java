@@ -93,6 +93,13 @@ public class ManagerResources {
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
+	@PUT
+	@Path("/update-lab-assistant-status")
+	public Response updateLabApplicantStatus(@QueryParam("status") String status, @QueryParam("studentId") String studentId) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateLabApplicantStatus(status, studentId);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
 	@POST
 	@Path("/download")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)

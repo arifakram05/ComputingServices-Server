@@ -69,6 +69,8 @@ public interface ManagerOperations extends Connection {
 	 */
 	ComputingServicesResponse<Void> updateLabAssistant(String labAssistant);
 
+	ComputingServicesResponse<Void> updateLabApplicantStatus(String status, String studentId);
+
 	/**
 	 * Grant a user access for registering with this system
 	 * 
