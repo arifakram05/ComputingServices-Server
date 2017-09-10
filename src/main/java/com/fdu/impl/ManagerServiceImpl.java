@@ -80,7 +80,8 @@ public class ManagerServiceImpl implements ManagerService {
 				.append(Constants.RESUME.getValue(), labAssistant.getResume())
 				.append(Constants.STUDENTID.getValue(), labAssistant.getStudentId())
 				.append(Constants.EDUCATION.getValue(), labAssistant.getEducation())
-				.append(Constants.RESUME_EXTN.getValue(), labAssistant.getResumeExtn());
+				.append(Constants.RESUME_EXTN.getValue(), labAssistant.getResumeExtn())
+				.append(Constants.STATUS.getValue(), Constants.NEW.getValue());
 		// query
 		labAssistantsCollection.insertOne(document);
 		LOGGER.info("Saved a new LA with ID " + labAssistant.getStudentId());

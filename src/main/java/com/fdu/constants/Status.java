@@ -9,7 +9,7 @@ import org.codehaus.jackson.annotate.JsonValue;
 
 public enum Status {
 
-	NEW("New"), ACTIVE("Active"), INACTIVE("InActive"), ALUMNI("Alumni");
+	NEW("NEW"), ACTIVE("ACTIVE"), INACTIVE("INACTIVE"), ALUMNI("ALUMNI");
 
 	private String value;
 
@@ -21,13 +21,13 @@ public enum Status {
 		return value;
 	}
 
-	private static Map<String, Status> namesMap = new HashMap<String, Status>(4);
+	private static Map<String, Status> namesMap = new HashMap<String, Status>(3);
 
 	static {
-		namesMap.put("New", NEW);
-		namesMap.put("Active", ACTIVE);
-		namesMap.put("InActive", INACTIVE);
-		namesMap.put("Alumni", ALUMNI);
+		namesMap.put("NEW", NEW);
+		namesMap.put("ACTIVE", ACTIVE);
+		namesMap.put("INACTIVE", INACTIVE);
+		namesMap.put("ALUMNI", ALUMNI);
 	}
 
 	/**

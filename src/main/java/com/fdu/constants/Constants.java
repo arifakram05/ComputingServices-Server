@@ -65,7 +65,13 @@ public enum Constants {
 	ROLES("roles"),
 	STAFFSCHECULE("staffschedule"),
 	LABASSISTANTS("labassistants"),
-	JOBAPPLICANTS("jobapplicants");
+	JOBAPPLICANTS("jobapplicants"),
+
+	// statuses
+	ALUMNI("ALMUNI"),
+	ACTIVE("ACTIVE"),
+	INACTIVE("INACTIVE"),
+	NEW("NEW");
 
 	private String value;
 
