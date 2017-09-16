@@ -37,10 +37,10 @@ public interface RoleService {
 	 * @return {@link ComputingServicesResponse} containing operation success
 	 *         status
 	 */
-	default ComputingServicesResponse<Void> updateRole(Role role) {
+	default ComputingServicesResponse<Void> updateRole(Role role, String originalRoleName) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
-			update(role);
+			update(role, originalRoleName);
 			response.setMessage("Updated the role - " + role.getRoleName() + " - and its privileges");
 			response.setStatusCode(200);
 		} catch (ComputingServicesException e) {
@@ -64,9 +64,11 @@ public interface RoleService {
 	 * 
 	 * @param role
 	 *            role to update
+	 * @param originalRoleName
+	 *            original role name
 	 * @throws ComputingServicesException
 	 */
-	void update(Role role) throws ComputingServicesException;
+	void update(Role role, String originalRoleName) throws ComputingServicesException;
 
 	/**
 	 * get all the available roles and privileges associated with a role

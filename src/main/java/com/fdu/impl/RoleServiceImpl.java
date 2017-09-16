@@ -23,7 +23,9 @@ import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 
 public class RoleServiceImpl implements RoleService {
 
@@ -70,7 +72,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void update(Role role) {
+	public void update(Role role, String originalRoleName) {
 		// get collection
 		MongoCollection<Document> rolesCollection = database.getCollection(Constants.ROLES.getValue());
 
@@ -103,8 +105,21 @@ public class RoleServiceImpl implements RoleService {
 		command.put("$set", rolesObject);
 
 		// query to update
-		rolesCollection.updateOne(eq(Constants.OBJECTID.getValue(), new ObjectId(role.get_id().toString())), command);
+		UpdateResult updateResult = rolesCollection
+				.updateOne(eq(Constants.OBJECTID.getValue(), new ObjectId(role.get_id().toString())), command);
+		if (updateResult.getModifiedCount() > 0 && !originalRoleName.equals(role.getRoleName())) {
+			updateUserRole(originalRoleName, role.getRoleName());
+		}
 		LOGGER.info("Updated roles and privilges for the role - " + role.getRoleName());
+	}
+
+	public void updateUserRole(String oldRoleName, String newRoleName) {
+		// get collection
+		MongoCollection<Document> usersCollection = database.getCollection(Constants.USERS.getValue());
+		// query
+		usersCollection.updateMany(eq(Constants.ROLE.getValue(), oldRoleName),
+				Updates.set(Constants.ROLE.getValue(), newRoleName));
+		LOGGER.info("Updated USERS collection with new role name - " + newRoleName);
 	}
 
 	@Override
@@ -148,7 +163,8 @@ public class RoleServiceImpl implements RoleService {
 			}
 		};
 		// query
-		rolesCollection.find().projection(Projections.fields(Projections.include(Constants.ROLENAME.getValue()))).forEach(processRetreivedData);
+		rolesCollection.find().projection(Projections.fields(Projections.include(Constants.ROLENAME.getValue())))
+				.forEach(processRetreivedData);
 		LOGGER.info("All role names fetched");
 		return rolesList;
 	}

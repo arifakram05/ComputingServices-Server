@@ -33,7 +33,7 @@ public interface ManagerOperations extends Connection {
 	ComputingServicesResponse<Void> deleteJobApplicant(String studentId);
 
 	ComputingServicesResponse<Void> hireJobApplicant(String labAssistant);
-	
+
 	ComputingServicesResponse<Void> updateJobApplicantStatus(String status, String studentId);
 
 	/*
@@ -100,10 +100,12 @@ public interface ManagerOperations extends Connection {
 	 * 
 	 * @param role
 	 *            role and privileges to update
+	 * @param originalRoleName
+	 *            original role name
 	 * @return a {@link ComputingServicesResponse} containing success status of
 	 *         the operation
 	 */
-	ComputingServicesResponse<Void> updateRole(String role);
+	ComputingServicesResponse<Void> updateRole(String role, String originalRoleName);
 
 	/**
 	 * Get all roles and privileges associated with the role

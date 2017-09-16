@@ -54,11 +54,13 @@ public class ManagerResources {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().hireJobApplicant(labAssistant);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
-	
+
 	@PUT
 	@Path("/update-job-applicant-status")
-	public Response updateJobApplicantStatus(@QueryParam("status") String status, @QueryParam("studentId") String studentId) {
-		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateJobApplicantStatus(status, studentId);
+	public Response updateJobApplicantStatus(@QueryParam("status") String status,
+			@QueryParam("studentId") String studentId) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateJobApplicantStatus(status,
+				studentId);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
@@ -95,8 +97,10 @@ public class ManagerResources {
 
 	@PUT
 	@Path("/update-lab-assistant-status")
-	public Response updateLabApplicantStatus(@QueryParam("status") String status, @QueryParam("studentId") String studentId) {
-		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateLabApplicantStatus(status, studentId);
+	public Response updateLabApplicantStatus(@QueryParam("status") String status,
+			@QueryParam("studentId") String studentId) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateLabApplicantStatus(status,
+				studentId);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
@@ -140,11 +144,11 @@ public class ManagerResources {
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 
-	@POST
+	@PUT
 	@Path("/updateRole")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response updateRole(@FormDataParam("role") String role) {
-		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateRole(role);
+	public Response updateRole(@FormDataParam("role") String role, @FormDataParam("originalRoleName") String originalRoleName) {
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateRole(role, originalRoleName);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 

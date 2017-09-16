@@ -200,14 +200,14 @@ public class ManagerOperationsImpl implements ManagerOperations {
 	}
 
 	@Override
-	public ComputingServicesResponse<Void> updateRole(String roleDetails) {
+	public ComputingServicesResponse<Void> updateRole(String roleDetails, String originalRoleName) {
 		ComputingServicesResponse<Void> response = null;
 		Role role = null;
 		try {
 			LOGGER.info("Preparing to update role and privileges");
 			role = new ObjectMapper().readValue(roleDetails, Role.class);
 			LOGGER.info("Updating role " + role.getRoleName());
-			response = getRoleServiceInstance().updateRole(role);
+			response = getRoleServiceInstance().updateRole(role, originalRoleName);
 			LOGGER.info("Updating role and privs success " + role.getRoleName());
 		} catch (Exception e) {
 			LOGGER.error("Error while updating role and priv details " + role.getRoleName(), e);
