@@ -19,6 +19,7 @@ import com.fdu.model.JobApplicant;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 public class CareersServiceImpl implements CareersService {
 
@@ -79,6 +80,16 @@ public class CareersServiceImpl implements CareersService {
 				.sort(ascending(Constants.DATEAPPPLIED.getValue())).forEach(processRetreivedData);
 		LOGGER.info("All job applicant details fetched");
 		return allJobApplicants;
+	}
+
+	@Override
+	public String getJobApplicantStatus(String studentId) {
+		// get collection
+		MongoCollection<Document> jobApplicantsCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
+		// query
+		Document jobApplicantDocument = jobApplicantsCollection
+				.find(Filters.eq(Constants.STUDENTID.getValue(), studentId)).first();
+		return jobApplicantDocument != null ? jobApplicantDocument.getString(Constants.STATUS.getValue()) : null;
 	}
 
 }

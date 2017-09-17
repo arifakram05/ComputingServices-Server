@@ -57,4 +57,12 @@ public interface CareersService {
 	 */
 	List<JobApplicant> viewAllJobApplicants();
 
+	/**
+	 * Get the given student's job application status
+	 * 
+	 * @param studentId
+	 *            student Id
+	 * @return String indicating the status of the job applicant
+	 */
+	String getJobApplicantStatus(String studentId);
 }

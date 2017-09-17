@@ -75,7 +75,7 @@ public class GeneralOperationsImpl implements GeneralOperations {
 	public ComputingServicesResponse<Void> canUserRegister(String userId) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		try {
-			LOGGER.info("Preparing to check if a user can register "+userId);
+			LOGGER.info("Preparing to check if a user can register " + userId);
 			response = getRegisterServiceInstance().canUserRegister(userId);
 			if (response.getStatusCode() == 200) {
 				response.setMessage("You are authorized to register, please continue");
@@ -89,7 +89,7 @@ public class GeneralOperationsImpl implements GeneralOperations {
 			response.setStatusCode(500);
 			response.setMessage("Error occurred while verifying. Please contact Lab Assistant or Lab Manager");
 		}
-		LOGGER.info("User Registration check for complete for "+userId);
+		LOGGER.info("User Registration check for complete for " + userId);
 		return response;
 	}
 
@@ -98,9 +98,9 @@ public class GeneralOperationsImpl implements GeneralOperations {
 		ComputingServicesResponse<User> response = new ComputingServicesResponse<>();
 		List<User> userList = null;
 		try {
-			LOGGER.info("Preparing to search for users with pattern: "+searchText);
+			LOGGER.info("Preparing to search for users with pattern: " + searchText);
 			userList = getManagerServiceInstance().searchUsers(searchText);
-			LOGGER.info("Users searched and retrieved number is "+userList.size());
+			LOGGER.info("Users searched and retrieved number is " + userList.size());
 			response.setStatusCode(200);
 			response.setMessage("List of all users that match search criteria");
 			response.setResponse(userList);
@@ -108,6 +108,32 @@ public class GeneralOperationsImpl implements GeneralOperations {
 			LOGGER.error("Error while fetching users per search criteria", e);
 			response.setStatusCode(500);
 			response.setMessage("Error occurred. Could not retrieve users per your search criteria");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> checkJobApplicantStatus(String studentId) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		LOGGER.info("Preparing to check the status of the job applicant: " + studentId);
+		try {
+			String status = getCareersServiceInstance().getJobApplicantStatus(studentId);
+			if (status != null) {
+				response.setMessage(status);
+				response.setStatusCode(200);
+			} else {
+				response.setMessage("The student with given ID has not submitted an application. "
+						+ "Please note that if your application is more than 3 months old, "
+						+ "you will have to re-submit the application. Also, if you are rejected, "
+						+ "your record will be deleted from our database. In such case, a candidate "
+						+ "has to submit a new application when there are job openings.");
+				response.setStatusCode(404);
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error occurred while trying to check job status", e);
+			response.setStatusCode(500);
+			response.setMessage(
+					"Error occurred while trying to check job status. Please contact Lab Assistant or Lab Manager.");
 		}
 		return response;
 	}

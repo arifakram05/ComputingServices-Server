@@ -39,6 +39,14 @@ public interface GeneralOperations extends Connection {
 	ComputingServicesResponse<User> searchUsers(String searchText);
 
 	/**
+	 * Check status of a job applicant
+	 * 
+	 * @param studentId
+	 * @return {@link ComputingServicesResponse} containing response details
+	 */
+	ComputingServicesResponse<Void> checkJobApplicantStatus(String studentId);
+
+	/**
 	 * Apply for a job as a lab assistant
 	 * 
 	 * @param application
@@ -57,7 +65,7 @@ public interface GeneralOperations extends Connection {
 	 *         this interface
 	 */
 	static GeneralOperationsImpl getInstance() {
-		if(instanceMap.get("GeneralOperations") == null) {
+		if (instanceMap.get("GeneralOperations") == null) {
 			instanceMap.put("GeneralOperations", new GeneralOperationsImpl());
 		}
 		return (GeneralOperationsImpl) instanceMap.get("GeneralOperations");
@@ -68,28 +76,28 @@ public interface GeneralOperations extends Connection {
 	 */
 
 	default LoginService getLoginServiceInstance() {
-		if(instanceMap.get("LoginService") == null) {
+		if (instanceMap.get("LoginService") == null) {
 			instanceMap.put("LoginService", new LoginServiceImpl(getDBConnection()));
 		}
 		return (LoginServiceImpl) instanceMap.get("LoginService");
 	}
 
 	default RegisterService getRegisterServiceInstance() {
-		if(instanceMap.get("RegisterService") == null) {
+		if (instanceMap.get("RegisterService") == null) {
 			instanceMap.put("RegisterService", new RegisterServiceImpl(getDBConnection()));
 		}
 		return (RegisterServiceImpl) instanceMap.get("RegisterService");
 	}
 
 	default CareersService getCareersServiceInstance() {
-		if(instanceMap.get("CareersService") == null) {
+		if (instanceMap.get("CareersService") == null) {
 			instanceMap.put("CareersService", new CareersServiceImpl(getDBConnection()));
 		}
 		return (CareersServiceImpl) instanceMap.get("CareersService");
 	}
 
 	default ManagerService getManagerServiceInstance() {
-		if(instanceMap.get("ManagerService") == null) {
+		if (instanceMap.get("ManagerService") == null) {
 			instanceMap.put("ManagerService", new ManagerServiceImpl(getDBConnection()));
 		}
 		return (ManagerServiceImpl) instanceMap.get("ManagerService");

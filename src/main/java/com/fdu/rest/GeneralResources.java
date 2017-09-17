@@ -6,10 +6,12 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import com.fdu.interfaces.GeneralOperations;
 import com.fdu.model.ComputingServicesResponse;
@@ -62,10 +64,18 @@ public class GeneralResources {
 	@Path("/careers")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public ComputingServicesResponse<Void> careers(@FormDataParam("application") String application,
-			@FormDataParam("resume") InputStream resume, @FormDataParam("resume") FormDataContentDisposition fileDetail) {
+			@FormDataParam("resume") InputStream resume,
+			@FormDataParam("resume") FormDataContentDisposition fileDetail) {
 
 		ComputingServicesResponse<Void> response = GeneralOperations.getInstance().careers(application, resume);
 		return response;
+	}
+
+	@GET
+	@Path("/check-status/{id}")
+	public Response checkJobApplicantStatus(@PathParam("id") String studentId) {
+		ComputingServicesResponse<Void> response = GeneralOperations.getInstance().checkJobApplicantStatus(studentId);
+		return Response.status(Status.OK).entity(response).build();
 	}
 
 }
