@@ -39,6 +39,7 @@ public enum Constants {
 	BGCOLOR("backgroundColor"),
 	DATE("date"),
 	TIMESHEET("timesheet"),
+	ISAPPROVED("isApproved"),
 
 	//USERS
 	USERID("userId"),

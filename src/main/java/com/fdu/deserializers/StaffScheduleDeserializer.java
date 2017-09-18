@@ -55,6 +55,7 @@ public class StaffScheduleDeserializer extends StdDeserializer<StaffSchedule> {
 		staffSchedule.setStudentId(staffScheduleNode.get(Constants.STUDENTID.getValue()).getTextValue());
 		staffSchedule.setBackgroundColor(staffScheduleNode.get(Constants.BGCOLOR.getValue()).getTextValue());
 		staffSchedule.setAllDay(staffScheduleNode.get(Constants.ALLDAY.getValue()).getBooleanValue());
+		staffSchedule.setApproved(staffScheduleNode.get(Constants.ISAPPROVED.getValue()).getBooleanValue());
 		staffSchedule.setLabName(staffScheduleNode.get(Constants.LABNAME.getValue()).getTextValue());
 		staffSchedule.setStart(staffScheduleNode.get(Constants.START.getValue()).getTextValue());
 		staffSchedule.setEnd(staffScheduleNode.get(Constants.END.getValue()).getTextValue());

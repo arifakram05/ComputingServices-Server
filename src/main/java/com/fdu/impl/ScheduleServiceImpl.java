@@ -51,6 +51,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		document.append(Constants.START.getValue(), DateMechanic.extractTimeOnly(staffschedule.getStart()));
 		document.append(Constants.END.getValue(), DateMechanic.extractTimeOnly(staffschedule.getEnd()));
 		document.append(Constants.ALLDAY.getValue(), staffschedule.isAllDay());
+		document.append(Constants.ISAPPROVED.getValue(), staffschedule.isApproved());
 		document.append(Constants.STUDENTID.getValue(), staffschedule.getStudentId());
 		document.append(Constants.TITLE.getValue(), staffschedule.getTitle());
 		document.append(Constants.BGCOLOR.getValue(), staffschedule.getBackgroundColor());
@@ -150,6 +151,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		document.append(Constants.START.getValue(), DateMechanic.extractTimeOnly(staffschedule.getStart()));
 		document.append(Constants.END.getValue(), DateMechanic.extractTimeOnly(staffschedule.getEnd()));
 		document.append(Constants.ALLDAY.getValue(), staffschedule.isAllDay());
+		document.append(Constants.ISAPPROVED.getValue(), staffschedule.isApproved());
 		document.append(Constants.STUDENTID.getValue(), staffschedule.getStudentId());
 		document.append(Constants.TITLE.getValue(), staffschedule.getTitle());
 		document.append(Constants.BGCOLOR.getValue(), staffschedule.getBackgroundColor());

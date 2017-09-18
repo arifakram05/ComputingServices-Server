@@ -22,6 +22,7 @@ public class StaffSchedule {
 	private String title; // corresponds to student's name
 	private String backgroundColor;
 	private Timesheet timesheet;
+	private boolean isApproved;
 
 	public Object get_id() {
 		return _id;
@@ -109,6 +110,14 @@ public class StaffSchedule {
 
 	public void setEnd(String end) {
 		this.end = end;
+	}
+
+	public boolean isApproved() {
+		return isApproved;
+	}
+
+	public void setApproved(boolean isApproved) {
+		this.isApproved = isApproved;
 	}
 
 }
