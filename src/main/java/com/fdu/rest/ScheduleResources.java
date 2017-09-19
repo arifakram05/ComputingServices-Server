@@ -16,7 +16,8 @@ import com.fdu.model.StaffSchedule;
 import com.sun.jersey.multipart.FormDataParam;
 
 /**
- * Consists of all end-points concerning staff schedule and staff assistant schedule
+ * Consists of all end-points concerning staff schedule and staff assistant
+ * schedule
  * 
  * @author arifakrammohammed
  *
@@ -44,7 +45,8 @@ public class ScheduleResources {
 	/**
 	 * get all events happening in a staff
 	 * 
-	 * @return {@link ComputingServicesResponse} containing {@link StaffSchedule}
+	 * @return {@link ComputingServicesResponse} containing
+	 *         {@link StaffSchedule}
 	 */
 	@GET
 	@Path("/fetch")
@@ -112,6 +114,38 @@ public class ScheduleResources {
 	@Path("/delete-all")
 	public Response deleteManyEvents(@QueryParam("groupId") String groupId) {
 		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().deleteManyEvents(groupId);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	/**
+	 * approve an event on the staff calendar
+	 * 
+	 * @param staffschedule
+	 *            event to update
+	 * @return {@link ComputingServicesResponse} containing operation status
+	 *         details
+	 */
+	@POST
+	@Path("/approve")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response approveStaffSchedule(@FormDataParam("staffschedule") String staffschedule) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().approveStaffSchedule(staffschedule);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	/**
+	 * approve all related events
+	 * 
+	 * @param staffschedule
+	 *            event to udpate
+	 * @return {@link ComputingServicesResponse} containing operation status
+	 *         details
+	 */
+	@POST
+	@Path("/approve-all")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response approveManyEvents(@FormDataParam("staffschedule") String staffschedule) {
+		ComputingServicesResponse<Void> response = ScheduleOperations.getInstance().approveManyEvents(staffschedule);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 

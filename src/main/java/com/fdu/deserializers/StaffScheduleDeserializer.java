@@ -48,17 +48,34 @@ public class StaffScheduleDeserializer extends StdDeserializer<StaffSchedule> {
 			if (staffScheduleNode.get(Constants.OBJECTID.getValue()).isValueNode()) {
 				staffSchedule.set_id(staffScheduleNode.get(Constants.OBJECTID.getValue()).getTextValue());
 			} else {
-				staffSchedule.set_id(staffScheduleNode.get(Constants.OBJECTID.getValue()).get(Constants.$OBJECTID.getValue()).getTextValue());
+				staffSchedule.set_id(staffScheduleNode.get(Constants.OBJECTID.getValue())
+						.get(Constants.$OBJECTID.getValue()).getTextValue());
 			}
 		}
-		staffSchedule.setTitle(staffScheduleNode.get(Constants.TITLE.getValue()).getTextValue());
-		staffSchedule.setStudentId(staffScheduleNode.get(Constants.STUDENTID.getValue()).getTextValue());
-		staffSchedule.setBackgroundColor(staffScheduleNode.get(Constants.BGCOLOR.getValue()).getTextValue());
-		staffSchedule.setAllDay(staffScheduleNode.get(Constants.ALLDAY.getValue()).getBooleanValue());
-		staffSchedule.setApproved(staffScheduleNode.get(Constants.ISAPPROVED.getValue()).getBooleanValue());
-		staffSchedule.setLabName(staffScheduleNode.get(Constants.LABNAME.getValue()).getTextValue());
-		staffSchedule.setStart(staffScheduleNode.get(Constants.START.getValue()).getTextValue());
-		staffSchedule.setEnd(staffScheduleNode.get(Constants.END.getValue()).getTextValue());
+		if (staffScheduleNode.get(Constants.TITLE.getValue()) != null) {
+			staffSchedule.setTitle(staffScheduleNode.get(Constants.TITLE.getValue()).getTextValue());
+		}
+		if (staffScheduleNode.get(Constants.STUDENTID.getValue()) != null) {
+			staffSchedule.setStudentId(staffScheduleNode.get(Constants.STUDENTID.getValue()).getTextValue());
+		}
+		if (staffScheduleNode.get(Constants.BGCOLOR.getValue()) != null) {
+			staffSchedule.setBackgroundColor(staffScheduleNode.get(Constants.BGCOLOR.getValue()).getTextValue());
+		}
+		if (staffScheduleNode.get(Constants.ALLDAY.getValue()) != null) {
+			staffSchedule.setAllDay(staffScheduleNode.get(Constants.ALLDAY.getValue()).getBooleanValue());
+		}
+		if (staffScheduleNode.get(Constants.ISAPPROVED.getValue()) != null) {
+			staffSchedule.setApproved(staffScheduleNode.get(Constants.ISAPPROVED.getValue()).getBooleanValue());
+		}
+		if (staffScheduleNode.get(Constants.LABNAME.getValue()) != null) {
+			staffSchedule.setLabName(staffScheduleNode.get(Constants.LABNAME.getValue()).getTextValue());
+		}
+		if (staffScheduleNode.get(Constants.START.getValue()) != null) {
+			staffSchedule.setStart(staffScheduleNode.get(Constants.START.getValue()).getTextValue());
+		}
+		if (staffScheduleNode.get(Constants.END.getValue()) != null) {
+			staffSchedule.setEnd(staffScheduleNode.get(Constants.END.getValue()).getTextValue());
+		}
 		if (staffScheduleNode.get(Constants.GROUPID.getValue()) != null) {
 			staffSchedule.setGroupId(staffScheduleNode.get(Constants.GROUPID.getValue()).getTextValue());
 		}
@@ -80,8 +97,8 @@ public class StaffScheduleDeserializer extends StdDeserializer<StaffSchedule> {
 		// this is the way to call another customer deserializer from a custom
 		// deserializer; else Timesheet object will be set as null
 		if (staffScheduleNode.get(Constants.TIMESHEET.getValue()) != null) {
-			Timesheet timesheet = new ObjectMapper().readValue(staffScheduleNode.get(Constants.TIMESHEET.getValue()).toString(),
-					Timesheet.class);
+			Timesheet timesheet = new ObjectMapper()
+					.readValue(staffScheduleNode.get(Constants.TIMESHEET.getValue()).toString(), Timesheet.class);
 			staffSchedule.setTimesheet(timesheet);
 		}
 

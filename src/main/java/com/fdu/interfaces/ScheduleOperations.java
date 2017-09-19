@@ -32,6 +32,10 @@ public interface ScheduleOperations extends Connection {
 
 	ComputingServicesResponse<Void> deleteManyEvents(String groupId);
 
+	ComputingServicesResponse<Void> approveStaffSchedule(String staffschedule);
+
+	ComputingServicesResponse<Void> approveManyEvents(String staffschedule);
+
 	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class

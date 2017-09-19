@@ -13,7 +13,7 @@ import com.fdu.model.StaffSchedule;
 public class ScheduleOperationsImpl implements ScheduleOperations {
 
 	private final static Logger LOGGER = Logger.getLogger(ManagerOperationsImpl.class);
-	
+
 	@Override
 	public ComputingServicesResponse<Void> saveStaffSchedule(String staffscheduleDetails) {
 		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
@@ -100,11 +100,11 @@ public class ScheduleOperationsImpl implements ScheduleOperations {
 		try {
 			LOGGER.info("Preparing to delete an event from staff calendar");
 			getScheduleServiceInstance().deleteStaffSchedule(eventId);
-			LOGGER.info("Event to deleted - "+eventId);
+			LOGGER.info("Event to deleted - " + eventId);
 			response.setStatusCode(200);
-			response.setMessage("Deleted");			
+			response.setMessage("Deleted");
 		} catch (Exception e) {
-			LOGGER.error("Error while deleting event from staff calendar "+eventId, e);
+			LOGGER.error("Error while deleting event from staff calendar " + eventId, e);
 			response.setStatusCode(500);
 			response.setMessage("Failed to delete event from staff calendar");
 		}
@@ -117,13 +117,51 @@ public class ScheduleOperationsImpl implements ScheduleOperations {
 		try {
 			LOGGER.info("Preparing to delete multiple events from staff calendar");
 			getScheduleServiceInstance().deleteManyEvents(groupId);
-			LOGGER.info("Group Events to deleted - "+groupId);
+			LOGGER.info("Group Events to deleted - " + groupId);
 			response.setStatusCode(200);
-			response.setMessage("Deleted");			
+			response.setMessage("Deleted");
 		} catch (Exception e) {
-			LOGGER.error("Error while deleting many events from staff calendar "+groupId, e);
+			LOGGER.error("Error while deleting many events from staff calendar " + groupId, e);
 			response.setStatusCode(500);
 			response.setMessage("Failed to delete events from staff calendar");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> approveStaffSchedule(String staffscheduleDetails) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		StaffSchedule staffschedule = null;
+		try {
+			LOGGER.info("Preparing to approve an event on staff schedule");
+			staffschedule = new ObjectMapper().readValue(staffscheduleDetails, StaffSchedule.class);
+			getScheduleServiceInstance().approveStaffSchedule(staffschedule);
+			response.setStatusCode(200);
+			response.setMessage("Shift approved");
+			LOGGER.info("Approving staff schedule success");
+		} catch (Exception e) {
+			LOGGER.error("Error while approving staff schedule details " + staffschedule.toString(), e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while approving shift");
+		}
+		return response;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> approveManyEvents(String staffscheduleDetails) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		StaffSchedule staffschedule = null;
+		try {
+			LOGGER.info("Preparing to approve many events on staff schedule");
+			staffschedule = new ObjectMapper().readValue(staffscheduleDetails, StaffSchedule.class);
+			getScheduleServiceInstance().approveManyEvents(staffschedule);
+			response.setStatusCode(200);
+			response.setMessage("All shifts approved");
+			LOGGER.info("Approving many staff schedule events success");
+		} catch (Exception e) {
+			LOGGER.error("Error while approving many staff schedule events details " + staffschedule.toString(), e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred while approving shifts");
 		}
 		return response;
 	}

@@ -23,6 +23,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Updates;
 
 public class ScheduleServiceImpl implements ScheduleService {
 
@@ -179,6 +180,29 @@ public class ScheduleServiceImpl implements ScheduleService {
 		// query
 		staffscheduleCollection.deleteMany(eq(Constants.GROUPID.getValue(), groupId));
 		LOGGER.info("Deleted all events of group " + groupId);
+	}
+
+	@Override
+	public void approveStaffSchedule(StaffSchedule staffschedule) throws ComputingServicesException {
+		// get collection
+		MongoCollection<Document> staffscheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
+		// query to update
+		staffscheduleCollection.updateOne(
+				eq(Constants.OBJECTID.getValue(), new ObjectId(staffschedule.get_id().toString())),
+				Updates.combine(Updates.set(Constants.ISAPPROVED.getValue(), staffschedule.isApproved()),
+						Updates.set(Constants.BGCOLOR.getValue(), staffschedule.getBackgroundColor())));
+		LOGGER.info("Approved the staff schedule");
+	}
+
+	@Override
+	public void approveManyEvents(StaffSchedule staffschedule) throws ComputingServicesException {
+		// get collection
+		MongoCollection<Document> staffscheduleCollection = database.getCollection(Constants.STAFFSCHECULE.getValue());
+		// query to update
+		staffscheduleCollection.updateMany(eq(Constants.GROUPID.getValue(), staffschedule.getGroupId()),
+				Updates.combine(Updates.set(Constants.ISAPPROVED.getValue(), staffschedule.isApproved()),
+						Updates.set(Constants.BGCOLOR.getValue(), staffschedule.getBackgroundColor())));
+		LOGGER.info("Approved the staff schedules");
 	}
 
 }

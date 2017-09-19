@@ -19,4 +19,7 @@ public interface ScheduleService {
 
 	void deleteManyEvents(String groupId);
 
+	void approveStaffSchedule(StaffSchedule staffschedule) throws ComputingServicesException;
+
+	void approveManyEvents(StaffSchedule staffschedule) throws ComputingServicesException;
 }
