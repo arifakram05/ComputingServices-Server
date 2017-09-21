@@ -19,6 +19,7 @@ import com.fdu.interfaces.ManagerService;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.LabAssistant;
 import com.fdu.model.User;
+import com.fdu.model.Wiki;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -199,6 +200,23 @@ public class ManagerServiceImpl implements ManagerService {
 						Updates.set(Constants.STATUS.getValue(), status))
 				.getModifiedCount();
 		return updatedDocumentsCount == 0 ? false : true;
+	}
+
+	@Override
+	public void uploadWiki(Wiki wiki) {
+		// get collection
+		MongoCollection<Document> jobApplicantsCollection = database.getCollection(Constants.WIKIPAGES.getValue());
+		// create document
+		Document document = new Document();
+		// add document properties
+		document.append(Constants.FILENAME.getValue(), wiki.getFileName());
+		document.append(Constants.FILE_EXTN.getValue(), wiki.getFileExtn());
+		document.append(Constants.FILE_DATA.getValue(), wiki.getFileData());
+		//document.append(Constants.UPLOADED_ON.getValue(), wiki.getUploadedOn());
+		document.append(Constants.UPLOADED_BY.getValue(), wiki.getUploadedBy());
+		document.append(Constants.DESCRIPTION.getValue(), wiki.getDescription());
+		// save document
+		jobApplicantsCollection.insertOne(document);
 	}
 
 }

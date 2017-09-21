@@ -1,7 +1,9 @@
 package com.fdu.impl;
 
+import java.io.InputStream;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -11,6 +13,7 @@ import com.fdu.model.JobApplicant;
 import com.fdu.model.LabAssistant;
 import com.fdu.model.Role;
 import com.fdu.model.User;
+import com.fdu.model.Wiki;
 
 public class ManagerOperationsImpl implements ManagerOperations {
 
@@ -307,6 +310,28 @@ public class ManagerOperationsImpl implements ManagerOperations {
 			LOGGER.error("Error while downloading file for " + id, e);
 		}
 		return data;
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> uploadWiki(String wiki, Object wikiPage) {
+		ComputingServicesResponse<Void> response;
+		Wiki wikiObject;
+		try {
+			wikiObject = new ObjectMapper().readValue(wiki, Wiki.class);
+			wikiObject.setFileData(IOUtils.toByteArray((InputStream) wikiPage));
+			LOGGER.info("Recording a new wiki page uploaded by " + wikiObject.getUploadedBy());
+			getManagerServiceInstance().uploadWiki(wikiObject);
+			response = new ComputingServicesResponse<>();
+			response.setMessage("File Uploaded Successfully");
+			response.setStatusCode(200);
+			LOGGER.info("Saved Wiki details successfully");
+		} catch (Exception e) {
+			LOGGER.error("Error while saving Wiki", e);
+			response = new ComputingServicesResponse<>();
+			response.setStatusCode(500);
+			response.setMessage("Error Occurred while uploading the file");
+		}
+		return response;
 	}
 
 }

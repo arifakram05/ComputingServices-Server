@@ -149,10 +149,12 @@ public class AssistantServiceImpl implements AssistantService {
 		InputStream inputStream = null;
 		MongoCollection<Document> laCollection = null;
 		// get collection
-		if (requester.equalsIgnoreCase("jobapplicants")) {
+		if (requester.equalsIgnoreCase(Constants.JOBAPPLICANTS.getValue())) {
 			laCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
-		} else if (requester.equalsIgnoreCase("labassistants")) {
+		} else if (requester.equalsIgnoreCase(Constants.LABASSISTANTS.getValue())) {
 			laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+		} else if (requester.equalsIgnoreCase(Constants.WIKIPAGES.getValue())) {
+			laCollection = database.getCollection(Constants.WIKIPAGES.getValue());
 		} else {
 			throw new ComputingServicesException("Requester not recognized");
 		}

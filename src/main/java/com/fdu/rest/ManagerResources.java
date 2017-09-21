@@ -1,5 +1,7 @@
 package com.fdu.rest;
 
+import java.io.InputStream;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,6 +20,7 @@ import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.JobApplicant;
 import com.fdu.model.LabAssistant;
 import com.fdu.model.Role;
+import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/admin")
@@ -147,7 +150,8 @@ public class ManagerResources {
 	@PUT
 	@Path("/updateRole")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response updateRole(@FormDataParam("role") String role, @FormDataParam("originalRoleName") String originalRoleName) {
+	public Response updateRole(@FormDataParam("role") String role,
+			@FormDataParam("originalRoleName") String originalRoleName) {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().updateRole(role, originalRoleName);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
@@ -164,6 +168,16 @@ public class ManagerResources {
 	@Path("/deleteRole")
 	public Response deleteRole(@QueryParam("roleId") String roleId) {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().deleteRole(roleId);
+		return Response.status(response.getStatusCode()).entity(response).build();
+	}
+
+	@POST
+	@Path("/upload-wiki")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response careers(@FormDataParam("wikipage") String wiki, @FormDataParam("file") InputStream wikiPage,
+			@FormDataParam("file") FormDataContentDisposition wikiDetail) {
+
+		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().uploadWiki(wiki, wikiPage);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
 

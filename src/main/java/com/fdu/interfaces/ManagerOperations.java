@@ -137,6 +137,8 @@ public interface ManagerOperations extends Connection {
 	 */
 	Object download(String id, String requester);
 
+	ComputingServicesResponse<Void> uploadWiki(String wiki, Object wikiPage);
+
 	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class

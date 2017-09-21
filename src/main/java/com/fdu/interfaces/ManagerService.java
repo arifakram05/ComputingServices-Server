@@ -8,6 +8,7 @@ import com.fdu.exception.ComputingServicesException;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.LabAssistant;
 import com.fdu.model.User;
+import com.fdu.model.Wiki;
 
 public interface ManagerService {
 
@@ -57,4 +58,5 @@ public interface ManagerService {
 
 	List<User> searchUsers(String searchText);
 
+	void uploadWiki(Wiki wiki);
 }

@@ -61,12 +61,19 @@ public enum Constants {
 	CLOCKEDINDATETIME("clockedInDateTime"),
 	CLOCKEDOUTDATETIME("clockedOutDateTime"),
 
+	// WIKI
+	FILE_EXTN("fileExtn"),
+	FILE_DATA("fileData"),
+	UPLOADED_ON("uploadedOn"),
+	UPLOADED_BY("uploadedBy"),
+
 	// names of collections
 	USERS("users"),
 	ROLES("roles"),
 	STAFFSCHECULE("staffschedule"),
 	LABASSISTANTS("labassistants"),
 	JOBAPPLICANTS("jobapplicants"),
+	WIKIPAGES("wikipages"),
 
 	// statuses
 	ALUMNI("ALMUNI"),
