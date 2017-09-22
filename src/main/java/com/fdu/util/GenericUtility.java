@@ -1,19 +1,23 @@
 package com.fdu.util;
 
+import javax.ws.rs.core.Response.Status;
+
 import com.fdu.model.ComputingServicesResponse;
 
-public class GenericUtility {
+public final class GenericUtility {
 
-	/**
-	 * Constructs an object with given details. This object is then sent to the UI for display to the user.
-	 * @param message to be shown to the user
-	 * @param statusCode number indications operation status.<br/>1 = Success<br/>2 = Partial Success<br/>3 = Error
-	 * @return
-	 */
-	public static ComputingServicesResponse response(String message, int statusCode) {
-		ComputingServicesResponse response = new ComputingServicesResponse();
+	public static ComputingServicesResponse<?> createSuccessResponse(String message) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
 		response.setMessage(message);
-		response.setStatusCode(statusCode);
+		response.setStatusCode(Status.OK.getStatusCode());
 		return response;
-	} 
+	}
+
+	public static ComputingServicesResponse<?> createFailureResponse(String message) {
+		ComputingServicesResponse<Void> response = new ComputingServicesResponse<>();
+		response.setMessage(message);
+		response.setStatusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode());
+		return response;
+	}
+
 }

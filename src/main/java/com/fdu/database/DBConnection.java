@@ -10,12 +10,12 @@ import com.mongodb.client.MongoDatabase;
  * @author arifakrammohammed
  *
  */
-public class DBConnection {
+public final class DBConnection {
 
 	private static MongoClient mongoClient;
 	private static MongoDatabase mongoDatabase;
 
-	public DBConnection() {
+	private DBConnection() {
 
 	}
 

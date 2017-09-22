@@ -6,7 +6,7 @@ public enum Constants {
 	OBJECTID("_id"),
 	$OBJECTID("$oid"),
 	//file name
-	FILENAME("filename"),
+	FILENAME("fileName"),
 
 	// LABASSISTANT AND JOBAPPLICANT
 	FIRSTNAME("firstName"),

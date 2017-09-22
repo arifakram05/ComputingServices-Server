@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(value = { "fileData" }, ignoreUnknown = true)
 public class Wiki {
 
 	private Object _id;
