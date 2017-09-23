@@ -148,19 +148,24 @@ public class AssistantServiceImpl implements AssistantService {
 		}
 		InputStream inputStream = null;
 		MongoCollection<Document> laCollection = null;
+		Object[] result = null;
+
 		// get collection
 		if (requester.equalsIgnoreCase(Constants.JOBAPPLICANTS.getValue())) {
 			laCollection = database.getCollection(Constants.JOBAPPLICANTS.getValue());
+			result = laCollection.find(eq(Constants.STUDENTID.getValue(), id))
+					.projection(Projections.include(Constants.RESUME.getValue())).first().values().toArray();
 		} else if (requester.equalsIgnoreCase(Constants.LABASSISTANTS.getValue())) {
 			laCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
+			result = laCollection.find(eq(Constants.STUDENTID.getValue(), id))
+					.projection(Projections.include(Constants.RESUME.getValue())).first().values().toArray();
 		} else if (requester.equalsIgnoreCase(Constants.WIKIPAGES.getValue())) {
 			laCollection = database.getCollection(Constants.WIKIPAGES.getValue());
+			result = laCollection.find(eq(Constants.OBJECTID.getValue(), new ObjectId(id)))
+					.projection(Projections.include(Constants.FILE_DATA.getValue())).first().values().toArray();
 		} else {
 			throw new ComputingServicesException("Requester not recognized");
 		}
-		// query
-		Object[] result = laCollection.find(eq(Constants.STUDENTID.getValue(), id))
-				.projection(Projections.include(Constants.RESUME.getValue())).first().values().toArray();
 
 		try {
 			if (result[1] != null) {
@@ -258,8 +263,7 @@ public class AssistantServiceImpl implements AssistantService {
 					.find(and(eq(Constants.STUDENTID.getValue(), studentId),
 							Filters.gte(Constants.DATE.getValue(), DateMechanic.convertStringToDateOnly(startDate)),
 							Filters.lte(Constants.DATE.getValue(), DateMechanic.convertStringToDateOnly(endDate))))
-					.sort(new BasicDBObject(Constants.DATE.getValue(), 1))
-					.forEach(processRetreivedData);
+					.sort(new BasicDBObject(Constants.DATE.getValue(), 1)).forEach(processRetreivedData);
 		} catch (ParseException e) {
 			LOGGER.error("Error while processing date ", e);
 			throw new ComputingServicesException(e);
