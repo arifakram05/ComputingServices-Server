@@ -135,8 +135,7 @@ public class AssistantServiceImpl implements AssistantService {
 		command.put("$set", laDocument);
 
 		// query to update
-		laCollection.updateOne(eq(Constants.OBJECTID.getValue(), new ObjectId(labAssistant.get_id().toString())),
-				command);
+		laCollection.updateOne(eq(Constants.STUDENTID.getValue(), labAssistant.getStudentId()), command);
 		LOGGER.info(
 				"Updated lab assistant profile - " + labAssistant.getLastName() + "," + labAssistant.getFirstName());
 	}
