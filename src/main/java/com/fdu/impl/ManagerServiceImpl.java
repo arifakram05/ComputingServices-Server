@@ -212,7 +212,7 @@ public class ManagerServiceImpl implements ManagerService {
 		document.append(Constants.FILENAME.getValue(), wiki.getFileName());
 		document.append(Constants.FILE_EXTN.getValue(), wiki.getFileExtn());
 		document.append(Constants.FILE_DATA.getValue(), wiki.getFileData());
-		//document.append(Constants.UPLOADED_ON.getValue(), wiki.getUploadedOn());
+		document.append(Constants.UPLOADED_ON.getValue(), wiki.getUploadedOn());
 		document.append(Constants.UPLOADED_BY.getValue(), wiki.getUploadedBy());
 		document.append(Constants.DESCRIPTION.getValue(), wiki.getDescription());
 		// save document

@@ -3,6 +3,9 @@ package com.fdu.model;
 import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+
+import com.fdu.deserializers.CSDateDeserializer;
 
 @JsonIgnoreProperties(value = { "fileData" }, ignoreUnknown = true)
 public class Wiki {
@@ -51,6 +54,7 @@ public class Wiki {
 		return uploadedOn;
 	}
 
+	@JsonDeserialize(using = CSDateDeserializer.class)
 	public void setUploadedOn(Date uploadedOn) {
 		this.uploadedOn = uploadedOn;
 	}
