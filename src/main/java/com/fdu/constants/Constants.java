@@ -45,6 +45,7 @@ public enum Constants {
 	USERID("userId"),
 	ROLE("role"),
 	PASSWORD("password"),
+	BLOCKED("blocked"),
 
 	//ROLES
 	ROLENAME("roleName"),

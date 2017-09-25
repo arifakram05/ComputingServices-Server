@@ -105,7 +105,8 @@ public class ManagerServiceImpl implements ManagerService {
 				.append(Constants.FIRSTNAME.getValue(), user.getFirstName())
 				.append(Constants.LASTNAME.getValue(), user.getLastName())
 				.append(Constants.ROLE.getValue(), user.getRole())
-				.append(Constants.PASSWORD.getValue(), user.getPassword());
+				.append(Constants.PASSWORD.getValue(), null)
+				.append(Constants.BLOCKED.getValue(), false);
 		// query
 		userCollection.insertOne(document);
 		LOGGER.info("Saved a new user with ID " + user.getUserId());

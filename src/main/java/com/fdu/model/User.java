@@ -5,12 +5,14 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
+	private Object _id;
 	private String userId;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
 	private String role;
+	private boolean blocked;
 
 	public String getUserId() {
 		return userId;
@@ -58,6 +60,22 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
+
+	public Object get_id() {
+		return _id;
+	}
+
+	public void set_id(Object _id) {
+		this._id = _id;
 	}
 
 }
