@@ -13,6 +13,6 @@ public interface UserController {
 
 	ComputingServicesResponse<Void> deleteUser(String id);
 
-	ComputingServicesResponse<Void> addUser(User user);
+	ComputingServicesResponse<Void> addUser(String user);
 
 }

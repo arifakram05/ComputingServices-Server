@@ -2,6 +2,8 @@ package com.fdu.controller.impl;
 
 import java.util.List;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.fdu.constants.ControllerType;
 import com.fdu.controller.interfaces.UserController;
 import com.fdu.database.factory.FactoryCreator;
@@ -54,9 +56,11 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	public ComputingServicesResponse<Void> addUser(User user) {
+	public ComputingServicesResponse<Void> addUser(String userDetails) {
 		String message = null;
+		User user = null;
 		try {
+			user = new ObjectMapper().readValue(userDetails, User.class);
 			FactoryCreator.getFactory(ControllerType.USERS).getUser().addUser(user);
 			message = "Added Successfully";
 			return GenericUtility.createSuccessResponse(message);

@@ -16,6 +16,7 @@ import com.fdu.constants.ControllerType;
 import com.fdu.controller.factory.FactoryCreator;
 import com.fdu.model.ComputingServicesResponse;
 import com.fdu.model.User;
+import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -71,8 +72,8 @@ public class UserResource {
 
 	@POST
 	@Path("/users")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response hireJobApplicant(User user) {
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response hireJobApplicant(@FormDataParam("user") String user) {
 		ComputingServicesResponse<Void> response = null;
 		try {
 			response = FactoryCreator.getFactory(ControllerType.USERS).getUser().addUser(user);
