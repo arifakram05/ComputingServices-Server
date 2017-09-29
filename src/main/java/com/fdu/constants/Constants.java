@@ -68,6 +68,9 @@ public enum Constants {
 	UPLOADED_ON("uploadedOn"),
 	UPLOADED_BY("uploadedBy"),
 
+	// Settings
+	SUBNETRANGE("subnetRange"),
+	
 	// names of collections
 	USERS("users"),
 	ROLES("roles"),
@@ -75,6 +78,7 @@ public enum Constants {
 	LABASSISTANTS("labassistants"),
 	JOBAPPLICANTS("jobapplicants"),
 	WIKIPAGES("wikipages"),
+	SETTINGS("settings"),
 
 	// statuses
 	ALUMNI("ALMUNI"),
