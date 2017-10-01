@@ -10,8 +10,10 @@ public interface SettingsDAO {
 	Map<String, String> getSettings();
 
 	boolean updateEmail(String email);
-	
+
 	boolean changePassword(String oldPassword, String newPassword, String userId);
+
+	boolean resetPassword(String userId);
 
 	class Factory {
 		private static final SettingsDAOImpl INSTANCE = new SettingsDAOImpl(DBConnection.getConnection());

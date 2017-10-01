@@ -68,4 +68,19 @@ public class SettingsDAOImpl implements SettingsDAO {
 		}
 	}
 
+	@Override
+	public boolean resetPassword(String userId) {
+		// get collection
+		MongoCollection<Document> usersCollection = database.getCollection(Constants.USERS.getValue());
+		// query
+		Document document = usersCollection.findOneAndUpdate(Filters.eq(Constants.USERID.getValue(), userId),
+				Updates.set(Constants.PASSWORD.getValue(), null));
+		LOGGER.info("Done resetting password");
+		if (document != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

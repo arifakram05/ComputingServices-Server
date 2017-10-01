@@ -130,7 +130,7 @@ public class ManagerServiceImpl implements ManagerService {
 	public List<User> searchUsers(String searchText) {
 		// get collection
 		MongoCollection<Document> usersCollection = database.getCollection(Constants.LABASSISTANTS.getValue());
-		List<User> userList = new ArrayList<>();
+		List<User> labAssistants = new ArrayList<>();
 		// process each retrieved record
 		Block<Document> processRetreivedData = (document) -> {
 
@@ -143,7 +143,7 @@ public class ManagerServiceImpl implements ManagerService {
 				user.setFirstName(labAssistant.getFirstName());
 				user.setLastName(labAssistant.getLastName());
 				user.setUserId(labAssistant.getStudentId());
-				userList.add(user);
+				labAssistants.add(user);
 			} catch (IOException e) {
 				LOGGER.error("Error occurred while processing retrieved user details for search associates operation");
 			}
@@ -154,7 +154,7 @@ public class ManagerServiceImpl implements ManagerService {
 		 */
 		usersCollection.find(text(searchText, new TextSearchOptions().caseSensitive(false)))
 				.forEach(processRetreivedData);
-		return userList;
+		return labAssistants;
 	}
 
 	private byte[] getFileDataFromDB(String id) throws ComputingServicesException {

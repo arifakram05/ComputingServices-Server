@@ -17,14 +17,14 @@ public class SettingsControllerImpl implements SettingsController {
 	}
 
 	@Override
-	public ComputingServicesResponse<Void> configureEmail(String email) {
+	public ComputingServicesResponse<Void> configureEmail(String email) throws Exception {
 		String message = null;
 		if (SettingsDAO.Factory.getInstance().updateEmail(email)) {
 			message = "Updated email address";
 			return GenericUtility.createSuccessResponse(message);
 		} else {
 			message = "Failed to update email address";
-			return GenericUtility.createFailureResponse(message);
+			throw new Exception(message);
 		}
 	}
 
@@ -40,6 +40,18 @@ public class SettingsControllerImpl implements SettingsController {
 			return GenericUtility.createSuccessResponse(message);
 		} else {
 			message = "Failed to update email address";
+			throw new Exception(message);
+		}
+	}
+
+	@Override
+	public ComputingServicesResponse<Void> resetPassword(String userId) throws Exception {
+		String message = null;
+		if (SettingsDAO.Factory.getInstance().resetPassword(userId)) {
+			message = "Password is reset";
+			return GenericUtility.createSuccessResponse(message);
+		} else {
+			message = "Failed to reset password";
 			throw new Exception(message);
 		}
 	}

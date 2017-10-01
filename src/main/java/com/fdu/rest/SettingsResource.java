@@ -39,10 +39,11 @@ public class SettingsResource {
 			response = SettingsController.Factory.getInstance().configureEmail(email);
 			return Response.status(Status.OK).entity(response).build();
 		} catch (Exception e) {
+			response = GenericUtility.createFailureResponse(e.getMessage());
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(response).build();
 		}
 	}
-	
+
 	@PUT
 	@Path("/password")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -50,6 +51,19 @@ public class SettingsResource {
 		ComputingServicesResponse<Void> response = null;
 		try {
 			response = SettingsController.Factory.getInstance().changePassword(passwordDetails);
+			return Response.status(Status.OK).entity(response).build();
+		} catch (Exception e) {
+			response = GenericUtility.createFailureResponse(e.getMessage());
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(response).build();
+		}
+	}
+
+	@PUT
+	@Path("/password/reset/{userId}")
+	public Response resetPassword(@PathParam("userId") String userId) {
+		ComputingServicesResponse<Void> response = null;
+		try {
+			response = SettingsController.Factory.getInstance().resetPassword(userId);
 			return Response.status(Status.OK).entity(response).build();
 		} catch (Exception e) {
 			response = GenericUtility.createFailureResponse(e.getMessage());
