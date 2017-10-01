@@ -11,6 +11,7 @@ import com.fdu.database.dao.SettingsDAO;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 
@@ -48,6 +49,23 @@ public class SettingsDAOImpl implements SettingsDAO {
 		UpdateResult result = userCollection.updateOne(null, Updates.set(Constants.EMAIL.getValue(), email));
 		LOGGER.info("Done updating FROM email address");
 		return result.wasAcknowledged();
+	}
+
+	@Override
+	public boolean changePassword(String oldPassword, String newPassword, String userId) {
+		// get collection
+		MongoCollection<Document> usersCollection = database.getCollection(Constants.USERS.getValue());
+		// query
+		Document document = usersCollection.findOneAndUpdate(
+				Filters.and(Filters.eq(Constants.USERID.getValue(), userId),
+						Filters.eq(Constants.PASSWORD.getValue(), oldPassword)),
+				Updates.set(Constants.PASSWORD.getValue(), newPassword));
+		LOGGER.info("Done changing password");
+		if (document != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
