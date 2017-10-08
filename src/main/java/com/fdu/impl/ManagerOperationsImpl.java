@@ -334,4 +334,23 @@ public class ManagerOperationsImpl implements ManagerOperations {
 		return response;
 	}
 
+	@Override
+	public ComputingServicesResponse<String> getAssignedPrivileges(String role) {
+		ComputingServicesResponse<String> response = new ComputingServicesResponse<>();
+		List<String> privilegesList = null;
+		try {
+			LOGGER.info("Preparing to fetch all assigned privileges");
+			privilegesList = getRoleServiceInstance().getAssignedPrivileges(role);
+			LOGGER.info("All assigned privileges successfully retrieved");
+			response.setStatusCode(200);
+			response.setMessage("List of all assigned privileges");
+			response.setResponse(privilegesList);
+		} catch (Exception e) {
+			LOGGER.error("Error while fetching assigned privileges ", e);
+			response.setStatusCode(500);
+			response.setMessage("Error occurred. Could not retrieve assigned privileges list");
+		}
+		return response;
+	}
+
 }

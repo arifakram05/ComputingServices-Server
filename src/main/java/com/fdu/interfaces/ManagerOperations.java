@@ -139,6 +139,8 @@ public interface ManagerOperations extends Connection {
 
 	ComputingServicesResponse<Void> uploadWiki(String wiki, Object wikiPage);
 
+	ComputingServicesResponse<String> getAssignedPrivileges(String role);
+
 	/**
 	 * Java 8 feature.<br/>
 	 * Get an object of the implementations class

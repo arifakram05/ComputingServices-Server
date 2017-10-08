@@ -87,4 +87,6 @@ public interface RoleService {
 	 * @return boolean value indicating the operation success status
 	 */
 	boolean deleteRole(String roleId);
+
+	List<String> getAssignedPrivileges(String role);
 }

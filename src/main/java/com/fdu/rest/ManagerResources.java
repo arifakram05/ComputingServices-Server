@@ -180,5 +180,12 @@ public class ManagerResources {
 		ComputingServicesResponse<Void> response = ManagerOperations.getInstance().uploadWiki(wiki, wikiPage);
 		return Response.status(response.getStatusCode()).entity(response).build();
 	}
+	
+	@GET
+	@Path("/privileges")
+	public Response getAssignedPrivileges(@QueryParam("role") String role) {
+		ComputingServicesResponse<String> response = ManagerOperations.getInstance().getAssignedPrivileges(role);
+		return Response.status(response.getStatusCode()).entity(response.getResponse()).build();
+	}
 
 }
