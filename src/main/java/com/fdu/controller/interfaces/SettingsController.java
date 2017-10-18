@@ -15,6 +15,8 @@ public interface SettingsController {
 
 	ComputingServicesResponse<Void> resetPassword(String userId) throws Exception;
 
+	ComputingServicesResponse<Void> defineSubnetRange(String start, String end) throws Exception;
+
 	class Factory {
 		private static final SettingsControllerImpl INSTANCE = new SettingsControllerImpl();
 

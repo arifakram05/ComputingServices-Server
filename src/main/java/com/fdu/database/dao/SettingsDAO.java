@@ -15,6 +15,8 @@ public interface SettingsDAO {
 
 	boolean resetPassword(String userId);
 
+	boolean defineSubnetRange(String start, String end);
+
 	class Factory {
 		private static final SettingsDAOImpl INSTANCE = new SettingsDAOImpl(DBConnection.getConnection());
 

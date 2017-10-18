@@ -44,9 +44,9 @@ public class SettingsDAOImpl implements SettingsDAO {
 	@Override
 	public boolean updateEmail(String email) {
 		// get collection
-		MongoCollection<Document> userCollection = database.getCollection(Constants.SETTINGS.getValue());
+		MongoCollection<Document> settingsCollection = database.getCollection(Constants.SETTINGS.getValue());
 		// query
-		UpdateResult result = userCollection.updateOne(null, Updates.set(Constants.EMAIL.getValue(), email));
+		UpdateResult result = settingsCollection.updateOne(new Document(), Updates.set(Constants.EMAIL.getValue(), email));
 		LOGGER.info("Done updating FROM email address");
 		return result.wasAcknowledged();
 	}
@@ -81,6 +81,18 @@ public class SettingsDAOImpl implements SettingsDAO {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean defineSubnetRange(String start, String end) {
+		// get collection
+		MongoCollection<Document> settingsCollection = database.getCollection(Constants.SETTINGS.getValue());
+		// query
+		String range = new StringBuilder(start).append("-").append(end).toString();
+		// As filter cannot be null, passing an empty document indication Mongo to update all documents
+		UpdateResult result = settingsCollection.updateOne(new Document(), Updates.set(Constants.SUBNETRANGE.getValue(), range));
+		LOGGER.info("Done updating subnet range");
+		return result.wasAcknowledged();
 	}
 
 }

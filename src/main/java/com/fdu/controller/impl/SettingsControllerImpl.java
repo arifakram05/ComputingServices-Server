@@ -56,4 +56,16 @@ public class SettingsControllerImpl implements SettingsController {
 		}
 	}
 
+	@Override
+	public ComputingServicesResponse<Void> defineSubnetRange(String start, String end) throws Exception {
+		String message = null;
+		if (SettingsDAO.Factory.getInstance().defineSubnetRange(start, end)) {
+			message = "Subnet range set";
+			return GenericUtility.createSuccessResponse(message);
+		} else {
+			message = "Failed to set subnet range";
+			throw new Exception(message);
+		}
+	}
+
 }
