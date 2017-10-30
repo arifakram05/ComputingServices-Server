@@ -13,7 +13,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fdu.constants.Constants;
 import com.fdu.interfaces.GeneralService;
+import com.fdu.model.Email;
 import com.fdu.model.Wiki;
+import com.fdu.util.EmailWorker;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -60,5 +62,16 @@ public class GeneralServiceImpl implements GeneralService {
 		LOGGER.info("Deleted wiki with ID: " + fileId);
 		return result.wasAcknowledged();
 
+	}
+
+	@Override
+	public void sendEmail(String emailDetails) {
+		Email email = null;
+		try {
+			email = new ObjectMapper().readValue(emailDetails, Email.class);
+		} catch (IOException e) {
+			LOGGER.error("Error occurred while processing email content");
+		}
+		EmailWorker.sendEmail(email);
 	}
 }

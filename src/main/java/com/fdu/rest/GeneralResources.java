@@ -111,4 +111,12 @@ public class GeneralResources {
 		}
 	}
 
+	@POST
+	@Path("/email")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response sendEmail(String emailDetails) {
+		GeneralService.Factory.getInstance().sendEmail(emailDetails);
+		return Response.status(Status.OK).entity(GenericUtility.createSuccessResponse("Deleted")).build();
+	}
+
 }

@@ -12,6 +12,8 @@ public interface GeneralService {
 
 	boolean deleteWiki(String fileId);
 
+	void sendEmail(String emailDetails);
+
 	class Factory {
 		private static final GeneralServiceImpl INSTANCE = new GeneralServiceImpl(DBConnection.getConnection());
 
